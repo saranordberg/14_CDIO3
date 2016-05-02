@@ -62,7 +62,11 @@ public class MainView extends Composite {
 		this.hPanel.add(fTable);
 
 	}
-
+	/**
+	 * ClickHandler for the "Create" button.
+	 * Creates a new row as the first, displaying text fields
+	 * and a save and cancel button
+	 */
 	private class createClickHandler implements ClickHandler {
 
 		public void onClick(ClickEvent event) {
@@ -73,6 +77,9 @@ public class MainView extends Composite {
 			oprId = new TextBox();
 			cpr = new TextBox();
 			password = new TextBox();
+			
+			cpr.setMaxLength(10);
+			password.setMaxLength(8);
 
 			saveBtn = new Button("Save");
 			saveBtn.addClickHandler(new saveClickHandler());
@@ -98,6 +105,10 @@ public class MainView extends Composite {
 
 	}
 
+	/**
+	 * ClickHandler for the "Edit" button
+	 * Redirects you to a new page or makes the fields ready for edit
+	 */
 	private class editClickHandler implements ClickHandler {
 
 		@Override
@@ -108,6 +119,11 @@ public class MainView extends Composite {
 		}
 
 	}
+	
+	/**
+	 * ClickHandler for the "Details" button
+	 * Displays more details about a person
+	 */
 	private class detailsClickHandler implements ClickHandler {
 
 		@Override
@@ -118,6 +134,12 @@ public class MainView extends Composite {
 		}
 
 	}
+	
+	/**
+	 * ClickHandler for the "Save" button
+	 * saves the data entered into the TextBox fields and calls the private method "add".
+	 *  Also removes "Save" and Cancel" button
+	 */
 	private class saveClickHandler implements ClickHandler {
 
 		@Override
@@ -148,11 +170,15 @@ public class MainView extends Composite {
 
 	}
 
+	
+	/**
+	 * ClickHandler for the "Cancel" button
+	 * Removes the newly created row and removes save and cancel button
+	 */
 	private class cancelClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			int nr = fTable.getRowCount();
 			saveBtn.removeFromParent();
 			cancelBtn.removeFromParent();
 			fTable.removeRow(1);
@@ -165,7 +191,11 @@ public class MainView extends Composite {
 		}
 
 	}
-		public void add(String name, String text, int column, ClickHandler handler){
+	
+	/**
+	 * private method that adds button to the newly created row
+	 */
+	private void add(String name, String text, int column, ClickHandler handler){
 			String number = name + fTable.getRowCount();
 			Button tempButton;
 			tempButton = new Button(number, handler);
