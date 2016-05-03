@@ -60,7 +60,6 @@ public class MainView extends Composite {
 		fTable.setWidget(1, 4, OPRID);
 
 		this.hPanel.add(fTable);
-
 	}
 	/**
 	 * ClickHandler for the "Create" button.
@@ -74,7 +73,7 @@ public class MainView extends Composite {
 			fTable.insertRow(1);
 			fName = new TextBox();
 			lName = new TextBox();
-			oprId = new TextBox();
+			//oprId = new TextBox();
 			cpr = new TextBox();
 			password = new TextBox();
 			
@@ -97,7 +96,7 @@ public class MainView extends Composite {
 
 			fTable.setWidget(1, 2, fName);
 			fTable.setWidget(1, 3, lName);
-			fTable.setWidget(1, 4, oprId);
+			//fTable.setWidget(1, 4, oprId);
 			fTable.setWidget(1, 5, cpr);
 			fTable.setWidget(1, 6, password);
 
