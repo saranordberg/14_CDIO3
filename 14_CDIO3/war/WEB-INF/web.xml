@@ -6,6 +6,17 @@
          xmlns="http://java.sun.com/xml/ns/javaee">
 
   <!-- Servlets -->
+  <servlet>
+ 	<servlet-name>operatorServlet</servlet-name>
+ 	<servlet-class>cdio.service.implementation.OperatorServiceImpl</servlet-class>
+ </servlet>
+ 
+ <servlet-mapping>
+ 	<servlet-name>operatorServlet</servlet-name>
+ 	<url-pattern>/14_CDIO3/operatorService</url-pattern>
+ </servlet-mapping>
+  
+  
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>_4_CDIO3.html</welcome-file>
