@@ -2,6 +2,7 @@ package example.cdio.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -29,6 +30,7 @@ public class MainView extends Composite {
 		editBtn.addClickHandler(new editClickHandler());
 
 		this.detailsBtn = new Button("Details");
+		detailsBtn.addClickHandler(new detailsClickHandler());
 
 		this.vPanel.add(hPanel);
 
@@ -127,6 +129,7 @@ public class MainView extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			
 			String buttonName = event.getClass().getName();
 			
 			String oprID = buttonName.replaceAll("detailsBtn", "");
@@ -143,7 +146,13 @@ public class MainView extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			
+			saveBtn.removeFromParent();
+			cancelBtn.removeFromParent();
+
+			for (int i = 0; i < fTable.getRowCount(); i++) {
+				fTable.removeCell(i, 6);
+				fTable.removeCell(i, 5);
+			}
 			
 			add("editBtn", "Edit", 0, new editClickHandler());
 			add("detailsBtn", "Details", 1, new detailsClickHandler());
@@ -156,14 +165,6 @@ public class MainView extends Composite {
 
 			Label newOprId = new Label(oprId.getText());
 			fTable.setWidget(1, 4, newOprId);
-
-			saveBtn.removeFromParent();
-			cancelBtn.removeFromParent();
-
-			for (int i = 0; i < fTable.getRowCount(); i++) {
-				fTable.removeCell(i, 6);
-				fTable.removeCell(i, 5);
-			}
 
 		}
 
