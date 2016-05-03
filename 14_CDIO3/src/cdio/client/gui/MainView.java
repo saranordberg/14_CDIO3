@@ -26,7 +26,7 @@ public class MainView extends Composite {
 		initWidget(this.vPanel);
 		OperatorServiceClientImpl clientImpl = new OperatorServiceClientImpl(GWT.getModuleBaseURL() + "operatorService");
 
-		GWT.log("hej");
+		clientImpl.getOperatoer(1);
 		this.createBtn = new Button("Create");
 		createBtn.addClickHandler(new createClickHandler());
 		this.vPanel.add(createBtn);

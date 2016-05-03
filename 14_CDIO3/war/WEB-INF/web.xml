@@ -13,7 +13,7 @@
  
  <servlet-mapping>
  	<servlet-name>operatorServlet</servlet-name>
- 	<url-pattern>/14_CDIO3/operatorService</url-pattern>
+ 	<url-pattern>/_4_cdio3/operatorService</url-pattern>
  </servlet-mapping>
   
   

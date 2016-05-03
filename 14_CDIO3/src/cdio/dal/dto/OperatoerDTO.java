@@ -1,5 +1,7 @@
 package cdio.dal.dto;
 
+import java.io.Serializable;
+
 /**
  * Operatoer Data Access Objekt
  * 
@@ -7,7 +9,7 @@ package cdio.dal.dto;
  * @version 1.2
  */
 
-public class OperatoerDTO
+public class OperatoerDTO implements Serializable
 {
 	/** Operatoer-identifikationsnummer (opr_id) i omraadet 1-99999999. Vaelges af brugerne */
 	public int oprId;                     
@@ -20,6 +22,8 @@ public class OperatoerDTO
 	/** Operatoer password min. 7 max. 8 karakterer */
 	public String password;            
 
+	public OperatoerDTO() {}
+	
 	public OperatoerDTO(int oprId, String oprNavn, String ini, String cpr, String password)
 	{
 		this.oprId = oprId;

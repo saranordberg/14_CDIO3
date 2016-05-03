@@ -11,6 +11,8 @@ import cdio.service.OperatorServiceAsync;
 public class OperatorServiceClientImpl {
 	private OperatorServiceAsync service;
 	
+	public OperatorServiceClientImpl() {}
+	
 	public OperatorServiceClientImpl(String url) {
 		System.out.println(url);
 		this.service = GWT.create(OperatorService.class);
