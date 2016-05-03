@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-import cdio.dal.OperatoerDTO;
+import cdio.dal.dto.OperatoerDTO;
 
 public interface OperatorServiceAsync {
 	void getOperatoer(int oprId, AsyncCallback callback);

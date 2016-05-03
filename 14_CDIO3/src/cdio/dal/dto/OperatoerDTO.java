@@ -1,4 +1,4 @@
-package cdio.dal;
+package cdio.dal.dto;
 
 /**
  * Operatoer Data Access Objekt

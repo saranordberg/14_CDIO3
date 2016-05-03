@@ -5,8 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import cdio.dal.Connector;
-import cdio.dal.OperatoerDTO;
-import cdio.dal.dto.OperatoerDAO;
+import cdio.dal.dto.OperatoerDTO;
 import cdio.dal.exception.DALException;
 
 import java.util.ArrayList;

@@ -6,6 +6,7 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import cdio.dal.*;
+import cdio.dal.dto.OperatoerDTO;
 
 
 @RemoteServiceRelativePath("")

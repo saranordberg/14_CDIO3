@@ -1,8 +1,8 @@
-package cdio.dal.dto;
+package cdio.dal.dao;
 
 import java.util.List;
 
-import cdio.dal.OperatoerDTO;
+import cdio.dal.dto.OperatoerDTO;
 import cdio.dal.exception.DALException;
 
 
