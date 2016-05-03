@@ -13,13 +13,13 @@
  
  <servlet-mapping>
  	<servlet-name>operatorServlet</servlet-name>
- 	<url-pattern>/_4_cdio3/operatorService</url-pattern>
+ 	<url-pattern>/Group14_CDIO3/operatorService</url-pattern>
  </servlet-mapping>
   
   
   <!-- Default page to serve -->
   <welcome-file-list>
-    <welcome-file>_4_CDIO3.html</welcome-file>
+    <welcome-file>Group14_CDIO3.html</welcome-file>
   </welcome-file-list>
 
 </web-app>

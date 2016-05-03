@@ -23,7 +23,7 @@
   // Compute some codeserver urls so as the user does not need bookmarklets
   var hostName = $wnd.location.hostname;
   var serverUrl = 'http://' + hostName + ':9876';
-  var module = '_4_cdio3';
+  var module = 'Group14_CDIO3';
   var nocacheUrl = serverUrl + '/recompile-requester/' + module;
 
   // Insert the superdevmode nocache script in the first position of the head
