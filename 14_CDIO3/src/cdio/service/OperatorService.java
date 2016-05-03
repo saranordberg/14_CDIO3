@@ -8,7 +8,6 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import cdio.dal.*;
 import cdio.dal.dto.OperatoerDTO;
 
-
 @RemoteServiceRelativePath("")
 public interface OperatorService extends RemoteService {
 	OperatoerDTO getOperatoer(int oprId);
