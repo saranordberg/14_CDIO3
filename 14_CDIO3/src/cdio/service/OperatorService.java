@@ -9,7 +9,7 @@ import cdio.dal.*;
 import cdio.dal.dto.OperatoerDTO;
 
 
-@RemoteServiceRelativePath("")
+@RemoteServiceRelativePath("operatorService")
 public interface OperatorService extends RemoteService {
 	OperatoerDTO getOperatoer(int oprId);
 	void createOperator(OperatoerDTO opr);

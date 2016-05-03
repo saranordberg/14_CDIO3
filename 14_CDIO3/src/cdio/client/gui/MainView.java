@@ -1,5 +1,6 @@
 package cdio.client.gui;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -11,6 +12,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import cdio.client.implementation.OperatorServiceClientImpl;
+
 public class MainView extends Composite {
 	private VerticalPanel vPanel = new VerticalPanel();
 	private HorizontalPanel hPanel = new HorizontalPanel();
@@ -21,7 +24,9 @@ public class MainView extends Composite {
 
 	public MainView() {
 		initWidget(this.vPanel);
+		OperatorServiceClientImpl clientImpl = new OperatorServiceClientImpl(GWT.getModuleBaseURL() + "operatorService");
 
+		GWT.log("hej");
 		this.createBtn = new Button("Create");
 		createBtn.addClickHandler(new createClickHandler());
 		this.vPanel.add(createBtn);
@@ -115,6 +120,32 @@ public class MainView extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			String buttonName = event.getClass().getName();
+			int rownr = fTable.getCellForEvent(event).getCellIndex();
+			fName = new TextBox();
+			lName = new TextBox();
+			cpr = new TextBox();
+			
+			cpr.setMaxLength(10);
+			password.setMaxLength(8);
+
+			saveBtn = new Button("Save");
+			saveBtn.addClickHandler(new saveClickHandler());
+			hPanel.add(saveBtn);
+
+			cancelBtn = new Button("Cancel");
+			cancelBtn.addClickHandler(new cancelClickHandler());
+			hPanel.add(cancelBtn);
+			
+			cprnr = new Label("CPR number");
+			pw = new Label("Password");
+
+			fTable.setWidget(rownr, 5, cprnr);
+			fTable.setWidget(rownr, 6, pw);
+
+			fTable.setWidget(rownr, 2, fName);
+			fTable.setWidget(rownr, 3, lName);
+			fTable.setWidget(rownr, 5, cpr);
+			fTable.setWidget(rownr, 6, password);
 			
 			String oprID = buttonName.replaceAll("editBtn", "");
 		}
@@ -129,6 +160,9 @@ public class MainView extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			
+			
+			
 			
 			String buttonName = event.getClass().getName();
 			
