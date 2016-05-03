@@ -1,4 +1,4 @@
-package cdio.service;
+package cdio.service.implementation;
 
 public class OperatorServiceClientImpl {
 
