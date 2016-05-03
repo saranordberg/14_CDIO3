@@ -149,10 +149,11 @@ public class MainView extends Composite {
 			saveBtn.removeFromParent();
 			cancelBtn.removeFromParent();
 
-			for (int i = 0; i < fTable.getRowCount(); i++) {
+			for (int i = 0; i <= 1; i++) {
 				fTable.removeCell(i, 6);
 				fTable.removeCell(i, 5);
 			}
+			
 			
 			add("editBtn", "Edit", 0, new editClickHandler());
 			add("detailsBtn", "Details", 1, new detailsClickHandler());
@@ -183,10 +184,8 @@ public class MainView extends Composite {
 			cancelBtn.removeFromParent();
 			fTable.removeRow(1);
 
-			for (int i = 0; i < fTable.getRowCount(); i++) {
-				fTable.removeCell(i, 6);
-				fTable.removeCell(i, 5);
-			}
+				fTable.removeCell(0, 6);
+				fTable.removeCell(0, 5);
 
 		}
 
