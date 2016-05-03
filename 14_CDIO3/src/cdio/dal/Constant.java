@@ -1,4 +1,4 @@
-package example.cdio.client.Operator;
+package cdio.dal;
 
 
 // erstat konstanterne nedenfor

@@ -1,6 +1,9 @@
-package example.cdio.client.Operator;
+package cdio.dal.dto;
 
 import java.util.List;
+
+import cdio.dal.OperatoerDTO;
+import cdio.dal.exception.DALException;
 
 
 

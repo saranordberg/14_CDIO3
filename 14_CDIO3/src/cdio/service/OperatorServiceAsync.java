@@ -1,10 +1,10 @@
-package example.cdio.client.service;
+package cdio.service;
 
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-import example.cdio.client.Operator.OperatoerDTO;
+import cdio.dal.OperatoerDTO;
 
 public interface OperatorServiceAsync {
 	void getOperatoer(int oprId, AsyncCallback callback);

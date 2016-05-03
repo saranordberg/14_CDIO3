@@ -1,4 +1,4 @@
-package example.cdio.client.gui;
+package cdio.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

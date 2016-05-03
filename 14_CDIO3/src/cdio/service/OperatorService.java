@@ -1,10 +1,11 @@
-package example.cdio.client.service;
+package cdio.service;
 
 import java.util.List;
-import example.cdio.client.Operator.*;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+
+import cdio.dal.*;
 
 
 @RemoteServiceRelativePath("")

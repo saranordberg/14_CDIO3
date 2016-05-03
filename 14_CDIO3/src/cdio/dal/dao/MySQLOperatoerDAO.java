@@ -1,8 +1,14 @@
-package example.cdio.client.Operator;
+package cdio.dal.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+
+import cdio.dal.Connector;
+import cdio.dal.OperatoerDTO;
+import cdio.dal.dto.OperatoerDAO;
+import cdio.dal.exception.DALException;
+
 import java.util.ArrayList;
 
 

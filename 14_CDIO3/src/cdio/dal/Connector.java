@@ -1,4 +1,4 @@
-package example.cdio.client.Operator;
+package cdio.dal;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
+
+import cdio.dal.exception.DALException;
 
 
 public class Connector

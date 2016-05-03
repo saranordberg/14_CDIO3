@@ -1,4 +1,4 @@
-package example.cdio.client.Operator;
+package cdio.dal.exception;
 
 public class DALException extends Exception
 {
