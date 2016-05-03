@@ -6,7 +6,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import cdio.client.gui.MainView;
 
 
-public class _4_CDIO3 implements EntryPoint {
+public class Group14_CDIO3 implements EntryPoint {
 
 	private MainView mView = new MainView();
 	
