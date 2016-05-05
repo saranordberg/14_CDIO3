@@ -12,6 +12,8 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import cdio.dal.dto.OperatoerDTO;
+
 public class MainGUI extends Composite {
 	private TextBox username = new TextBox();
 	private PasswordTextBox password = new PasswordTextBox();
@@ -19,8 +21,8 @@ public class MainGUI extends Composite {
 	private Button logout = new Button("Logout");
 	private VerticalPanel vPanel = new VerticalPanel();
 	private Label usernameTxt, passwordTxt;
-
-	MainView newView;
+	private Composite newView;
+	private OperatoerDTO opr;
 	
 	public MainGUI(){
 		initWidget(this.vPanel);
@@ -43,6 +45,10 @@ public class MainGUI extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			opr = new OperatoerDTO();
+			//Lav login funktion der tjekker om password i textbox stemmer overens med opr.getPassword(oprId)
+			//hvor oprId kommer fra username textbox
+			
 			login.removeFromParent();
 			password.removeFromParent();
 			username.removeFromParent();
@@ -50,9 +56,8 @@ public class MainGUI extends Composite {
 			passwordTxt.removeFromParent();
 			
 			vPanel.add(logout);
+			LoginUser();
 			
-			newView = new MainView();
-			RootPanel.get().add(newView);
 			
 			
 		}
@@ -74,5 +79,13 @@ public class MainGUI extends Composite {
 			
 		}
 		
+	}
+	public void LoginAdmin(){
+		newView = new AdminView();
+		RootPanel.get().add(newView);
+	}
+	public void LoginUser(){
+		newView = new UserView();
+		RootPanel.get().add(newView);
 	}
 }
