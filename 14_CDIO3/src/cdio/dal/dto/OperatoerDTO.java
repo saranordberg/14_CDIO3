@@ -43,4 +43,11 @@ public class OperatoerDTO implements Serializable
     }
     
 	public String toString() { return oprId + "\t" + oprNavn + "\t" + ini + "\t" + cpr + "\t" + password; }
+	
+	public String getPassword(){
+		return this.password;
+	}
+	public int getId(){
+		return this.oprId;
+	}
 }
