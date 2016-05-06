@@ -125,7 +125,9 @@ public class AdminView extends Composite {
 			String buttonName = event.getClass().getName();
 			int rownr = fTable.getCellForEvent(event).getCellIndex() +1;
 			fName = new TextBox();
+			fName.setText(fTable.getText(rownr, 2));
 			lName = new TextBox();
+			lName.setText(fTable.getText(rownr, 3));
 			cpr = new TextBox();
 			password = new TextBox();
 			
@@ -143,8 +145,8 @@ public class AdminView extends Composite {
 			cprnr = new Label("CPR number");
 			pw = new Label("Password");
 
-			fTable.setWidget(rownr, 5, cprnr);
-			fTable.setWidget(rownr, 6, pw);
+			fTable.setWidget(0, 5, cprnr);
+			fTable.setWidget(0, 6, pw);
 
 			fTable.setWidget(rownr, 2, fName);
 			fTable.setWidget(rownr, 3, lName);
@@ -224,6 +226,10 @@ public class AdminView extends Composite {
 
 			fTable.removeCell(0, 6);
 			fTable.removeCell(0, 5);
+			
+			
+
+			
 
 		}
 
@@ -241,7 +247,14 @@ public class AdminView extends Composite {
 
 			fTable.removeCell(0, 6);
 			fTable.removeCell(0, 5);
-
+			
+			fName.removeFromParent();
+			lName.removeFromParent();
+			cpr.removeFromParent();
+			
+			fTable.setWidget(1, 2, Fname);
+			fTable.setWidget(1, 3, Lname);
+			fTable.setWidget(1, 4, OPRID);
 		}
 
 	}
