@@ -127,6 +127,7 @@ public class AdminView extends Composite {
 			fName = new TextBox();
 			lName = new TextBox();
 			cpr = new TextBox();
+			password = new TextBox();
 			
 			cpr.setMaxLength(10);
 			password.setMaxLength(8);
@@ -136,7 +137,7 @@ public class AdminView extends Composite {
 			hPanel.add(saveBtn);
 
 			cancelBtn = new Button("Cancel");
-			cancelBtn.addClickHandler(new cancelClickHandler());
+			cancelBtn.addClickHandler(new cancelClickHandler2());
 			hPanel.add(cancelBtn);
 			
 			cprnr = new Label("CPR number");
@@ -214,7 +215,7 @@ public class AdminView extends Composite {
 	 * Removes the newly created row and removes save and cancel button
 	 */
 	private class cancelClickHandler implements ClickHandler {
-
+		
 		@Override
 		public void onClick(ClickEvent event) {
 			saveBtn.removeFromParent();
@@ -237,7 +238,6 @@ public class AdminView extends Composite {
 		public void onClick(ClickEvent event) {
 			saveBtn.removeFromParent();
 			cancelBtn.removeFromParent();
-			fTable.removeRow(1);
 
 			fTable.removeCell(0, 6);
 			fTable.removeCell(0, 5);
