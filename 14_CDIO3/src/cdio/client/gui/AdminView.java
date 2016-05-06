@@ -87,7 +87,7 @@ public class AdminView extends Composite
 			fTable.insertRow(1);
 			fName = new TextBox();
 			lName = new TextBox();
-			// oprId = new TextBox();
+//			oprId = new TextBox();
 			cpr = new TextBox();
 			password = new TextBox();
 			
@@ -111,7 +111,7 @@ public class AdminView extends Composite
 			
 			fTable.setWidget(1, 2, fName);
 			fTable.setWidget(1, 3, lName);
-			// fTable.setWidget(1, 4, oprId);
+//			fTable.setWidget(1, 4, oprId);
 			fTable.setWidget(1, 5, cpr);
 			fTable.setWidget(1, 6, password);
 			
@@ -131,6 +131,9 @@ public class AdminView extends Composite
 		{
 			String buttonName = ((Button)event.getSource()).getStyleName();
 			int rownr = fTable.getCellForEvent(event).getRowIndex();
+			
+			//Her er problemet for edit
+			//
 			int oprId = Integer.parseInt(buttonName.replace("gwt-Button Edit", ""));
 			GWT.log(((Integer)oprId).toString());
 			
@@ -237,12 +240,18 @@ public class AdminView extends Composite
 			cancelBtn.removeFromParent();
 			//private TextBox fName, lName, oprId, cpr, password;
 			
+			for (int i = 0; i <= 1; i++)
+			{
+				fTable.removeCell(i, 6);
+				fTable.removeCell(i, 5);
+			}
+			
+			//Den her sætning er problemet for save2
+			//
 			updateOperator(new OperatoerDTO(oprId, fName.getText(), "", cpr.getText(), password.getText()));
 			
-			fTable.removeCell(0, 6);
-			fTable.removeCell(0, 5);
-			fTable.removeCell(rownr, 6);
-			fTable.removeCell(rownr, 5);
+			fName.removeFromParent();
+			lName.removeFromParent();
 			
 			Label firstName = new Label(fName.getText());
 			fTable.setWidget(rownr, 2, firstName);
@@ -304,8 +313,8 @@ public class AdminView extends Composite
 			cpr.removeFromParent();
 			password.removeFromParent();
 			
-			fTable.setWidget(rownr, 2, new Label(fName.getValue()));
-			fTable.setWidget(rownr, 3, new Label(fName.getValue()));
+			fTable.setWidget(rownr, 2, new Label(fName.getText()));
+			fTable.setWidget(rownr, 3, new Label(lName.getText()));
 		}
 		
 	}
