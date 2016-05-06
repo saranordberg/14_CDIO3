@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -25,7 +26,6 @@ public class AdminView extends Composite
 	private Label Fname, Lname, OPRID, edit, details, cprnr, pw;
 	private Button createBtn, editBtn, detailsBtn, saveBtn, cancelBtn;
 	private TextBox fName, lName, oprId, cpr, password;
-	
 	public AdminView()
 	{
 		initWidget(this.vPanel);
@@ -90,7 +90,7 @@ public class AdminView extends Composite
 			lName = new TextBox();
 			// oprId = new TextBox();
 			cpr = new TextBox();
-			password = new TextBox();
+			password = new PasswordTextBox();
 			
 			cpr.setMaxLength(10);
 			password.setMaxLength(8);
@@ -136,7 +136,7 @@ public class AdminView extends Composite
 			lName = new TextBox();
 			lName.setText(fTable.getText(rownr, 3));
 			cpr = new TextBox();
-			password = new TextBox();
+			password = new PasswordTextBox();
 			
 			cpr.setMaxLength(10);
 			password.setMaxLength(8);
