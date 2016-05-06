@@ -125,25 +125,27 @@ public class AdminView extends Composite {
 			String buttonName = event.getClass().getName();
 			int rownr = fTable.getCellForEvent(event).getCellIndex() +1;
 			fName = new TextBox();
+			fName.setText(fTable.getText(rownr, 2));
 			lName = new TextBox();
+			lName.setText(fTable.getText(rownr, 3));
 			cpr = new TextBox();
-			
-			cpr.setMaxLength(10);
-			password.setMaxLength(8);
+//			
+//			cpr.setMaxLength(10);
+//			password.setMaxLength(8);
 
 			saveBtn = new Button("Save");
 			saveBtn.addClickHandler(new saveClickHandler());
 			hPanel.add(saveBtn);
 
 			cancelBtn = new Button("Cancel");
-			cancelBtn.addClickHandler(new cancelClickHandler());
+			cancelBtn.addClickHandler(new cancelClickHandler2());
 			hPanel.add(cancelBtn);
 			
 			cprnr = new Label("CPR number");
 			pw = new Label("Password");
 
-			fTable.setWidget(rownr, 5, cprnr);
-			fTable.setWidget(rownr, 6, pw);
+			fTable.setWidget(0, 5, cprnr);
+			fTable.setWidget(0, 6, pw);
 
 			fTable.setWidget(rownr, 2, fName);
 			fTable.setWidget(rownr, 3, lName);
@@ -223,6 +225,10 @@ public class AdminView extends Composite {
 
 			fTable.removeCell(0, 6);
 			fTable.removeCell(0, 5);
+			
+			
+
+			
 
 		}
 
@@ -237,11 +243,17 @@ public class AdminView extends Composite {
 		public void onClick(ClickEvent event) {
 			saveBtn.removeFromParent();
 			cancelBtn.removeFromParent();
-			fTable.removeRow(1);
 
 			fTable.removeCell(0, 6);
 			fTable.removeCell(0, 5);
-
+			
+			fName.removeFromParent();
+			lName.removeFromParent();
+			cpr.removeFromParent();
+			
+			fTable.setWidget(1, 2, Fname);
+			fTable.setWidget(1, 3, Lname);
+			fTable.setWidget(1, 4, OPRID);
 		}
 
 	}
