@@ -14,7 +14,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import cdio.client.implementation.OperatorServiceClientImpl;
 
-public class MainView extends Composite {
+public class AdminView extends Composite {
 	private VerticalPanel vPanel = new VerticalPanel();
 	private HorizontalPanel hPanel = new HorizontalPanel();
 	private FlexTable fTable;
@@ -22,7 +22,7 @@ public class MainView extends Composite {
 	private Button createBtn, editBtn, detailsBtn, saveBtn, cancelBtn;
 	private TextBox fName, lName, oprId, cpr, password;
 
-	public MainView() {
+	public AdminView() {
 		initWidget(this.vPanel);
 		OperatorServiceClientImpl clientImpl = new OperatorServiceClientImpl(GWT.getModuleBaseURL() + "operatorService");
 
