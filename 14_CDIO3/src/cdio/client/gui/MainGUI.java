@@ -68,7 +68,8 @@ public class MainGUI extends Composite {
 			
 			vPanel.add(logout);
 			wrongLogin.setVisible(false);
-			LoginUser();
+//			LoginUser();
+			LoginAdmin();
 			} else {
 				wrongLogin.setVisible(true);
 				wrongLogin.setText("Wrong username or password");

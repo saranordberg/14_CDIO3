@@ -4,6 +4,7 @@ import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 
+import cdio.client.gui.AdminView;
 import cdio.dal.dto.OperatoerDTO;
 import cdio.service.OperatorService;
 import cdio.service.OperatorServiceAsync;
@@ -20,9 +21,14 @@ public class OperatorServiceClientImpl {
 		endpoint.setServiceEntryPoint(url);	
 	}
 	
-	public void getOperatoer(int oprId) {
+//	public void getOperatoer(int oprId) {
+//		service.getOperatoer(1, new GetOperatorCallback());
+//	}
+	
+	public void getOperator(int oprId) {
 		service.getOperatoer(1, new GetOperatorCallback());
 	}
+	
 	private class GetOperatorCallback implements AsyncCallback {
 
 		@Override
@@ -33,16 +39,8 @@ public class OperatorServiceClientImpl {
 
 		@Override
 		public void onSuccess(Object result) {
-//			if(result instanceof String) {
-//				String greeting = (String) result;
-//				//maingui.updateLabel(greeting);
-//			}
-//			else if(result instanceof Integer) {
-//				int sum = (Integer) result;
-//				//maingui.updateSumLabel(sum);
-//			}
 			
-			GWT.log(((OperatoerDTO)result).password);
+			AdminView.hej();
 			
 		}
 		

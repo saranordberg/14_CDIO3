@@ -19,7 +19,7 @@ public class UserView extends Composite {
 		initWidget(this.vPanel);
 		OperatorServiceClientImpl clientImpl = new OperatorServiceClientImpl(GWT.getModuleBaseURL() + "operatorService");
 
-		clientImpl.getOperatoer(1);
+		clientImpl.getOperator(1);
 
 		this.vPanel.add(hPanel);
 

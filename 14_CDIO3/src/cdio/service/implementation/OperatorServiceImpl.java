@@ -1,41 +1,68 @@
 package cdio.service.implementation;
 
+import java.sql.SQLException;
 import java.util.List;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+import cdio.dal.Connector;
+import cdio.dal.Constant;
+import cdio.dal.dao.MySQLOperatoerDAO;
 import cdio.dal.dto.OperatoerDTO;
+import cdio.dal.exception.DALException;
 import cdio.service.OperatorService;
 
 public class OperatorServiceImpl extends RemoteServiceServlet implements OperatorService 
 {
+	
 
 	@Override
 	public OperatoerDTO getOperatoer(int oprId)
 	{
-		// TODO Auto-generated method stub
-		return new OperatoerDTO(oprId, "Hej1", "Hej2","Hej3","Hej4");
-	}
-
-	@Override
-	public void createOperator(OperatoerDTO opr)
-	{
-		// TODO Auto-generated method stub
+		try
+		{
+			Connector db = new Connector(Constant.server, Constant.port, Constant.database, Constant.username, Constant.password);
+		}
+		catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		MySQLOperatoerDAO conn = new MySQLOperatoerDAO();
+		try
+		{
+			
+			return conn.getOperatoer(oprId);
+		}
+		catch (DALException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-	}
-
-	@Override
-	public void updateOperator(OperatoerDTO opr)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public List<OperatoerDTO> listOperator()
-	{
-		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void createOperator(OperatoerDTO opr) throws DALException
+	{
+		MySQLOperatoerDAO conn = new MySQLOperatoerDAO();
+		conn.createOperatoer(opr);
+	}
+
+	@Override
+	public void updateOperator(OperatoerDTO opr) throws DALException
+	{
+		MySQLOperatoerDAO conn = new MySQLOperatoerDAO();
+		conn.updateOperatoer(opr);
+	}
+
+	@Override
+	public List<OperatoerDTO> listOperator() throws DALException
+	{
+		MySQLOperatoerDAO conn = new MySQLOperatoerDAO();
+		return conn.getOperatoerList();
 	}
 	
 }

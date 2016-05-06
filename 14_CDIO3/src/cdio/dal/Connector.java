@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 
+import com.google.gwt.core.client.GWT;
+
 import cdio.dal.exception.DALException;
 
 
@@ -67,6 +69,7 @@ public class Connector
 	public static ResultSet doQuery(String query, Object... parameters) throws DALException
 	{
 		try {
+			
 			PreparedStatement statement = conn.prepareStatement(query);
 			
 			int i = 1;

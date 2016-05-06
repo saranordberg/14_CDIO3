@@ -26,7 +26,7 @@ public class AdminView extends Composite {
 		initWidget(this.vPanel);
 		OperatorServiceClientImpl clientImpl = new OperatorServiceClientImpl(GWT.getModuleBaseURL() + "operatorService");
 
-		clientImpl.getOperatoer(1);
+//		clientImpl.getOperator(1);
 		this.createBtn = new Button("Create");
 		createBtn.addClickHandler(new createClickHandler());
 		this.vPanel.add(createBtn);
@@ -120,7 +120,7 @@ public class AdminView extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			String buttonName = event.getClass().getName();
-			int rownr = fTable.getCellForEvent(event).getCellIndex();
+			int rownr = fTable.getCellForEvent(event).getCellIndex() +1;
 			fName = new TextBox();
 			lName = new TextBox();
 			cpr = new TextBox();
@@ -218,8 +218,8 @@ public class AdminView extends Composite {
 			cancelBtn.removeFromParent();
 			fTable.removeRow(1);
 
-				fTable.removeCell(0, 6);
-				fTable.removeCell(0, 5);
+			fTable.removeCell(0, 6);
+			fTable.removeCell(0, 5);
 
 		}
 
@@ -234,5 +234,9 @@ public class AdminView extends Composite {
 			tempButton = new Button(number, handler);
 			tempButton.setText(text);
 			fTable.setWidget(1, column, tempButton);
+	}
+	
+	public static void hej() {
+		GWT.log("HEJ");
 	}
 }
