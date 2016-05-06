@@ -7,7 +7,6 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import cdio.client.implementation.OperatorServiceClientImpl;
 
 public class UserView extends Composite
 {
@@ -19,10 +18,10 @@ public class UserView extends Composite
 	public UserView()
 	{
 		initWidget(this.vPanel);
-		OperatorServiceClientImpl clientImpl = new OperatorServiceClientImpl(
-				GWT.getModuleBaseURL() + "operatorService");
+//		OperatorServiceClientImpl clientImpl = new OperatorServiceClientImpl(
+//				GWT.getModuleBaseURL() + "operatorService");
 		
-		clientImpl.getOperator(1);
+//		clientImpl.getOperator(1);
 		
 		this.vPanel.add(hPanel);
 		
