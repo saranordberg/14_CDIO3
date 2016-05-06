@@ -26,7 +26,7 @@ public class MainGUI extends Composite {
 	private OperatoerDTO opr;
 	
 	public MainGUI(){
-		opr = new OperatoerDTO(1, "Rasmus Gundel", "RG", "211294-1471", "Hej");
+		opr = new OperatoerDTO(1, "Rasmus Gundel", "RG", "211294", "Hej");
 		
 		initWidget(this.vPanel);
 		

@@ -227,6 +227,24 @@ public class AdminView extends Composite {
 		}
 
 	}
+	/**
+	 * ClickHandler for the "Cancel" button
+	 * Removes the newly created row and removes save and cancel button
+	 */
+	private class cancelClickHandler2 implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			saveBtn.removeFromParent();
+			cancelBtn.removeFromParent();
+			fTable.removeRow(1);
+
+			fTable.removeCell(0, 6);
+			fTable.removeCell(0, 5);
+
+		}
+
+	}
 	
 	/**
 	 * private method that adds button to the newly created row
