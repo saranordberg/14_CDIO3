@@ -1,5 +1,7 @@
 package cdio.client.gui;
 
+import java.util.ArrayList;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -13,6 +15,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import cdio.client.implementation.OperatorServiceClientImpl;
+import cdio.dal.dto.OperatoerDTO;
 
 public class AdminView extends Composite {
 	private VerticalPanel vPanel = new VerticalPanel();
@@ -236,7 +239,13 @@ public class AdminView extends Composite {
 			fTable.setWidget(1, column, tempButton);
 	}
 	
-	public static void hej() {
-		GWT.log("HEJ");
+	public static void GetOperator(OperatoerDTO result) {
+		
+	}
+
+	public static void getListOperators(ArrayList<OperatoerDTO> result)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }
