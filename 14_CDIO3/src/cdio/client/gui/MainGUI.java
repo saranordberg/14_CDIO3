@@ -22,15 +22,17 @@ public class MainGUI extends Composite
 	private Button login = new Button("Login");
 	private Button logout = new Button("Logout");
 	private VerticalPanel vPanel = new VerticalPanel();
-	private Label usernameTxt, passwordTxt, wrongLogin;
+	private Label usernameTxt, passwordTxt, wrongLogin,logininfo;
 	private Composite newView;
 	private OperatoerDTO opr;
 	
 	public MainGUI()
 	{
-		opr = new OperatoerDTO(1, "Rasmus Gundel", "RG", "211294", "Hej");
+		opr = new OperatoerDTO(1, "John Doe", "JD", "1111111", "Password");
 		
 		initWidget(this.vPanel);
+		
+		vPanel.add(logininfo = new Label("Username 1, Password = Password"));
 		
 		wrongLogin = new Label();
 		vPanel.add(wrongLogin);
@@ -70,6 +72,7 @@ public class MainGUI extends Composite
 				username.removeFromParent();
 				usernameTxt.removeFromParent();
 				passwordTxt.removeFromParent();
+				logininfo.removeFromParent();
 				
 				vPanel.add(logout);
 				wrongLogin.setVisible(false);
@@ -96,6 +99,10 @@ public class MainGUI extends Composite
 			newView.removeFromParent();
 			logout.removeFromParent();
 			
+			username.setText("");
+			password.setText("");
+			
+			vPanel.add(logininfo);
 			vPanel.add(usernameTxt);
 			vPanel.add(username);
 			
