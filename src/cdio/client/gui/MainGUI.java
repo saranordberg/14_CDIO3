@@ -15,24 +15,20 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import cdio.dal.dto.OperatoerDTO;
 
-public class MainGUI extends Composite
-{
+public class MainGUI extends Composite {
 	private IntegerBox username = new IntegerBox();
 	private PasswordTextBox password = new PasswordTextBox();
 	private Button login = new Button("Login");
 	private Button logout = new Button("Logout");
 	private VerticalPanel vPanel = new VerticalPanel();
-	private Label usernameTxt, passwordTxt, wrongLogin,logininfo;
+	private Label usernameTxt, passwordTxt, wrongLogin;
 	private Composite newView;
 	private OperatoerDTO opr;
 	
-	public MainGUI()
-	{
-		opr = new OperatoerDTO(1, "John Doe", "JD", "1111111", "Password");
+	public MainGUI(){
+		opr = new OperatoerDTO(1, "Rasmus Gundel", "RG", "211294-1471", "Hej");
 		
 		initWidget(this.vPanel);
-		
-		vPanel.add(logininfo = new Label("Username 1, Password = Password"));
 		
 		wrongLogin = new Label();
 		vPanel.add(wrongLogin);
@@ -40,6 +36,7 @@ public class MainGUI extends Composite
 		
 		usernameTxt = new Label("Username");
 		passwordTxt = new Label("Password");
+		
 		
 		this.login.addClickHandler(new LoginClickHandler());
 		this.logout.addClickHandler(new LogoutClickHandler());
@@ -51,58 +48,45 @@ public class MainGUI extends Composite
 		vPanel.add(password);
 		vPanel.add(login);
 		
-	}
-	
-	private class LoginClickHandler implements ClickHandler
-	{
 		
+	}
+	private class LoginClickHandler implements ClickHandler {
+
 		@Override
-		public void onClick(ClickEvent event)
-		{
+		public void onClick(ClickEvent event) {
 			
-			// remember to remove getters from OperatoerDTO and use DB instead.
-			if (password.getText() == opr.getPassword() && username.getValue() == opr.getId())
-			{
-				// Lav login funktion der tjekker om password i textbox stemmer
-				// overens med opr.getPassword(oprId)
-				// hvor oprId kommer fra username textbox
-				
-				login.removeFromParent();
-				password.removeFromParent();
-				username.removeFromParent();
-				usernameTxt.removeFromParent();
-				passwordTxt.removeFromParent();
-				logininfo.removeFromParent();
-				
-				vPanel.add(logout);
-				wrongLogin.setVisible(false);
-				// LoginUser();
-				LoginAdmin();
-			}
-			else
-			{
+			//remember to remove getters from OperatoerDTO and use DB instead.
+			if(password.getText() == opr.getPassword() && username.getValue() == opr.getId() ){
+			//Lav login funktion der tjekker om password i textbox stemmer overens med opr.getPassword(oprId)
+			//hvor oprId kommer fra username textbox
+			
+			login.removeFromParent();
+			password.removeFromParent();
+			username.removeFromParent();
+			usernameTxt.removeFromParent();
+			passwordTxt.removeFromParent();
+			
+			vPanel.add(logout);
+			wrongLogin.setVisible(false);
+//			LoginUser();
+			LoginAdmin();
+			} else {
 				wrongLogin.setVisible(true);
 				wrongLogin.setText("Wrong username or password");
 				
 			}
 			
+			
 		}
 		
 	}
-	
-	private class LogoutClickHandler implements ClickHandler
-	{
-		
+	private class LogoutClickHandler implements ClickHandler {
+
 		@Override
-		public void onClick(ClickEvent event)
-		{
+		public void onClick(ClickEvent event) {
 			newView.removeFromParent();
 			logout.removeFromParent();
 			
-			username.setText("");
-			password.setText("");
-			
-			vPanel.add(logininfo);
 			vPanel.add(usernameTxt);
 			vPanel.add(username);
 			
@@ -113,15 +97,11 @@ public class MainGUI extends Composite
 		}
 		
 	}
-	
-	public void LoginAdmin()
-	{
+	public void LoginAdmin(){
 		newView = new AdminView();
 		RootPanel.get().add(newView);
 	}
-	
-	public void LoginUser()
-	{
+	public void LoginUser(){
 		newView = new UserView();
 		RootPanel.get().add(newView);
 	}
