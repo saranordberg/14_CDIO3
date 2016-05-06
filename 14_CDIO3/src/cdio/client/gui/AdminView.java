@@ -17,31 +17,34 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import cdio.client.implementation.OperatorServiceClientImpl;
 import cdio.dal.dto.OperatoerDTO;
 
-public class AdminView extends Composite {
+public class AdminView extends Composite
+{
 	private VerticalPanel vPanel = new VerticalPanel();
 	private HorizontalPanel hPanel = new HorizontalPanel();
 	private FlexTable fTable;
 	private Label Fname, Lname, OPRID, edit, details, cprnr, pw;
 	private Button createBtn, editBtn, detailsBtn, saveBtn, cancelBtn;
 	private TextBox fName, lName, oprId, cpr, password;
-
-	public AdminView() {
+	
+	public AdminView()
+	{
 		initWidget(this.vPanel);
-		OperatorServiceClientImpl clientImpl = new OperatorServiceClientImpl(GWT.getModuleBaseURL() + "operatorService");
-
-//		clientImpl.getOperator(1);
+		OperatorServiceClientImpl clientImpl = new OperatorServiceClientImpl(
+				GWT.getModuleBaseURL() + "operatorService");
+		
+		// clientImpl.getOperator(1);
 		this.createBtn = new Button("Create");
 		createBtn.addClickHandler(new createClickHandler());
 		this.vPanel.add(createBtn);
-
+		
 		this.editBtn = new Button("Edit");
 		editBtn.addClickHandler(new editClickHandler());
-
+		
 		this.detailsBtn = new Button("Details");
 		detailsBtn.addClickHandler(new detailsClickHandler());
-
+		
 		this.vPanel.add(hPanel);
-
+		
 		this.fTable = new FlexTable();
 		fTable.setBorderWidth(1);
 		fTable.setCellPadding(1);
@@ -56,7 +59,7 @@ public class AdminView extends Composite {
 		fTable.setWidget(0, 3, Lname);
 		OPRID = new Label("Operator ID");
 		fTable.setWidget(0, 4, OPRID);
-
+		
 		// First person - this will be a loop based on query done in database
 		// row number will be = i for each instance i++
 		// columns will always be the same
@@ -68,60 +71,64 @@ public class AdminView extends Composite {
 		fTable.setWidget(1, 3, Lname);
 		OPRID = new Label("11");
 		fTable.setWidget(1, 4, OPRID);
-
+		
 		this.hPanel.add(fTable);
 	}
+	
 	/**
-	 * ClickHandler for the "Create" button.
-	 * Creates a new row as the first, displaying text fields
-	 * and a save and cancel button
+	 * ClickHandler for the "Create" button. Creates a new row as the first,
+	 * displaying text fields and a save and cancel button
 	 */
-	private class createClickHandler implements ClickHandler {
-
-		public void onClick(ClickEvent event) {
-
+	private class createClickHandler implements ClickHandler
+	{
+		
+		public void onClick(ClickEvent event)
+		{
+			
 			fTable.insertRow(1);
 			fName = new TextBox();
 			lName = new TextBox();
-			//oprId = new TextBox();
+			// oprId = new TextBox();
 			cpr = new TextBox();
 			password = new TextBox();
 			
 			cpr.setMaxLength(10);
 			password.setMaxLength(8);
-
+			
 			saveBtn = new Button("Save");
 			saveBtn.addClickHandler(new saveClickHandler());
 			hPanel.add(saveBtn);
-
+			
 			cancelBtn = new Button("Cancel");
 			cancelBtn.addClickHandler(new cancelClickHandler());
 			hPanel.add(cancelBtn);
-
+			
 			cprnr = new Label("CPR number");
 			pw = new Label("Password");
-
+			
 			fTable.setWidget(0, 5, cprnr);
 			fTable.setWidget(0, 6, pw);
-
+			
 			fTable.setWidget(1, 2, fName);
 			fTable.setWidget(1, 3, lName);
-			//fTable.setWidget(1, 4, oprId);
+			// fTable.setWidget(1, 4, oprId);
 			fTable.setWidget(1, 5, cpr);
 			fTable.setWidget(1, 6, password);
-
+			
 		}
-
+		
 	}
-
+	
 	/**
-	 * ClickHandler for the "Edit" button
-	 * Redirects you to a new page or makes the fields ready for edit
+	 * ClickHandler for the "Edit" button Redirects you to a new page or makes
+	 * the fields ready for edit
 	 */
-	private class editClickHandler implements ClickHandler {
-
+	private class editClickHandler implements ClickHandler
+	{
+		
 		@Override
-		public void onClick(ClickEvent event) {
+		public void onClick(ClickEvent event)
+		{
 			String buttonName = event.getClass().getName();
 			int rownr = fTable.getCellForEvent(event).getRowIndex();
 			fName = new TextBox();
@@ -133,21 +140,21 @@ public class AdminView extends Composite {
 			
 			cpr.setMaxLength(10);
 			password.setMaxLength(8);
-
+			
 			saveBtn = new Button("Save");
 			saveBtn.addClickHandler(new saveClickHandler2(rownr));
 			hPanel.add(saveBtn);
-
+			
 			cancelBtn = new Button("Cancel");
 			cancelBtn.addClickHandler(new cancelClickHandler2(rownr));
 			hPanel.add(cancelBtn);
 			
 			cprnr = new Label("CPR number");
 			pw = new Label("Password");
-
+			
 			fTable.setWidget(0, 5, cprnr);
 			fTable.setWidget(0, 6, pw);
-
+			
 			fTable.setWidget(rownr, 2, fName);
 			fTable.setWidget(rownr, 3, lName);
 			fTable.setWidget(rownr, 5, cpr);
@@ -155,70 +162,78 @@ public class AdminView extends Composite {
 			
 			String oprID = buttonName.replaceAll("editBtn", "");
 		}
-
+		
 	}
 	
 	/**
-	 * ClickHandler for the "Details" button
-	 * Displays more details about a person
+	 * ClickHandler for the "Details" button Displays more details about a
+	 * person
 	 */
-	private class detailsClickHandler implements ClickHandler {
-
+	private class detailsClickHandler implements ClickHandler
+	{
+		
 		@Override
-		public void onClick(ClickEvent event) {
+		public void onClick(ClickEvent event)
+		{
 			String buttonName = event.getClass().getName();
 			
 			String oprID = buttonName.replaceAll("detailsBtn", "");
 		}
-
+		
 	}
 	
 	/**
-	 * ClickHandler for the "Save" button
-	 * saves the data entered into the TextBox fields and calls the private method "add".
-	 *  Also removes "Save" and Cancel" button
+	 * ClickHandler for the "Save" button saves the data entered into the
+	 * TextBox fields and calls the private method "add". Also removes "Save"
+	 * and Cancel" button
 	 */
-	private class saveClickHandler implements ClickHandler {
-
+	private class saveClickHandler implements ClickHandler
+	{
+		
 		@Override
-		public void onClick(ClickEvent event) {
+		public void onClick(ClickEvent event)
+		{
 			saveBtn.removeFromParent();
 			cancelBtn.removeFromParent();
-
-			for (int i = 0; i <= 1; i++) {
+			
+			for (int i = 0; i <= 1; i++)
+			{
 				fTable.removeCell(i, 6);
 				fTable.removeCell(i, 5);
 			}
-			
 			
 			add("editBtn", "Edit", 0, new editClickHandler());
 			add("detailsBtn", "Details", 1, new detailsClickHandler());
 			
 			Label firstName = new Label(fName.getText());
 			fTable.setWidget(1, 2, firstName);
-
+			
 			Label lastName = new Label(lName.getText());
 			fTable.setWidget(1, 3, lastName);
-
-//			Label newOprId = new Label(oprId.getText());
-//			fTable.setWidget(1, 4, newOprId);
-
+			
+			// Label newOprId = new Label(oprId.getText());
+			// fTable.setWidget(1, 4, newOprId);
+			
 		}
-
+		
 	}
 	
-	private class saveClickHandler2 implements ClickHandler {
-
+	private class saveClickHandler2 implements ClickHandler
+	{
+		
 		private int rownr;
-		public saveClickHandler2(int rownr) {
+		
+		public saveClickHandler2(int rownr)
+		{
 			this.rownr = rownr;
 		}
 		
 		@Override
-		public void onClick(ClickEvent event) {
+		public void onClick(ClickEvent event)
+		{
 			saveBtn.removeFromParent();
 			cancelBtn.removeFromParent();
-
+			
 			fTable.removeCell(0, 6);
 			fTable.removeCell(0, 5);
 			fTable.removeCell(rownr, 6);
@@ -226,48 +241,54 @@ public class AdminView extends Composite {
 			
 			Label firstName = new Label(fName.getText());
 			fTable.setWidget(rownr, 2, firstName);
-
+			
 			Label lastName = new Label(lName.getText());
 			fTable.setWidget(rownr, 3, lastName);
-
+			
 		}
-
+		
 	}
-
 	
 	/**
-	 * ClickHandler for the "Cancel" button
-	 * Removes the newly created row and removes save and cancel button
+	 * ClickHandler for the "Cancel" button Removes the newly created row and
+	 * removes save and cancel button
 	 */
-	private class cancelClickHandler implements ClickHandler {
+	private class cancelClickHandler implements ClickHandler
+	{
 		
 		@Override
-		public void onClick(ClickEvent event) {
+		public void onClick(ClickEvent event)
+		{
 			saveBtn.removeFromParent();
 			cancelBtn.removeFromParent();
 			fTable.removeRow(1);
-
+			
 			fTable.removeCell(0, 6);
 			fTable.removeCell(0, 5);
 		}
-
+		
 	}
+	
 	/**
-	 * ClickHandler for the "Cancel" button
-	 * Removes the newly created row and removes save and cancel button
+	 * ClickHandler for the "Cancel" button Removes the newly created row and
+	 * removes save and cancel button
 	 */
-	private class cancelClickHandler2 implements ClickHandler {
-
+	private class cancelClickHandler2 implements ClickHandler
+	{
+		
 		private int rownr;
-		public cancelClickHandler2(int rownr) {
+		
+		public cancelClickHandler2(int rownr)
+		{
 			this.rownr = rownr;
 		}
 		
 		@Override
-		public void onClick(ClickEvent event) {
+		public void onClick(ClickEvent event)
+		{
 			saveBtn.removeFromParent();
 			cancelBtn.removeFromParent();
-			GWT.log(((Integer)rownr).toString());
+			GWT.log(((Integer) rownr).toString());
 			fTable.removeCell(0, 6);
 			fTable.removeCell(0, 5);
 			fTable.removeCell(rownr, 6);
@@ -276,32 +297,33 @@ public class AdminView extends Composite {
 			fName.removeFromParent();
 			lName.removeFromParent();
 			cpr.removeFromParent();
-//			
+			//
 			fTable.setWidget(rownr, 2, Fname);
 			fTable.setWidget(rownr, 3, Lname);
 			fTable.setWidget(rownr, 4, OPRID);
 		}
-
+		
 	}
 	
 	/**
 	 * private method that adds button to the newly created row
 	 */
-	private void add(String name, String text, int column, ClickHandler handler){
-			String number = name + fTable.getRowCount();
-			Button tempButton;
-			tempButton = new Button(number, handler);
-			tempButton.setText(text);
-			fTable.setWidget(1, column, tempButton);
+	private void add(String name, String text, int column, ClickHandler handler)
+	{
+		String number = name + fTable.getRowCount();
+		Button tempButton;
+		tempButton = new Button(number, handler);
+		tempButton.setText(text);
+		fTable.setWidget(1, column, tempButton);
 	}
 	
-	public static void GetOperator(OperatoerDTO result) {
+	public static void GetOperator(OperatoerDTO result)
+	{
 		
 	}
-
+	
 	public static void getListOperators(ArrayList<OperatoerDTO> result)
 	{
-		// TODO Auto-generated method stub
 		
 	}
 }

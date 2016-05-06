@@ -18,7 +18,8 @@ public class Operator
 	Connector db;
 	
 	@Before
-	public void setup() {
+	public void setup()
+	{
 		try
 		{
 			db = new Connector(Constant.server, Constant.port, Constant.database, Constant.username, Constant.password);
@@ -30,9 +31,9 @@ public class Operator
 		}
 	}
 	
-	
 	@Test
-	public void GetOperator() {
+	public void GetOperator()
+	{
 		MySQLOperatoerDAO conn = new MySQLOperatoerDAO();
 		
 		try

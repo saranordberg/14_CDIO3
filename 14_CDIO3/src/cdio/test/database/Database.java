@@ -1,4 +1,5 @@
 package cdio.test.database;
+
 import static org.junit.Assert.*;
 
 import java.sql.SQLException;
@@ -17,7 +18,8 @@ public class Database
 	private Connector db;
 	
 	@Test
-	public void testConnection() {
+	public void testConnection()
+	{
 		try
 		{
 			db = new Connector(Constant.server, Constant.port, Constant.database, Constant.username, Constant.password);

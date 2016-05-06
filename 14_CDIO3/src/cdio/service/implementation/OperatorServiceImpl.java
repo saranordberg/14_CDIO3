@@ -13,13 +13,15 @@ import cdio.dal.dto.OperatoerDTO;
 import cdio.dal.exception.DALException;
 import cdio.service.OperatorService;
 
-public class OperatorServiceImpl extends RemoteServiceServlet implements OperatorService 
+public class OperatorServiceImpl extends RemoteServiceServlet implements OperatorService
 {
 	
-	private void connect() {
+	private void connect()
+	{
 		try
 		{
-			Connector db = new Connector(Constant.server, Constant.port, Constant.database, Constant.username, Constant.password);
+			Connector db = new Connector(Constant.server, Constant.port, Constant.database, Constant.username,
+					Constant.password);
 		}
 		catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e)
 		{
@@ -27,7 +29,7 @@ public class OperatorServiceImpl extends RemoteServiceServlet implements Operato
 			e.printStackTrace();
 		}
 	}
-
+	
 	@Override
 	public OperatoerDTO getOperatoer(int oprId) throws DALException
 	{
@@ -35,7 +37,7 @@ public class OperatorServiceImpl extends RemoteServiceServlet implements Operato
 		MySQLOperatoerDAO conn = new MySQLOperatoerDAO();
 		return conn.getOperatoer(oprId);
 	}
-
+	
 	@Override
 	public void createOperator(OperatoerDTO opr) throws DALException
 	{
@@ -43,7 +45,7 @@ public class OperatorServiceImpl extends RemoteServiceServlet implements Operato
 		MySQLOperatoerDAO conn = new MySQLOperatoerDAO();
 		conn.createOperatoer(opr);
 	}
-
+	
 	@Override
 	public void updateOperator(OperatoerDTO opr) throws DALException
 	{
@@ -51,7 +53,7 @@ public class OperatorServiceImpl extends RemoteServiceServlet implements Operato
 		MySQLOperatoerDAO conn = new MySQLOperatoerDAO();
 		conn.updateOperatoer(opr);
 	}
-
+	
 	@Override
 	public List<OperatoerDTO> listOperator() throws DALException
 	{
