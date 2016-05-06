@@ -6,43 +6,42 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import cdio.client.implementation.OperatorServiceClientImpl;
 import cdio.dal.dto.OperatoerDTO;
-import cdio.service.OperatorService;
-import cdio.service.OperatorServiceAsync;
 
 public class AdminView extends Composite
 {
 	private VerticalPanel vPanel = new VerticalPanel();
 	private HorizontalPanel hPanel = new HorizontalPanel();
-	private static FlexTable fTable;
+	private FlexTable fTable;
 	private Label Fname, Lname, OPRID, edit, details, cprnr, pw;
 	private Button createBtn, editBtn, detailsBtn, saveBtn, cancelBtn;
 	private TextBox fName, lName, oprId, cpr, password;
-	private OperatorServiceAsync service;
-	
 	public AdminView()
 	{
 		initWidget(this.vPanel);
-//		OperatorServiceClientImpl clientImpl = new OperatorServiceClientImpl(
-//				GWT.getModuleBaseURL() + "operatorService");
-		
-		getOperatorService(GWT.getModuleBaseURL() + "operatorService");
-		
+		OperatorServiceClientImpl clientImpl = new OperatorServiceClientImpl(
+				GWT.getModuleBaseURL() + "operatorService");
 		
 		// clientImpl.getOperator(1);
 		this.createBtn = new Button("Create");
 		createBtn.addClickHandler(new createClickHandler());
 		this.vPanel.add(createBtn);
+		
+		this.editBtn = new Button("Edit");
+		editBtn.addClickHandler(new editClickHandler());
+		
+		this.detailsBtn = new Button("Details");
+		detailsBtn.addClickHandler(new detailsClickHandler());
 		
 		this.vPanel.add(hPanel);
 		
@@ -61,17 +60,19 @@ public class AdminView extends Composite
 		OPRID = new Label("Operator ID");
 		fTable.setWidget(0, 4, OPRID);
 		
-		this.hPanel.add(fTable);
+		// First person - this will be a loop based on query done in database
+		// row number will be = i for each instance i++
+		// columns will always be the same
+		fTable.setWidget(1, 0, editBtn);
+		fTable.setWidget(1, 1, detailsBtn);
+		Fname = new Label("Rasmus");
+		fTable.setWidget(1, 2, Fname);
+		Lname = new Label("Gundel");
+		fTable.setWidget(1, 3, Lname);
+		OPRID = new Label("11");
+		fTable.setWidget(1, 4, OPRID);
 		
-		getListOperators();
-	}
-	
-	public void getOperatorService(String url)
-	{
-		System.out.println(url);
-		this.service = GWT.create(OperatorService.class);
-		ServiceDefTarget endpoint = (ServiceDefTarget) this.service;
-		endpoint.setServiceEntryPoint(url);
+		this.hPanel.add(fTable);
 	}
 	
 	/**
@@ -89,7 +90,7 @@ public class AdminView extends Composite
 			lName = new TextBox();
 			// oprId = new TextBox();
 			cpr = new TextBox();
-			password = new TextBox();
+			password = new PasswordTextBox();
 			
 			cpr.setMaxLength(10);
 			password.setMaxLength(8);
@@ -97,7 +98,6 @@ public class AdminView extends Composite
 			saveBtn = new Button("Save");
 			saveBtn.addClickHandler(new saveClickHandler());
 			hPanel.add(saveBtn);
-			
 			
 			cancelBtn = new Button("Cancel");
 			cancelBtn.addClickHandler(new cancelClickHandler());
@@ -129,23 +129,20 @@ public class AdminView extends Composite
 		@Override
 		public void onClick(ClickEvent event)
 		{
-			String buttonName = ((Button)event.getSource()).getStyleName();
+			String buttonName = event.getClass().getName();
 			int rownr = fTable.getCellForEvent(event).getRowIndex();
-			int oprId = Integer.parseInt(buttonName.replace("gwt-Button Edit", ""));
-			GWT.log(((Integer)oprId).toString());
-			
 			fName = new TextBox();
 			fName.setText(fTable.getText(rownr, 2));
 			lName = new TextBox();
 			lName.setText(fTable.getText(rownr, 3));
 			cpr = new TextBox();
-			password = new TextBox();
+			password = new PasswordTextBox();
 			
 			cpr.setMaxLength(10);
 			password.setMaxLength(8);
 			
 			saveBtn = new Button("Save");
-			saveBtn.addClickHandler(new saveClickHandler2(rownr, oprId));
+			saveBtn.addClickHandler(new saveClickHandler2(rownr));
 			hPanel.add(saveBtn);
 			
 			cancelBtn = new Button("Cancel");
@@ -162,6 +159,8 @@ public class AdminView extends Composite
 			fTable.setWidget(rownr, 3, lName);
 			fTable.setWidget(rownr, 5, cpr);
 			fTable.setWidget(rownr, 6, password);
+			
+			String oprID = buttonName.replaceAll("editBtn", "");
 		}
 		
 	}
@@ -222,12 +221,11 @@ public class AdminView extends Composite
 	private class saveClickHandler2 implements ClickHandler
 	{
 		
-		private int rownr, oprId;
+		private int rownr;
 		
-		public saveClickHandler2(int rownr, int oprId)
+		public saveClickHandler2(int rownr)
 		{
 			this.rownr = rownr;
-			this.oprId = oprId;
 		}
 		
 		@Override
@@ -235,9 +233,6 @@ public class AdminView extends Composite
 		{
 			saveBtn.removeFromParent();
 			cancelBtn.removeFromParent();
-			//private TextBox fName, lName, oprId, cpr, password;
-			
-			updateOperator(new OperatoerDTO(oprId, fName.getText(), "", cpr.getText(), password.getText()));
 			
 			fTable.removeCell(0, 6);
 			fTable.removeCell(0, 5);
@@ -291,21 +286,21 @@ public class AdminView extends Composite
 		@Override
 		public void onClick(ClickEvent event)
 		{
-			GWT.log(((Integer)rownr).toString());
 			saveBtn.removeFromParent();
 			cancelBtn.removeFromParent();
-			fTable.removeCell(rownr, 6);
-			fTable.removeCell(rownr, 5);
+			GWT.log(((Integer) rownr).toString());
 			fTable.removeCell(0, 6);
 			fTable.removeCell(0, 5);
+			fTable.removeCell(rownr, 6);
+			fTable.removeCell(rownr, 5);
 			
 			fName.removeFromParent();
 			lName.removeFromParent();
 			cpr.removeFromParent();
-			password.removeFromParent();
-			
-			fTable.setWidget(rownr, 2, new Label(fName.getValue()));
-			fTable.setWidget(rownr, 3, new Label(fName.getValue()));
+			//
+			fTable.setWidget(rownr, 2, Fname);
+			fTable.setWidget(rownr, 3, Lname);
+			fTable.setWidget(rownr, 4, OPRID);
 		}
 		
 	}
@@ -327,58 +322,8 @@ public class AdminView extends Composite
 		
 	}
 	
-	public static void PopulateDetails(OperatoerDTO result, int rownr)
+	public static void getListOperators(ArrayList<OperatoerDTO> result)
 	{
-		
-	}
-	
-	public void getListOperators()
-	{
-		service.listOperator(new ListOperatorsCallback());
-	}
-	
-	public void updateOperator(OperatoerDTO opr)
-	{
-		service.updateOperator(opr, null);
-	}
-	
-	private class ListOperatorsCallback implements AsyncCallback<ArrayList<OperatoerDTO>>
-	{
-		
-		@Override
-		public void onFailure(Throwable caught)
-		{
-			System.out.println("An Error has accoured");
-			
-		}
-		
-		@Override
-		public void onSuccess(ArrayList<OperatoerDTO> result)
-		{
-			int i = 1;
-			// First person - this will be a loop based on query done in database
-			// row number will be = i for each instance i++
-			// columns will always be the same
-			for(OperatoerDTO opr : result)
-			{
-				
-				Button editBtn = new Button();
-				editBtn.setText("Edit");
-				editBtn.setStyleName("Edit" + opr.oprId, true);
-				editBtn.addClickHandler(new editClickHandler());
-				
-				Button detailsBtn = new Button("Details" + opr.oprId);
-				detailsBtn.setText("Details");
-				detailsBtn.addClickHandler(new detailsClickHandler());
-				
-				fTable.setWidget(i, 0, editBtn);
-				fTable.setWidget(i, 1, detailsBtn);
-				fTable.setWidget(i, 2, new Label(opr.oprNavn));
-				fTable.setWidget(i, 3, new Label(opr.oprNavn));
-				fTable.setWidget(i, 4, new Label(((Integer)opr.oprId).toString()));
-				i++;
-			}
-		}
 		
 	}
 }
