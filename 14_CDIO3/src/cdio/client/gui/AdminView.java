@@ -132,17 +132,13 @@ public class AdminView extends Composite
 			String buttonName = ((Button)event.getSource()).getStyleName();
 			int rownr = fTable.getCellForEvent(event).getRowIndex();
 			int oprId = Integer.parseInt(buttonName.replace("gwt-Button Edit", ""));
-			GWT.log(((Integer)oprId).toString());
+			getOperator(oprId, new EditDetailsCallback(rownr, oprId));
 			
 			fName = new TextBox();
 			fName.setText(fTable.getText(rownr, 2));
 			lName = new TextBox();
 			lName.setText(fTable.getText(rownr, 3));
-			cpr = new TextBox();
-			password = new TextBox();
 			
-			cpr.setMaxLength(10);
-			password.setMaxLength(8);
 			
 			saveBtn = new Button("Save");
 			saveBtn.addClickHandler(new saveClickHandler2(rownr, oprId));
@@ -152,16 +148,12 @@ public class AdminView extends Composite
 			cancelBtn.addClickHandler(new cancelClickHandler2(rownr));
 			hPanel.add(cancelBtn);
 			
-			cprnr = new Label("CPR number");
-			pw = new Label("Password");
 			
 			fTable.setWidget(0, 5, cprnr);
 			fTable.setWidget(0, 6, pw);
 			
 			fTable.setWidget(rownr, 2, fName);
 			fTable.setWidget(rownr, 3, lName);
-			fTable.setWidget(rownr, 5, cpr);
-			fTable.setWidget(rownr, 6, password);
 		}
 		
 	}
@@ -176,9 +168,10 @@ public class AdminView extends Composite
 		@Override
 		public void onClick(ClickEvent event)
 		{
-			String buttonName = event.getClass().getName();
-			
-			String oprID = buttonName.replaceAll("detailsBtn", "");
+			String buttonName = ((Button)event.getSource()).getStyleName();
+			int rownr = fTable.getCellForEvent(event).getRowIndex();
+			int oprId = Integer.parseInt(buttonName.replace("gwt-Button Details", ""));
+			getOperator(oprId, new DetailsCallback(rownr, oprId));
 		}
 		
 	}
@@ -197,20 +190,14 @@ public class AdminView extends Composite
 			saveBtn.removeFromParent();
 			cancelBtn.removeFromParent();
 			
-			for (int i = 0; i <= 1; i++)
-			{
-				fTable.removeCell(i, 6);
-				fTable.removeCell(i, 5);
-			}
+			fTable.removeCell(0, 6);
+			fTable.removeCell(0, 5);
+			fTable.removeCell(1, 6);
+			fTable.removeCell(1, 5);
 			
-			add("editBtn", "Edit", 0, new editClickHandler());
-			add("detailsBtn", "Details", 1, new detailsClickHandler());
+			OperatoerDTO opr = new OperatoerDTO(0, fName.getText(), lName.getText(), cpr.getText(), password.getText());
 			
-			Label firstName = new Label(fName.getText());
-			fTable.setWidget(1, 2, firstName);
-			
-			Label lastName = new Label(lName.getText());
-			fTable.setWidget(1, 3, lastName);
+			insertOperator(opr);
 			
 			// Label newOprId = new Label(oprId.getText());
 			// fTable.setWidget(1, 4, newOprId);
@@ -237,8 +224,6 @@ public class AdminView extends Composite
 			cancelBtn.removeFromParent();
 			//private TextBox fName, lName, oprId, cpr, password;
 			
-			updateOperator(new OperatoerDTO(oprId, fName.getText(), "", cpr.getText(), password.getText()));
-			
 			fTable.removeCell(0, 6);
 			fTable.removeCell(0, 5);
 			fTable.removeCell(rownr, 6);
@@ -249,6 +234,10 @@ public class AdminView extends Composite
 			
 			Label lastName = new Label(lName.getText());
 			fTable.setWidget(rownr, 3, lastName);
+			OperatoerDTO op = new OperatoerDTO(oprId, fName.getText(), "hej", cpr.getText(), password.getText()); 
+			GWT.log("Oprid: " + oprId);
+			GWT.log(fName.getText() + " hej " + " " + cpr.getText() + " " + password.getText());
+			updateOperator(op);
 			
 		}
 		
@@ -292,7 +281,6 @@ public class AdminView extends Composite
 		public void onClick(ClickEvent event)
 		{
 			GWT.log(((Integer)rownr).toString());
-			saveBtn.removeFromParent();
 			cancelBtn.removeFromParent();
 			fTable.removeCell(rownr, 6);
 			fTable.removeCell(rownr, 5);
@@ -306,6 +294,7 @@ public class AdminView extends Composite
 			
 			fTable.setWidget(rownr, 2, new Label(fName.getValue()));
 			fTable.setWidget(rownr, 3, new Label(fName.getValue()));
+			saveBtn.removeFromParent();
 		}
 		
 	}
@@ -313,33 +302,143 @@ public class AdminView extends Composite
 	/**
 	 * private method that adds button to the newly created row
 	 */
-	private void add(String name, String text, int column, ClickHandler handler)
+	private void add(String name, String style, int column, ClickHandler handler)
 	{
 		String number = name + fTable.getRowCount();
 		Button tempButton;
 		tempButton = new Button(number, handler);
-		tempButton.setText(text);
+		tempButton.setStyleName(style, true);
 		fTable.setWidget(1, column, tempButton);
 	}
 	
-	public static void GetOperator(OperatoerDTO result)
+	public void getOperator(int oprId, AsyncCallback callback)
 	{
-		
+		GWT.log("id: " + oprId);
+		service.getOperatoer(oprId, callback);
 	}
 	
-	public static void PopulateDetails(OperatoerDTO result, int rownr)
-	{
-		
-	}
 	
 	public void getListOperators()
 	{
 		service.listOperator(new ListOperatorsCallback());
 	}
 	
+	public void insertOperator(OperatoerDTO opr) {
+		service.createOperator(opr, new CreateCallback());
+	}
+	
 	public void updateOperator(OperatoerDTO opr)
 	{
-		service.updateOperator(opr, null);
+		service.updateOperator(opr, new updateCallback());
+	}
+	
+	private class CreateCallback implements AsyncCallback<OperatoerDTO>
+	{
+		@Override
+		public void onFailure(Throwable caught)
+		{
+			GWT.log(caught.getMessage());
+			System.out.println("An Error has accoured");
+			
+		}
+
+		@Override
+		public void onSuccess(OperatoerDTO result)
+		{
+			getListOperators();
+		}
+		
+	}
+	
+	private class DetailsCallback implements AsyncCallback<OperatoerDTO>
+	{
+		private int rownr, oprId;
+		
+		public DetailsCallback(int rownr, int oprId) {
+			this.rownr = rownr;
+			this.oprId = oprId;
+		}
+		@Override
+		public void onFailure(Throwable caught)
+		{
+			GWT.log(caught.getMessage());
+			System.out.println("An Error has accoured");
+			
+		}
+
+		@Override
+		public void onSuccess(OperatoerDTO result)
+		{
+			GWT.log(result.cpr);
+			GWT.log(result.password);
+			GWT.log("" + rownr);
+			GWT.log(oprId + "");
+			Label newcpr = new Label(result.cpr);
+			Label newpassword = new Label(result.password);
+			
+			cancelBtn = new Button("Cancel");
+			cancelBtn.addClickHandler(new cancelClickHandler2(rownr));
+			hPanel.add(cancelBtn);
+			
+			cprnr = new Label("CPR number");
+			pw = new Label("Password");
+			
+			fTable.setWidget(0, 5, cprnr);
+			fTable.setWidget(0, 6, pw);
+			
+			fTable.setWidget(rownr, 5, newcpr);
+			fTable.setWidget(rownr, 6, newpassword);
+		}
+		
+	}
+	
+	private class EditDetailsCallback implements AsyncCallback<OperatoerDTO>
+	{
+		private int rownr, oprId;
+		
+		public EditDetailsCallback(int rownr, int oprId) {
+			this.rownr = rownr;
+			this.oprId = oprId;
+		}
+		@Override
+		public void onFailure(Throwable caught)
+		{
+			GWT.log(caught.getMessage());
+			System.out.println("An Error has accoured");
+			
+		}
+
+		@Override
+		public void onSuccess(OperatoerDTO result)
+		{
+			cpr = new TextBox();
+			cpr.setValue(result.cpr);
+			password = new TextBox();
+			password.setValue(result.password);
+			
+			fTable.setWidget(rownr, 5, cpr);
+			fTable.setWidget(rownr, 6, password);
+		}
+		
+	}
+	
+	private class updateCallback implements AsyncCallback
+	{
+		
+		@Override
+		public void onFailure(Throwable caught)
+		{
+			GWT.log(caught.getMessage());
+			System.out.println("An Error has accoured");
+			
+		}
+
+		@Override
+		public void onSuccess(Object result)
+		{
+			GWT.log("Success");
+		}
+		
 	}
 	
 	private class ListOperatorsCallback implements AsyncCallback<ArrayList<OperatoerDTO>>
@@ -367,8 +466,9 @@ public class AdminView extends Composite
 				editBtn.setStyleName("Edit" + opr.oprId, true);
 				editBtn.addClickHandler(new editClickHandler());
 				
-				Button detailsBtn = new Button("Details" + opr.oprId);
+				Button detailsBtn = new Button();
 				detailsBtn.setText("Details");
+				detailsBtn.setStyleName("Details" + opr.oprId, true);
 				detailsBtn.addClickHandler(new detailsClickHandler());
 				
 				fTable.setWidget(i, 0, editBtn);

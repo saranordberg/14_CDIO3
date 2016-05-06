@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
+
 import cdio.dal.Connector;
 import cdio.dal.dto.OperatoerDTO;
 import cdio.dal.exception.DALException;
@@ -33,13 +35,13 @@ public class MySQLOperatoerDAO implements OperatoerDAO
 	
 	public void createOperatoer(OperatoerDTO opr) throws DALException
 	{
-		Connector.doQuery("INSERT INTO operatoer(opr_id, opr_navn, ini, cpr, password) VALUES (?, ?, ?, ?, ?)",
-				opr.oprId, opr.oprNavn, opr.ini, opr.cpr, opr.password);
+		Connector.doUpdate("INSERT INTO operatoer(opr_navn, ini, cpr, password) VALUES (?, ?, ?, ?)",
+				opr.oprNavn, opr.ini, opr.cpr, opr.password);
 	}
 	
 	public void updateOperatoer(OperatoerDTO opr) throws DALException
 	{
-		Connector.doQuery("UPDATE operatoer SET  opr_navn = ?, ini =  ?, cpr = ?, password = ? WHERE opr_id = ?",
+		Connector.doUpdate("UPDATE operatoer SET  opr_navn = ?, ini =  ?, cpr = ?, password = ? WHERE opr_id = ?",
 				opr.oprNavn, opr.ini, opr.cpr, opr.password, opr.oprId);
 	}
 	

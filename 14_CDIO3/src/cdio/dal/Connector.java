@@ -97,6 +97,39 @@ public class Connector
 		}
 	}
 	
+	public static int doUpdate(String query, Object... parameters) throws DALException
+	{
+		try
+		{
+			
+			PreparedStatement statement = conn.prepareStatement(query);
+			
+			int i = 1;
+			for (Object parameter : parameters)
+			{
+				if (parameter instanceof String)
+					statement.setString(i, (String) parameter);
+				else if (parameter instanceof Integer)
+					statement.setInt(i, (int) parameter);
+				else if (parameter instanceof Double)
+					statement.setDouble(i, (double) parameter);
+				else if (parameter instanceof Date)
+					statement.setDate(i, new java.sql.Date(((Date) parameter).getTime()));
+				else if (parameter instanceof Float)
+					statement.setFloat(i, (float) parameter);
+				
+				i++;
+			}
+			
+			return statement.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			throw new DALException(e);
+		}
+	}
+	
+	
 	public static int doUpdate(String cmd) throws DALException
 	{
 		try
