@@ -1,0 +1,21 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+	</ui:style>
+	
+	<g:HTMLPanel>
+		<g:VerticalPanel horizontalAlignment="ALIGN_CENTER" styleName="inner" width="200px">
+			<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
+				<g:VerticalPanel ui:field="content" width="94%" spacing="5" >
+				<g:Label ui:field="lbl" text="Loading..." />
+			</g:VerticalPanel>
+			</g:Cell>
+			<g:Cell horizontalAlignment="ALIGN_RIGHT">
+				<g:Button ui:field="button" width="35px" height="35px"
+					styleName="round_button">+</g:Button>
+			</g:Cell>
+		</g:VerticalPanel>
+
+	</g:HTMLPanel>
+</ui:UiBinder> 

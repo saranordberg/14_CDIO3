@@ -22,7 +22,7 @@ public class Database
 	{
 		try
 		{
-			db = new Connector(Constant.server, Constant.port, Constant.database, Constant.username, Constant.password);
+			db = Connector.getInstance();
 		}
 		catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e)
 		{

@@ -14,11 +14,11 @@ public abstract class Constant
 	// public static final int
 	// port = 3306;
 	
-	public static final String server = "127.0.0.1", // database-serveren
-			database = "projekt", // "jdbcdatabase", // navnet paa din database
+	public static final String server = "ec2-52-30-89-247.eu-west-1.compute.amazonaws.com", // database-serveren
+			database = "grp14", // "jdbcdatabase", // navnet paa din database
 									// = dit studienummer
-			username = "root", // dit brugernavn = dit studienummer
-			password = "root"; // dit password som du har valgt til din database
+			username = "grp14", // dit brugernavn = dit studienummer
+			password = "=T5vEz?&"; // dit password som du har valgt til din database
 	
 	public static final int port = 3306;
 	

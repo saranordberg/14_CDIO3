@@ -11,28 +11,18 @@ import org.junit.Test;
 import cdio.dal.Connector;
 import cdio.dal.Constant;
 import cdio.dal.dao.MySQLOperatoerDAO;
-import cdio.dal.dto.OperatoerDTO;
+import cdio.dal.dto.UserDTO;
 import cdio.dal.exception.DALException;
 
 public class Operator {
 	Connector db;
-	
-	@Before
-	public void setup() {
-		try {
-			db = new Connector(Constant.server, Constant.port, Constant.database, Constant.username, Constant.password);
-		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
 	@Test
 	public void GetOperator() {
 		MySQLOperatoerDAO conn = new MySQLOperatoerDAO();
 
 		try {
-			OperatoerDTO op = conn.getOperatoer(1);
+			UserDTO op = conn.getOperatoer(1);
 			assertNotNull(op);
 		} catch (DALException e) {
 			// TODO Auto-generated catch block
@@ -45,7 +35,7 @@ public class Operator {
 
 		MySQLOperatoerDAO conn = new MySQLOperatoerDAO();
 		try {
-			List<OperatoerDTO> op = conn.getOperatoerList();
+			List<UserDTO> op = conn.getOperatoerList();
 			assertNotNull(op);
 
 		} catch (DALException e) {
@@ -55,18 +45,18 @@ public class Operator {
 
 	}
 
-	@Test
-	public void CreateOprator() {
-		OperatoerDTO x = new OperatoerDTO(1234, "bob", "b", "2123213", "000000");
-		MySQLOperatoerDAO conn = new MySQLOperatoerDAO();
-		try {
-			conn.createOperatoer(x);
-			assertNotNull(conn.getOperatoer(1234));
-		} catch (DALException e) {
-
-			e.printStackTrace();
-		}
-
-	}
+//	@Test
+//	public void CreateOprator() {
+//		UserDTO x = new UserDTO(1234, "bob", "b", "2123213", "000000");
+//		MySQLOperatoerDAO conn = new MySQLOperatoerDAO();
+//		try {
+//			conn.createOperatoer(x);
+//			assertNotNull(conn.getOperatoer(1234));
+//		} catch (DALException e) {
+//
+//			e.printStackTrace();
+//		}
+//
+//	}
 
 }

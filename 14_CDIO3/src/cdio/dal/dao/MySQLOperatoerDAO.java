@@ -7,7 +7,7 @@ import java.util.List;
 import com.google.gwt.core.client.GWT;
 
 import cdio.dal.Connector;
-import cdio.dal.dto.OperatoerDTO;
+import cdio.dal.dto.UserDTO;
 import cdio.dal.exception.DALException;
 
 import java.util.ArrayList;
@@ -15,34 +15,51 @@ import java.util.ArrayList;
 //
 public class MySQLOperatoerDAO implements OperatoerDAO
 {
-	public OperatoerDTO getOperatoer(int oprId) throws DALException
+	public UserDTO getOperatoer(int oprId) throws DALException
 	{
-		ResultSet rs = Connector.doQuery("SELECT * FROM operatoer WHERE opr_id = ?", oprId);
 		try
 		{
+			ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM operatoer WHERE opr_id = ?", oprId);
+			
 			if (!rs.first())
 				throw new DALException("Operatoeren " + oprId + " findes ikke");
 			
-			return new OperatoerDTO(rs.getInt("opr_id"), rs.getString("opr_navn"), rs.getString("ini"),
+			return new UserDTO(rs.getInt("opr_id"), rs.getString("opr_navn"), rs.getString("ini"),
 					rs.getString("cpr"), rs.getString("password"));
 		}
-		catch (SQLException e)
+		catch (Exception e)
 		{
 			throw new DALException(e);
 		}
 		
 	}
 	
-	public void createOperatoer(OperatoerDTO opr) throws DALException
+	public void createOperatoer(UserDTO opr) throws DALException
 	{
-		Connector.doUpdate("INSERT INTO operatoer(opr_navn, ini, cpr, password) VALUES (?, ?, ?, ?)",
-				opr.oprNavn, opr.ini, opr.cpr, opr.password);
+		try
+		{
+			Connector.getInstance().doUpdate("INSERT INTO operatoer(opr_navn, ini, cpr, password) VALUES (?, ?, ?, ?)",
+					opr.oprNavn, opr.ini, opr.cpr, opr.password);
+		}
+		catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
-	public void updateOperatoer(OperatoerDTO opr) throws DALException
+	public void updateOperatoer(UserDTO opr) throws DALException
 	{
-		Connector.doUpdate("UPDATE operatoer SET  opr_navn = ?, ini =  ?, cpr = ?, password = ? WHERE opr_id = ?",
-				opr.oprNavn, opr.ini, opr.cpr, opr.password, opr.oprId);
+		try
+		{
+			Connector.getInstance().doUpdate("UPDATE operatoer SET  opr_navn = ?, ini =  ?, cpr = ?, password = ? WHERE opr_id = ?",
+					opr.oprNavn, opr.ini, opr.cpr, opr.password, opr.oprId);
+		}
+		catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/*
@@ -50,19 +67,19 @@ public class MySQLOperatoerDAO implements OperatoerDAO
 	 * 
 	 * @see daointerfaces01917.OperatoerDAO#getOperatoerList()
 	 */
-	public List<OperatoerDTO> getOperatoerList() throws DALException
+	public List<UserDTO> getOperatoerList() throws DALException
 	{
-		List<OperatoerDTO> list = new ArrayList<OperatoerDTO>();
-		ResultSet rs = Connector.doQuery("SELECT * FROM operatoer");
+		List<UserDTO> list = new ArrayList<UserDTO>();
 		try
 		{
+			ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM user");
 			while (rs.next())
 			{
-				list.add(new OperatoerDTO(rs.getInt("opr_id"), rs.getString("opr_navn"), rs.getString("ini"),
+				list.add(new UserDTO(rs.getInt("opr_id"), rs.getString("opr_navn"), rs.getString("ini"),
 						rs.getString("cpr"), rs.getString("password")));
 			}
 		}
-		catch (SQLException e)
+		catch (Exception e)
 		{
 			throw new DALException(e);
 		}

@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @version 1.2
  */
 
-public class OperatoerDTO implements Serializable
+public class UserDTO implements Serializable
 {
 	/**
 	 * Operatoer-identifikationsnummer (opr_id) i omraadet 1-99999999. Vaelges
@@ -23,13 +23,14 @@ public class OperatoerDTO implements Serializable
 	/** Operatoer cpr-nr 10 karakterer */
 	public String cpr;
 	/** Operatoer password min. 7 max. 8 karakterer */
+	public int userLevel;
 	public String password;
 	
-	public OperatoerDTO()
+	public UserDTO()
 	{
 	}
 	
-	public OperatoerDTO(int oprId, String oprNavn, String ini, String cpr, String password)
+	public UserDTO(int oprId, String oprNavn, String ini, String cpr, String password)
 	{
 		this.oprId = oprId;
 		this.oprNavn = oprNavn;
@@ -38,7 +39,7 @@ public class OperatoerDTO implements Serializable
 		this.password = password;
 	}
 	
-	public OperatoerDTO(OperatoerDTO opr)
+	public UserDTO(UserDTO opr)
 	{
 		this.oprId = opr.oprId;
 		this.oprNavn = opr.oprNavn;
