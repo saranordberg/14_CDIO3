@@ -15,25 +15,73 @@
 	  </ui:style>
 	
 	<g:HTMLPanel>
-		<g:VerticalPanel horizontalAlignment="ALIGN_LEFT" styleName="inner" width="200px">
-		<g:Cell horizontalAlignment="ALIGN_RIGHT">
-				<g:Button ui:field="button" width="200px" height="35px"
-					styleName="round_button">New</g:Button>
-			</g:Cell>
-			<g:Cell width="100%" horizontalAlignment="ALIGN_LEFT">
-				<g:VerticalPanel ui:field="content" width="94%" spacing="5" >
-				<g:Label ui:field="lbl" text="Loading..." />
+		<g:HorizontalPanel width="400px">
+			<g:VerticalPanel horizontalAlignment="ALIGN_LEFT" styleName="inner" width="200px" spacing="20">
+			<g:Cell horizontalAlignment="ALIGN_RIGHT">
+					<g:Button ui:field="newButton" width="200px" height="35px"
+						styleName="round_button">New</g:Button>
+				</g:Cell>
+				<g:Cell width="100%" horizontalAlignment="ALIGN_LEFT">
+					<g:VerticalPanel ui:field="content" width="100%" spacing="0" >
+					<g:Label ui:field="lbl" text="Loading..." />
+				</g:VerticalPanel>
+				</g:Cell>
 			</g:VerticalPanel>
-			</g:Cell>
-		</g:VerticalPanel>
-		
-		<g:VerticalPanel horizontalAlignment="ALIGN_RIGHT" styleName="leftinner" width="200px">
-			<g:Cell width="100%" horizontalAlignment="ALIGN_RIGHT">
-				<g:VerticalPanel ui:field="content2" width="94%" spacing="5" >
-				<g:Label ui:field="lbl2" text="Loading..." />
+			
+			<g:VerticalPanel horizontalAlignment="ALIGN_LEFT" styleName="inner2" width="200px" spacing="0">
+				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
+					<g:Label ui:field="userIdLabel" width="90%" horizontalAlignment="ALIGN_LEFT" >Bruger ID:</g:Label>
+				</g:Cell>
+				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
+					<g:TextBox readOnly="true"  ui:field="userId" width="90%"></g:TextBox>
+				</g:Cell>
+				
+				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
+					<g:Label ui:field="firtNameLabel" width="90%" horizontalAlignment="ALIGN_LEFT">Fornavn:</g:Label>
+				</g:Cell>
+				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
+					<g:TextBox ui:field="firstName" width="90%"/>
+				</g:Cell>
+				
+				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
+					<g:Label ui:field="lastNameLabel" width="90%" horizontalAlignment="ALIGN_LEFT">Efternavn:</g:Label>
+				</g:Cell>
+				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
+					<g:TextBox ui:field="lastName" width="90%"/>
+				</g:Cell>
+				
+				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
+					<g:Label ui:field="iniLabel" width="90%" horizontalAlignment="ALIGN_LEFT">Initialer:</g:Label>
+				</g:Cell>
+				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
+					<g:TextBox ui:field="ini" width="90%"/>
+				</g:Cell>
+				
+				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
+					<g:Label ui:field="cprLabel" width="90%" horizontalAlignment="ALIGN_LEFT">Cpr-nummer(maks 10 karakterer):</g:Label>
+				</g:Cell>
+				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
+					<g:TextBox maxLength="10" ui:field="cpr" width="90%"/>
+				</g:Cell>
+				
+				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
+					<g:Label ui:field="userLevelLabel" width="90%" horizontalAlignment="ALIGN_LEFT">Bruger niveau:(0-100)</g:Label>
+				</g:Cell>
+				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
+					<g:TextBox styleName="gwt-TextBox" maxLength="3" ui:field="userLevel" width="90%"/>
+				</g:Cell>
+				
+				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
+					<g:Label ui:field="passwordLabel" width="90%" horizontalAlignment="ALIGN_LEFT">Kodeord:</g:Label>
+				</g:Cell>
+				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
+					<g:TextBox ui:field="password" width="90%"/>
+				</g:Cell>
+				
+				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_BOTTOM">
+					<g:Button ui:field="actionButton" width="190px" height="35px" styleName="rect_button">Opret</g:Button>
+				</g:Cell>
 			</g:VerticalPanel>
-			</g:Cell>
-		</g:VerticalPanel>
-
+		</g:HorizontalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

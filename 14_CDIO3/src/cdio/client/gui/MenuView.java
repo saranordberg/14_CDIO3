@@ -17,8 +17,8 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-import cdio.client.UserLevels;
-import cdio.client.UserLevels.MenuLevel;
+import cdio.client.helpers.UserLevels;
+import cdio.client.helpers.UserLevels.MenuLevel;
 import cdio.dal.dto.UserDTO;
 import cdio.service.OperatorService;
 import cdio.service.OperatorServiceAsync;

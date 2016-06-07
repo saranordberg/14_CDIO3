@@ -1,4 +1,5 @@
-package cdio.client;
+package cdio.client.helpers;
+
 public class UserLevels {
 	public static enum MenuLevel {
 		

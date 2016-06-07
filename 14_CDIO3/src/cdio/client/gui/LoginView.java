@@ -53,6 +53,7 @@ public class LoginView extends Composite
 		this.userID.setText("1");
 		this.password.setText("Test");
 		
+		
 		getOperatorService();
 	}
 	

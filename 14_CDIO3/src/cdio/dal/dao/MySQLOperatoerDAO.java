@@ -52,7 +52,7 @@ public class MySQLOperatoerDAO implements OperatoerDAO
 	{
 		try
 		{
-			Connector.getInstance().doUpdate("UPDATE user SET  first_name = ?, last_name = ?, ini =  ?, cpr = ?, password = ? user_level = ? WHERE user_id = ?",
+			Connector.getInstance().doUpdate("UPDATE user SET  first_name = ?, last_name = ?, ini =  ?, cpr = ?, password = ?, user_level = ? WHERE user_id = ?",
 					user.firstName, user.lastName, user.ini, user.cpr, user.password, user.userLevel, user.userId);
 		}
 		catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e)

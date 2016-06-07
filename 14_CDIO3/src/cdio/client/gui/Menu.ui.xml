@@ -20,7 +20,7 @@
 	<g:HTMLPanel>
 		<g:HorizontalPanel ui:field="outer" width="100%" height="100%" styleName="outer" 
 			horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE">
-			<g:AbsolutePanel ui:field="inner" width="80%" height="436px" styleName="inner">
+			<g:AbsolutePanel ui:field="inner" width="80%" height="700px" styleName="inner">
 				<g:at top="0" left="0">
 					<g:DockPanel width="100%" height="100%">
 						<g:Dock direction="NORTH" height="80px">
