@@ -2,11 +2,21 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style>
-	</ui:style>
+	    .scrollable {
+	      height: 400px;
+	      width: 250px;
+	      border: 1px solid #ccc;
+	      text-align: left;
+	    }
+	    
+	    .contactFormCell {
+	      padding-left: 20px;
+	    }
+	  </ui:style>
 	
 	<g:HTMLPanel>
-		<g:VerticalPanel horizontalAlignment="ALIGN_CENTER" styleName="inner" width="200px">
-			<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
+		<g:VerticalPanel horizontalAlignment="ALIGN_LEFT" styleName="inner" width="200px">
+			<g:Cell width="100%" horizontalAlignment="ALIGN_LEFT">
 				<g:VerticalPanel ui:field="content" width="94%" spacing="5" >
 				<g:Label ui:field="lbl" text="Loading..." />
 			</g:VerticalPanel>

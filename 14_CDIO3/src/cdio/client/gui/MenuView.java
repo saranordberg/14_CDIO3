@@ -59,7 +59,7 @@ public class MenuView extends Composite implements iUserViewCallback
 		
 		initWidget(uiBinder.createAndBindUi(this));
 		
-		name.setText(user.oprNavn);
+		name.setText(user.firstName + " " + user.lastName);
 		GWT.log(this.userLevel+"");
 		GWT.log(""+UserLevels.HasRight(this.userLevel, MenuLevel.AFVEJNING));
 		opr_button.setVisible(UserLevels.HasRight(this.userLevel, MenuLevel.AFVEJNING));

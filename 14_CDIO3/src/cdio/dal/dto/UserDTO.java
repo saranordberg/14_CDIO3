@@ -11,55 +11,47 @@ import java.io.Serializable;
 
 public class UserDTO implements Serializable
 {
-	/**
-	 * Operatoer-identifikationsnummer (opr_id) i omraadet 1-99999999. Vaelges
-	 * af brugerne
-	 */
-	public int oprId;
-	/** Operatoernavn (opr_navn) min. 2 max. 20 karakterer */
-	public String oprNavn;
-	/** Operatoer-initialer min. 2 max. 3 karakterer */
+	public int userId;
+	public String firstName;
+	public String lastName;
 	public String ini;
-	/** Operatoer cpr-nr 10 karakterer */
 	public String cpr;
-	/** Operatoer password min. 7 max. 8 karakterer */
-	public int userLevel;
 	public String password;
+	public int userLevel;
 	
 	public UserDTO()
 	{
 	}
 	
-	public UserDTO(int oprId, String oprNavn, String ini, String cpr, String password)
+	public UserDTO(int userId, String firstName, String lastName, String ini, String cpr, String password, int userLevel)
 	{
-		this.oprId = oprId;
-		this.oprNavn = oprNavn;
+		this.userId = userId;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.ini = ini;
 		this.cpr = cpr;
 		this.password = password;
+		this.userLevel = userLevel;
 	}
 	
-	public UserDTO(UserDTO opr)
+	public UserDTO(UserDTO user)
 	{
-		this.oprId = opr.oprId;
-		this.oprNavn = opr.oprNavn;
-		this.ini = opr.ini;
-		this.cpr = opr.cpr;
-		this.password = opr.password;
+		this.userId = user.userId;
+		this.firstName = user.firstName;
+		this.lastName = user.lastName;
+		this.ini = user.ini;
+		this.cpr = user.cpr;
+		this.password = user.password;
+		this.userLevel = user.userLevel;
 	}
 	
 	public String toString()
 	{
-		return oprId + "\t" + oprNavn + "\t" + ini + "\t" + cpr + "\t" + password;
+		return userId + "\t" + firstName + "\t" + ini + "\t" + cpr + "\t" + password;
 	}
 	
-	public String getPassword()
+	public String getFullName()
 	{
-		return this.password;
-	}
-	
-	public int getId()
-	{
-		return this.oprId;
+		return firstName + " " + lastName;
 	}
 }

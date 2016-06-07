@@ -70,7 +70,7 @@ public class LoginView extends Composite
 			String password = this.password.getText();
 			UserDTO user = new UserDTO();
 			
-			user.oprId = 1;
+			user.userId = 1;
 			user.userLevel = 100;
 			//TODO: FIX LOGIN
 			callback.login(user, Document.get().createUniqueId());
