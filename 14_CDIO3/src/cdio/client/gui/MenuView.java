@@ -88,7 +88,7 @@ public class MenuView extends Composite implements iUserViewCallback
 	}
 
 	@Override
-	public void onOperatorSelected(UserDTO user)
+	public void onUserSelected(UserDTO user)
 	{
 		// TODO Auto-generated method stub
 		
