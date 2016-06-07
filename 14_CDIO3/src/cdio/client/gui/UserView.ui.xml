@@ -26,6 +26,14 @@
 			</g:VerticalPanel>
 			</g:Cell>
 		</g:VerticalPanel>
+		
+		<g:VerticalPanel horizontalAlignment="ALIGN_RIGHT" styleName="leftinner" width="200px">
+			<g:Cell width="100%" horizontalAlignment="ALIGN_RIGHT">
+				<g:VerticalPanel ui:field="content2" width="94%" spacing="5" >
+				<g:Label ui:field="lbl2" text="Loading..." />
+			</g:VerticalPanel>
+			</g:Cell>
+		</g:VerticalPanel>
 
 	</g:HTMLPanel>
 </ui:UiBinder> 

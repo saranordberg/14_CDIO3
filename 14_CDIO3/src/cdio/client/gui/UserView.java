@@ -36,7 +36,6 @@ public class UserView extends Composite
 	VerticalPanel content;
 	@UiField
 	Button button;
-	private iUserViewCallback callback;
 	
 	/*
 	 * SelectList variables
@@ -44,10 +43,9 @@ public class UserView extends Composite
 	private CellListHelper cellList;
 	private SelectionChangeEvent.Handler selectionHandler = selectionHandler();
 	
-	public UserView(UserDTO user, String token, iUserViewCallback callback)
+	public UserView(UserDTO user, String token)
 	{
 		getOperatorService();
-		this.callback = callback;
 		initWidget(uiBinder.createAndBindUi(this));
 		
 		service.listOperator(user.userId, token, new AsyncCallback<ArrayList<UserDTO>>()
@@ -97,13 +95,6 @@ public class UserView extends Composite
 		this.service = GWT.create(OperatorService.class);
 		ServiceDefTarget endpoint = (ServiceDefTarget) this.service;
 		endpoint.setServiceEntryPoint(GWT.getModuleBaseURL() + SERVICEURL);
-	}
-	
-	public interface iUserViewCallback
-	{
-		public void onUserSelected(UserDTO user);
-		
-		public void onNewOperator();
 	}
 	
 }

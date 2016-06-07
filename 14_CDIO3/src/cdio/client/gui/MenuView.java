@@ -19,12 +19,11 @@ import com.google.gwt.user.client.ui.Widget;
 
 import cdio.client.UserLevels;
 import cdio.client.UserLevels.MenuLevel;
-import cdio.client.gui.UserView.iUserViewCallback;
 import cdio.dal.dto.UserDTO;
 import cdio.service.OperatorService;
 import cdio.service.OperatorServiceAsync;
 
-public class MenuView extends Composite implements iUserViewCallback
+public class MenuView extends Composite
 {
 	private static MenuUiBinder uiBinder = GWT.create(MenuUiBinder.class);
 	
@@ -80,24 +79,10 @@ public class MenuView extends Composite implements iUserViewCallback
 	@UiHandler("opr_button")
 	void userButtonClick(ClickEvent event) {
 		content.clear();
-		content.add(new UserView(user, token, this));
+		content.add(new UserView(user, token));
 	}
 	
 	public interface iMenuCallback
 	{
-	}
-
-	@Override
-	public void onUserSelected(UserDTO user)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onNewOperator()
-	{
-		// TODO Auto-generated method stub
-		
 	}
 }
