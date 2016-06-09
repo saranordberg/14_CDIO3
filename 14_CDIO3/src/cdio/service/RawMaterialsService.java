@@ -9,7 +9,7 @@ import daointerfaces01917.DALException;
 import dto01917.RaavareDTO;
 
 
-@RemoteServiceRelativePath("RawMaterialService")
+@RemoteServiceRelativePath("RawMaterialsService")
 public interface RawMaterialsService extends RemoteService
 {
 	 RaavareDTO getRaavare (int raavareID, String token) throws DALException;
