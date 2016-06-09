@@ -7,7 +7,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import cdio.dal.dao.interfaces.DALException;
 import cdio.dal.dto.ReceptDTO;
 
-@RemoteServiceRelativePath("operatorService")
+@RemoteServiceRelativePath("prescriptionService")
 public interface PrescriptionService extends RemoteService
 {
 	ReceptDTO getRecept(int receptId, String token) throws DALException;

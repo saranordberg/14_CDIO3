@@ -24,7 +24,7 @@ public class MenuView extends Composite
 	private static MenuUiBinder uiBinder = GWT.create(MenuUiBinder.class);
 	
 	private UserServiceAsync service;
-	private final String SERVICEURL = "operatorService";
+	private final String SERVICEURL = "userService";
 	
 	@UiTemplate("Menu.ui.xml")
 	interface MenuUiBinder extends UiBinder<Widget, MenuView>

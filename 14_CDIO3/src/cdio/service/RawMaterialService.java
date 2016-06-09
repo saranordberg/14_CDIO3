@@ -9,8 +9,8 @@ import cdio.dal.dao.interfaces.DALException;
 import cdio.dal.dto.RaavareDTO;
 
 
-@RemoteServiceRelativePath("RawMaterialsService")
-public interface RawMaterialsService extends RemoteService
+@RemoteServiceRelativePath("rawMaterialService")
+public interface RawMaterialService extends RemoteService
 {
 	 RaavareDTO getRaavare (int raavareID, String token) throws DALException;
 	 

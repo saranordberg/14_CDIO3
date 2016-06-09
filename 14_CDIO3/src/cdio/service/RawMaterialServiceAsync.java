@@ -4,7 +4,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import cdio.dal.dto.RaavareDTO;
 
-public interface RawMaterialsServiceAsync
+public interface RawMaterialServiceAsync
 {
 	void getRaavare(int raavareId, String token, AsyncCallback callback);
 	

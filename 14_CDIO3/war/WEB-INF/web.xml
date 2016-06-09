@@ -7,13 +7,37 @@
 
   <!-- Servlets -->
   <servlet>
- 	<servlet-name>operatorServlet</servlet-name>
+ 	<servlet-name>userServlet</servlet-name>
  	<servlet-class>cdio.service.implementation.UserServiceImpl</servlet-class>
+ </servlet>
+ <servlet>
+ 	<servlet-name>rawMaterialServlet</servlet-name>
+ 	<servlet-class>cdio.service.implementation.RawMaterialServiceImpl</servlet-class>
+ </servlet>
+ <servlet>
+ 	<servlet-name>rawMaterialBatchServlet</servlet-name>
+ 	<servlet-class>cdio.service.implementation.RawMaterialBatchServiceImpl</servlet-class>
+ </servlet>
+  <servlet>
+ 	<servlet-name>prescriptionServlet</servlet-name>
+ 	<servlet-class>cdio.service.implementation.PrescriptionServiceImpl</servlet-class>
  </servlet>
  
  <servlet-mapping>
- 	<servlet-name>operatorServlet</servlet-name>
+ 	<servlet-name>userServlet</servlet-name>
  	<url-pattern>/Group14_CDIOFinal/userService</url-pattern>
+ </servlet-mapping>
+ <servlet-mapping>
+ 	<servlet-name>rawMaterialServlet</servlet-name>
+ 	<url-pattern>/Group14_CDIOFinal/rawMaterialService</url-pattern>
+ </servlet-mapping>
+ <servlet-mapping>
+ 	<servlet-name>rawMaterialBatchServlet</servlet-name>
+ 	<url-pattern>/Group14_CDIOFinal/rawMaterialBatchService</url-pattern>
+ </servlet-mapping>
+ <servlet-mapping>
+ 	<servlet-name>prescriptionServlet</servlet-name>
+ 	<url-pattern>/Group14_CDIOFinal/prescriptionhService</url-pattern>
  </servlet-mapping>
   
   

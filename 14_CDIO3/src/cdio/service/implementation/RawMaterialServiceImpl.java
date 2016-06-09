@@ -7,10 +7,10 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import cdio.dal.dao.MySQLRaavareDAO;
 import cdio.dal.dao.interfaces.DALException;
 import cdio.dal.dto.RaavareDTO;
-import cdio.service.RawMaterialsService;
+import cdio.service.RawMaterialService;
 
 
-public class RawMaterialsServiceImpl extends RemoteServiceServlet implements RawMaterialsService
+public class RawMaterialServiceImpl extends RemoteServiceServlet implements RawMaterialService
 {
 	@Override
 	public RaavareDTO getRaavare(int raavareId, String token) throws DALException

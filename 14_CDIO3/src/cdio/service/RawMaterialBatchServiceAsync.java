@@ -4,7 +4,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import cdio.dal.dto.RaavareBatchDTO;
 
-public interface RawMaterialsBatchServiceAsync
+public interface RawMaterialBatchServiceAsync
 {
 	void getRaavareBatch(int rbId, String token, AsyncCallback callback);
 	
