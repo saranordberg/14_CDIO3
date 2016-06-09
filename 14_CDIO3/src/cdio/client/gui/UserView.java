@@ -23,6 +23,7 @@ import cdio.client.helpers.CellListHelper;
 import cdio.dal.dto.UserDTO;
 import cdio.service.OperatorService;
 import cdio.service.OperatorServiceAsync;
+import dto01917.RaavareDTO;
 
 public class UserView extends Composite
 {
