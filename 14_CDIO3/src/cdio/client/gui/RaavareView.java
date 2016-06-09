@@ -25,10 +25,10 @@ import cdio.service.OperatorServiceAsync;
 import dto01917.RaavareDTO;
 import dto01917.UserDTO;
 
-public class RawMaterialsView extends Composite
+public class RaavareView extends Composite
 {
 	@UiTemplate("RawMaterialsView.ui.xml")
-	interface RawMaterialsUiBinder extends UiBinder<Widget, RawMaterialsView>
+	interface RawMaterialsUiBinder extends UiBinder<Widget, RaavareView>
 	{
 	}
 	
@@ -53,7 +53,7 @@ public class RawMaterialsView extends Composite
 	private CellListHelper cellList;
 	private SelectionChangeEvent.Handler selectionHandler = selectionHandler();
 	
-	public RawMaterialsView(UserDTO user, String token)
+	public RaavareView(UserDTO user, String token)
 	{
 		this.user = user;
 		this.token = token;
