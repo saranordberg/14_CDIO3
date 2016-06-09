@@ -10,7 +10,7 @@ import cdio.dal.dto.ProduktBatchDTO;
 import cdio.dal.dto.ReceptDTO;
 
 @RemoteServiceRelativePath("productBatchService")
-public interface ProductBatchService
+public interface ProductBatchService extends RemoteService
 {
 	ProduktBatchDTO getProduktBatch(int pbId, String token) throws DALException;
 	
