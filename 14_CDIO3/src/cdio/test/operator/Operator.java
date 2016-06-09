@@ -1,15 +1,12 @@
 package cdio.test.operator;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
-import java.sql.SQLException;
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import cdio.dal.Connector;
-import cdio.dal.Constant;
 import cdio.dal.dao.MySQLOperatoerDAO;
 import cdio.dal.dto.UserDTO;
 import cdio.dal.exception.DALException;

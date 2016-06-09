@@ -1,13 +1,9 @@
 package cdio.service.implementation;
 
-import java.sql.SQLException;
 import java.util.List;
 
-import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import cdio.dal.Connector;
-import cdio.dal.Constant;
 import cdio.dal.dao.MySQLOperatoerDAO;
 import cdio.dal.dto.UserDTO;
 import cdio.dal.exception.DALException;
