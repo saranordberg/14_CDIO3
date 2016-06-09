@@ -20,21 +20,19 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
 import cdio.client.helpers.CellListHelper;
-import cdio.service.OperatorService;
-import cdio.service.OperatorServiceAsync;
-import dto01917.RaavareDTO;
-import dto01917.UserDTO;
+import cdio.dal.dto.UserDTO;
+import cdio.service.UserServiceAsync;
 
 public class RaavareView extends Composite
 {
-	@UiTemplate("RawMaterialsView.ui.xml")
+	@UiTemplate("RaavareView.ui.xml")
 	interface RawMaterialsUiBinder extends UiBinder<Widget, RaavareView>
 	{
 	}
 	
 	private static RawMaterialsUiBinder uiBinder = GWT.create(RawMaterialsUiBinder.class);
 	
-	private OperatorServiceAsync service;
+	private UserServiceAsync service;
 	private final String SERVICEURL = "operatorService";
 	
 	@UiField

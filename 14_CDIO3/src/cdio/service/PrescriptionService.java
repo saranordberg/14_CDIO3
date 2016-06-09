@@ -4,10 +4,8 @@ import java.util.List;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-import cdio.dal.*;
-import daointerfaces01917.DALException;
-import dto01917.ReceptDTO;
-import dto01917.UserDTO;
+import cdio.dal.dao.interfaces.DALException;
+import cdio.dal.dto.ReceptDTO;
 
 @RemoteServiceRelativePath("operatorService")
 public interface PrescriptionService extends RemoteService

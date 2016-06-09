@@ -2,8 +2,8 @@ package cdio.client.implementation;
 
 import java.util.List;
 
-import daointerfaces01917.DALException;
-import dto01917.UserDTO;
+import cdio.dal.dao.interfaces.DALException;
+import cdio.dal.dto.UserDTO;
 
 public interface UserServiceClientInt
 {

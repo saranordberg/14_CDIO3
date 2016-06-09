@@ -4,13 +4,10 @@ import java.util.List;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import cdio.service.OperatorService;
+import cdio.dal.dao.MySQLRaavareDAO;
+import cdio.dal.dao.interfaces.DALException;
+import cdio.dal.dto.RaavareDTO;
 import cdio.service.RawMaterialsService;
-import daoimpl01917.MySQLRaavareDAO;
-import daoimpl01917.MySQLUserDAO;
-import daointerfaces01917.DALException;
-import dto01917.RaavareDTO;
-import dto01917.UserDTO;
 
 
 public class RawMaterialsServiceImpl extends RemoteServiceServlet implements RawMaterialsService

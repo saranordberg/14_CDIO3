@@ -15,9 +15,9 @@ import com.google.gwt.user.client.ui.Widget;
 
 import cdio.client.helpers.UserLevels;
 import cdio.client.helpers.UserLevels.MenuLevel;
+import cdio.dal.dto.UserDTO;
 import cdio.service.UserService;
 import cdio.service.UserServiceAsync;
-import dto01917.UserDTO;
 
 public class MenuView extends Composite
 {

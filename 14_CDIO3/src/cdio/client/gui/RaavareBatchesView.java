@@ -20,9 +20,8 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
 import cdio.client.helpers.CellListHelper;
-import cdio.service.OperatorService;
-import cdio.service.OperatorServiceAsync;
-import dto01917.UserDTO;
+import cdio.dal.dto.UserDTO;
+import cdio.service.UserServiceAsync;
 
 public class RaavareBatchesView extends Composite
 {
@@ -33,7 +32,7 @@ public class RaavareBatchesView extends Composite
 	
 	private static RaavareBatchesViewUiBinder uiBinder = GWT.create(RaavareBatchesViewUiBinder.class);
 	
-	private OperatorServiceAsync service;
+	private UserServiceAsync service;
 	private final String SERVICEURL = "operatorService";
 	
 	@UiField
