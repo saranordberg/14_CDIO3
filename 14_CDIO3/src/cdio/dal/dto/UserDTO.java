@@ -1,5 +1,7 @@
 package cdio.dal.dto;
 
+import java.io.Serializable;
+
 /**
  * User Data Access Objekt
  * 
@@ -7,7 +9,7 @@ package cdio.dal.dto;
  * @version 1.2
  */
 
-public class UserDTO
+public class UserDTO implements Serializable
 {
 	/** User-identifikationsnummer (user_id) i omraadet 1-99999999. Vaelges af brugerne */
 	public int userId;                     

@@ -30,26 +30,25 @@
 			
 			<g:VerticalPanel horizontalAlignment="ALIGN_LEFT" styleName="inner2" width="200px" spacing="0">
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:Label ui:field="userIdLabel" width="90%" horizontalAlignment="ALIGN_LEFT" >Raavare ID:</g:Label>
+					<g:Label ui:field="userIdLabel" width="90%" horizontalAlignment="ALIGN_LEFT" >Råvare ID:</g:Label>
 				</g:Cell>
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
 					<g:TextBox readOnly="true"  ui:field="raavareId" width="90%"></g:TextBox>
 				</g:Cell>
 				
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:Label ui:field="firtNameLabel" width="90%" horizontalAlignment="ALIGN_LEFT">Raavare Navn:</g:Label>
+					<g:Label ui:field="firtNameLabel" width="90%" horizontalAlignment="ALIGN_LEFT">Råvare navn:</g:Label>
 				</g:Cell>
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
 					<g:TextBox ui:field="raavareNavn" width="90%"/>
 				</g:Cell>
 				
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:Label ui:field="lastNameLabel" width="90%" horizontalAlignment="ALIGN_LEFT">Leverandoer:</g:Label>
+					<g:Label ui:field="lastNameLabel" width="90%" horizontalAlignment="ALIGN_LEFT">Leverandør:</g:Label>
 				</g:Cell>
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
 					<g:TextBox ui:field="leverandoer" width="90%"/>
 				</g:Cell>
-				
 				
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_BOTTOM">
 					<g:Button ui:field="actionButton" width="190px" height="35px" styleName="rect_button">Opret</g:Button>
@@ -57,4 +56,4 @@
 			</g:VerticalPanel>
 		</g:HorizontalPanel>
 	</g:HTMLPanel>
-</ui:UiBinder> <?xml version="1.0" encoding="UTF-8"?>
+</ui:UiBinder> 

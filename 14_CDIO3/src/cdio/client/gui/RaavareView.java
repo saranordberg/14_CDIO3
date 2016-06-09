@@ -58,7 +58,7 @@ public class RaavareView extends Composite
 		this.user = user;
 		this.token = token;
 		
-		getOperatorService();
+		getService();
 		initWidget(uiBinder.createAndBindUi(this));
 		populateCellList();
 	}
@@ -72,7 +72,7 @@ public class RaavareView extends Composite
 				String selected = cellList.selected();
 				int raavareIdFromSelect = Integer.parseInt(selected.split(" : ")[0].replace(" ", ""));
 				
-				service.getRaavare(raavareIdFromSelect, token, new AsyncCallback<UserDTO>()
+				service.getRaavare(raavareIdFromSelect, token, new AsyncCallback<RaavareDTO>()
 				{
 					
 					@Override
@@ -82,11 +82,11 @@ public class RaavareView extends Composite
 					}
 					
 					@Override
-					public void onSuccess(UserDTO result)
+					public void onSuccess(RaavareDTO result)
 					{
-						raavareId.setText(new Integer(result.userId).toString());
-						raavareNavn.setText(result.firstName);
-						leverandoer.setText(result.lastName);
+						raavareId.setText(new Integer(result.raavareId).toString());
+						raavareNavn.setText(result.raavareNavn);
+						leverandoer.setText(result.leverandoer);
 						actionButton.setText("Gem");
 					}
 					
@@ -123,7 +123,7 @@ public class RaavareView extends Composite
 	
 	public void populateCellList()
 	{
-		service.listRaavare(token, new AsyncCallback<ArrayList<UserDTO>>()
+		service.listRaavare(token, new AsyncCallback<ArrayList<RaavareDTO>>()
 		{
 			
 			@Override
@@ -133,12 +133,13 @@ public class RaavareView extends Composite
 			}
 			
 			@Override
-			public void onSuccess(ArrayList<UserDTO> results)
+			public void onSuccess(ArrayList<RaavareDTO> results)
 			{
 				ArrayList<String> values = new ArrayList<String>();
 				
-				for (UserDTO result : results)
-					values.add(result.userId + " : " + result.getFullName());
+				for (RaavareDTO result : results)
+					values.add(result.raavareId + " : " + result.raavareNavn);
+			
 				
 				cellList = new CellListHelper(values, selectionHandler);
 				
@@ -174,7 +175,7 @@ public class RaavareView extends Composite
 		};
 	}
 	
-	public void getOperatorService()
+	public void getService()
 	{
 		this.service = GWT.create(RawMaterialService.class);
 		ServiceDefTarget endpoint = (ServiceDefTarget) this.service;

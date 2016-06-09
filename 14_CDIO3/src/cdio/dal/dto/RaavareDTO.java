@@ -1,6 +1,8 @@
 
 package cdio.dal.dto;
 
+import java.io.Serializable;
+
 /**
  * Raavare Data Objekt
  * 
@@ -8,7 +10,7 @@ package cdio.dal.dto;
  * @version 1.2
  */
 
-public class RaavareDTO 
+public class RaavareDTO implements Serializable
 {
     /** i omraadet 1-99999999 vaelges af brugerne */
 	public int raavareId;                     
@@ -17,6 +19,7 @@ public class RaavareDTO
     /** min. 2 max. 20 karakterer */
 	public String leverandoer;         
 	
+	public RaavareDTO() { }
 	public RaavareDTO(int raavareId, String raavareNavn, String leverandoer)
 	{
 		this.raavareId = raavareId;

@@ -75,7 +75,7 @@ public class MenuView extends Composite
 	@UiHandler("opr_button")
 	void userButtonClick(ClickEvent event) {
 		content.clear();
-		content.add(new RaavareBatchesView(user, token));
+		content.add(new UserView(user, token));
 	}
 	
 	@UiHandler("raw_materials_button")

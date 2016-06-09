@@ -1,5 +1,7 @@
 package cdio.dal.dto;
 
+import java.io.Serializable;
+
 /**
  * Recept Data Objekt
  * 
@@ -7,7 +9,7 @@ package cdio.dal.dto;
  * @version 1.2
  */
 
-public class ReceptDTO 
+public class ReceptDTO  implements Serializable
 {
 	/** Recept nr i omraadet 1-99999999 */
 	public int receptId;
@@ -16,6 +18,7 @@ public class ReceptDTO
 	/** liste af kompenenter i recepten */
 	
     
+	public ReceptDTO() { }
 	public ReceptDTO(int receptId, String receptNavn)
 	{
         this.receptId = receptId;
