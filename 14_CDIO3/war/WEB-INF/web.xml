@@ -37,7 +37,7 @@
  </servlet-mapping>
  <servlet-mapping>
  	<servlet-name>prescriptionServlet</servlet-name>
- 	<url-pattern>/Group14_CDIOFinal/prescriptionhService</url-pattern>
+ 	<url-pattern>/Group14_CDIOFinal/prescriptionService</url-pattern>
  </servlet-mapping>
   
   
