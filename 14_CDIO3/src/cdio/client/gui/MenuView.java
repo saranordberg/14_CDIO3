@@ -78,6 +78,12 @@ public class MenuView extends Composite
 		content.add(new UserView(user, token));
 	}
 	
+	@UiHandler("raw_materials_button")
+	void RawButtonClick(ClickEvent event) {
+		content.clear();
+		content.add(new RawMaterialsView(user, token));
+	}
+	
 	public interface iMenuCallback
 	{
 	}
