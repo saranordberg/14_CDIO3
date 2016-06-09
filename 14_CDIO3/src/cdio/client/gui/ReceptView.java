@@ -20,27 +20,26 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
 import cdio.client.helpers.CellListHelper;
-import cdio.service.OperatorService;
 import cdio.service.OperatorServiceAsync;
-import dto01917.RaavareDTO;
+import dto01917.ReceptDTO;
 import dto01917.UserDTO;
 
-public class RawMaterialsView extends Composite
+public class ReceptView extends Composite
 {
-	@UiTemplate("RawMaterialsView.ui.xml")
-	interface RawMaterialsUiBinder extends UiBinder<Widget, RawMaterialsView>
+	@UiTemplate("ReceptView.ui.xml")
+	interface ReceptViewUiBinder extends UiBinder<Widget, ReceptView>
 	{
 	}
 	
-	private static RawMaterialsUiBinder uiBinder = GWT.create(RawMaterialsUiBinder.class);
+	private static ReceptViewUiBinder uiBinder = GWT.create(ReceptViewUiBinder.class);
 	
 	private OperatorServiceAsync service;
-	private final String SERVICEURL = "operatorService";
+	private final String SERVICEURL = "receptService";
 	
 	@UiField
 	public VerticalPanel content;
 	@UiField
-	public TextBox raavareId, raavareNavn, leverandoer;
+	public TextBox receptId, recept_navn;
 	@UiField
 	public Button actionButton;
 	
@@ -53,12 +52,12 @@ public class RawMaterialsView extends Composite
 	private CellListHelper cellList;
 	private SelectionChangeEvent.Handler selectionHandler = selectionHandler();
 	
-	public RawMaterialsView(UserDTO user, String token)
+	public ReceptView(UserDTO user, String token)
 	{
 		this.user = user;
 		this.token = token;
 		
-		getOperatorService();
+		getReceptService();
 		initWidget(uiBinder.createAndBindUi(this));
 		populateCellList();
 	}
@@ -70,9 +69,9 @@ public class RawMaterialsView extends Composite
 			public void onSelectionChange(SelectionChangeEvent event)
 			{
 				String selected = cellList.selected();
-				int userIdFromSelect = Integer.parseInt(selected.split(" : ")[0].replace(" ", ""));
+				int receptIdFromSelect = Integer.parseInt(selected.split(" : ")[0].replace(" ", ""));
 				
-				service.getOperatoer(userIdFromSelect, new AsyncCallback<UserDTO>()
+				service.getRecept(receptIdFromSelect, new AsyncCallback<ReceptDTO>()
 				{
 					
 					@Override
@@ -82,11 +81,10 @@ public class RawMaterialsView extends Composite
 					}
 					
 					@Override
-					public void onSuccess(UserDTO result)
+					public void onSuccess(ReceptDTO result)
 					{
-						raavareId.setText(new Integer(result.userId).toString());
-						raavareNavn.setText(result.firstName);
-						leverandoer.setText(result.lastName);
+						receptId.setText(new Integer(result.receptId).toString());
+						recept_navn.setText(result.receptNavn);
 						actionButton.setText("Gem");
 					}
 					
@@ -95,35 +93,34 @@ public class RawMaterialsView extends Composite
 		};
 	}
 	
-//	@UiHandler("actionButton")
-//	public void actionButtonClick(ClickEvent event)
-//	{
-//		RaavareDTO user = new RaavareDTO(0, raavareNavn.getText(), leverandoer.getText());
-//		
-//		// New user
-//		if (raavareId.getText().equals(""))
-//		{
-//			service.createRaavare(user, actionCallback());
-//		}
-//		// Update user
-//		else
-//		{
-//			user.raavareId = Integer.parseInt(raavareId.getText());
-//			service.updateRaavare(user, actionCallback());
-//		}
-//	}
+	@UiHandler("actionButton")
+	public void actionButtonClick(ClickEvent event)
+	{
+		ReceptDTO recept = new ReceptDTO(0, recept_navn.getText());
+		
+		// New user
+		if (receptId.getText().equals(""))
+		{
+			service.createRecept(recept, actionCallback());
+		}
+		// Update user
+		else
+		{
+			recept.receptId = Integer.parseInt(receptId.getText());
+			service.updateRecept(recept, actionCallback());
+		}
+	}
 	
 	@UiHandler("newButton")
 	public void newButtonClick(ClickEvent event) {
-		raavareId.setText("");
-		raavareNavn.setText("");
-		leverandoer.setText("");
+		receptId.setText("");
+		recept_navn.setText("");
 		actionButton.setText("Opret");
 	}
 	
 	public void populateCellList()
 	{
-		service.listOperator(user.userId, token, new AsyncCallback<ArrayList<UserDTO>>()
+		service.listRecept(recept.receptId, token, new AsyncCallback<ArrayList<ReceptDTO>>()
 		{
 			
 			@Override
@@ -133,12 +130,12 @@ public class RawMaterialsView extends Composite
 			}
 			
 			@Override
-			public void onSuccess(ArrayList<UserDTO> results)
+			public void onSuccess(ArrayList<ReceptDTO> results)
 			{
 				ArrayList<String> values = new ArrayList<String>();
 				
-				for (UserDTO result : results)
-					values.add(result.userId + " : " + result.getFullName());
+				for (ReceptDTO result : results)
+					values.add(result.receptId + " : " + result.getReceptName());
 				
 				cellList = new CellListHelper(values, selectionHandler);
 				
@@ -164,19 +161,18 @@ public class RawMaterialsView extends Composite
 			{
 				populateCellList();
 				
-				raavareId.setText("");
-				raavareNavn.setText("");
-				leverandoer.setText("");
+				receptId.setText("");
+				recept_navn.setText("");
 				actionButton.setText("Opret");
 				
-				Window.alert("Din raavare er nu gemt");
+				Window.alert("Din recept er nu gemt");
 			}
 		};
 	}
 	
-	public void getOperatorService()
+	public void getReceptService()
 	{
-		this.service = GWT.create(OperatorService.class);
+		this.service = GWT.create(ReceptService.class);
 		ServiceDefTarget endpoint = (ServiceDefTarget) this.service;
 		endpoint.setServiceEntryPoint(GWT.getModuleBaseURL() + SERVICEURL);
 	}

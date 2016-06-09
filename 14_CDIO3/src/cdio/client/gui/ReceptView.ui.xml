@@ -30,24 +30,17 @@
 			
 			<g:VerticalPanel horizontalAlignment="ALIGN_LEFT" styleName="inner2" width="200px" spacing="0">
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:Label ui:field="userIdLabel" width="90%" horizontalAlignment="ALIGN_LEFT" >Raavare ID:</g:Label>
+					<g:Label ui:field="receptIdLabel" width="90%" horizontalAlignment="ALIGN_LEFT" >Recept ID:</g:Label>
 				</g:Cell>
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:TextBox readOnly="true"  ui:field="raavareId" width="90%"></g:TextBox>
-				</g:Cell>
-				
-				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:Label ui:field="firtNameLabel" width="90%" horizontalAlignment="ALIGN_LEFT">Raavare Navn:</g:Label>
-				</g:Cell>
-				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:TextBox ui:field="raavareNavn" width="90%"/>
+					<g:TextBox readOnly="true"  ui:field="receptId" width="90%"></g:TextBox>
 				</g:Cell>
 				
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:Label ui:field="lastNameLabel" width="90%" horizontalAlignment="ALIGN_LEFT">Leverandoer:</g:Label>
+					<g:Label ui:field="recept_navnLabel" width="90%" horizontalAlignment="ALIGN_LEFT">Recept Navn:</g:Label>
 				</g:Cell>
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:TextBox ui:field="leverandoer" width="90%"/>
+					<g:TextBox ui:field="recept_navn" width="90%"/>
 				</g:Cell>
 				
 				
@@ -57,4 +50,4 @@
 			</g:VerticalPanel>
 		</g:HorizontalPanel>
 	</g:HTMLPanel>
-</ui:UiBinder> <?xml version="1.0" encoding="UTF-8"?>
+</ui:UiBinder> 
