@@ -1,15 +1,12 @@
 package cdio.client;
 
 
-import java.util.UUID;
-
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.ui.RootPanel;
 
-import cdio.dal.dto.UserDTO;
 import cdio.client.gui.LoginView;
 import cdio.client.gui.MenuView;
+import dto01917.UserDTO;
 
 public class Group14_CDIOFinal implements EntryPoint, LoginView.iLoginCallback
 {
