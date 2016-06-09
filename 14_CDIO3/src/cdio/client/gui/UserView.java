@@ -20,9 +20,9 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
 import cdio.client.helpers.CellListHelper;
-import cdio.service.OperatorService;
-import cdio.service.OperatorServiceAsync;
-import dto01917.UserDTO;
+import cdio.dal.dto.UserDTO;
+import cdio.service.UserService;
+import cdio.service.UserServiceAsync;
 
 public class UserView extends Composite
 {
@@ -33,8 +33,8 @@ public class UserView extends Composite
 	
 	private static UserViewUiBinder uiBinder = GWT.create(UserViewUiBinder.class);
 	
-	private OperatorServiceAsync service;
-	private final String SERVICEURL = "operatorService";
+	private UserServiceAsync service;
+	private final String SERVICEURL = "userService";
 	
 	@UiField
 	public VerticalPanel content;
@@ -71,7 +71,7 @@ public class UserView extends Composite
 				String selected = cellList.selected();
 				int userIdFromSelect = Integer.parseInt(selected.split(" : ")[0].replace(" ", ""));
 				
-				service.getOperatoer(userIdFromSelect, new AsyncCallback<UserDTO>()
+				service.getUser(userIdFromSelect, token, new AsyncCallback<UserDTO>()
 				{
 					
 					@Override
@@ -107,13 +107,13 @@ public class UserView extends Composite
 		// New user
 		if (userId.getText().equals(""))
 		{
-			service.createOperator(user, actionCallback());
+			service.createUser(user, token, actionCallback());
 		}
 		// Update user
 		else
 		{
 			user.userId = Integer.parseInt(userId.getText());
-			service.updateOperator(user, actionCallback());
+			service.updateUser(user, token, actionCallback());
 		}
 	}
 	
@@ -131,7 +131,7 @@ public class UserView extends Composite
 	
 	public void populateCellList()
 	{
-		service.listOperator(user.userId, token, new AsyncCallback<ArrayList<UserDTO>>()
+		service.listUser(user.userId, token, new AsyncCallback<ArrayList<UserDTO>>()
 		{
 			
 			@Override
@@ -188,7 +188,7 @@ public class UserView extends Composite
 	
 	public void getOperatorService()
 	{
-		this.service = GWT.create(OperatorService.class);
+		this.service = GWT.create(UserService.class);
 		ServiceDefTarget endpoint = (ServiceDefTarget) this.service;
 		endpoint.setServiceEntryPoint(GWT.getModuleBaseURL() + SERVICEURL);
 	}

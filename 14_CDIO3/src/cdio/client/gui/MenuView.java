@@ -15,15 +15,15 @@ import com.google.gwt.user.client.ui.Widget;
 
 import cdio.client.helpers.UserLevels;
 import cdio.client.helpers.UserLevels.MenuLevel;
-import cdio.service.OperatorService;
-import cdio.service.OperatorServiceAsync;
-import dto01917.UserDTO;
+import cdio.dal.dto.UserDTO;
+import cdio.service.UserService;
+import cdio.service.UserServiceAsync;
 
 public class MenuView extends Composite
 {
 	private static MenuUiBinder uiBinder = GWT.create(MenuUiBinder.class);
 	
-	private OperatorServiceAsync service;
+	private UserServiceAsync service;
 	private final String SERVICEURL = "operatorService";
 	
 	@UiTemplate("Menu.ui.xml")
@@ -67,7 +67,7 @@ public class MenuView extends Composite
 	
 	public void getOperatorService()
 	{
-		this.service = GWT.create(OperatorService.class);
+		this.service = GWT.create(UserService.class);
 		ServiceDefTarget endpoint = (ServiceDefTarget) this.service;
 		endpoint.setServiceEntryPoint(SERVICEURL);
 	}

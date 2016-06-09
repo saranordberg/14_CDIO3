@@ -2,9 +2,7 @@ package cdio.service;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-import java.util.List;
-
-import dto01917.RaavareDTO;
+import cdio.dal.dto.RaavareDTO;
 
 public interface RawMaterialsServiceAsync
 {

@@ -14,9 +14,9 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-import cdio.service.OperatorService;
-import cdio.service.OperatorServiceAsync;
-import dto01917.UserDTO;
+import cdio.dal.dto.UserDTO;
+import cdio.service.UserService;
+import cdio.service.UserServiceAsync;
 
 public class LoginView extends Composite
 {
@@ -27,7 +27,7 @@ public class LoginView extends Composite
 	
 	private static LoginUiBinder uiBinder = GWT.create(LoginUiBinder.class);
 	
-	private OperatorServiceAsync service;
+	private UserServiceAsync service;
 	private final String SERVICEURL = "operatorService";
 	
 	@UiField
@@ -38,7 +38,7 @@ public class LoginView extends Composite
 	
 	public void getOperatorService()
 	{
-		this.service = GWT.create(OperatorService.class);
+		this.service = GWT.create(UserService.class);
 		ServiceDefTarget endpoint = (ServiceDefTarget) this.service;
 		endpoint.setServiceEntryPoint(GWT.getModuleBaseURL() + SERVICEURL);
 	}

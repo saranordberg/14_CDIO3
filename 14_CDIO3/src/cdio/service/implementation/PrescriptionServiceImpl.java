@@ -4,10 +4,10 @@ import java.util.List;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+import cdio.dal.dao.MySQLReceptDAO;
+import cdio.dal.dao.interfaces.DALException;
+import cdio.dal.dto.ReceptDTO;
 import cdio.service.PrescriptionService;
-import daoimpl01917.MySQLReceptDAO;
-import daointerfaces01917.DALException;
-import dto01917.ReceptDTO;
 
 public class PrescriptionServiceImpl extends RemoteServiceServlet implements PrescriptionService
 {
