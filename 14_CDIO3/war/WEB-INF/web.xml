@@ -8,12 +8,12 @@
   <!-- Servlets -->
   <servlet>
  	<servlet-name>operatorServlet</servlet-name>
- 	<servlet-class>cdio.service.implementation.OperatorServiceImpl</servlet-class>
+ 	<servlet-class>cdio.service.implementation.UserServiceImpl</servlet-class>
  </servlet>
  
  <servlet-mapping>
  	<servlet-name>operatorServlet</servlet-name>
- 	<url-pattern>/Group14_CDIOFinal/operatorService</url-pattern>
+ 	<url-pattern>/Group14_CDIOFinal/userService</url-pattern>
  </servlet-mapping>
   
   

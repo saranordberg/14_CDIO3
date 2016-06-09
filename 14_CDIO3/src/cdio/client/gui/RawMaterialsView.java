@@ -1,6 +1,7 @@
 package cdio.client.gui;
 
 import java.util.ArrayList;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -11,7 +12,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -20,21 +20,22 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
 import cdio.client.helpers.CellListHelper;
-import cdio.dal.dto.UserDTO;
-import cdio.service.OperatorService;
-import cdio.service.OperatorServiceAsync;
+import cdio.service.UserService;
+import cdio.service.UserServiceAsync;
+import dto01917.RaavareDTO;
+import dto01917.UserDTO;
 
 public class RawMaterialsView extends Composite
 {
 	@UiTemplate("RawMaterialsView.ui.xml")
-	interface UserViewUiBinder extends UiBinder<Widget, UserView>
+	interface RawMaterialsUiBinder extends UiBinder<Widget, RawMaterialsView>
 	{
 	}
 	
-	private static UserViewUiBinder uiBinder = GWT.create(UserViewUiBinder.class);
+	private static RawMaterialsUiBinder uiBinder = GWT.create(RawMaterialsUiBinder.class);
 	
-	private OperatorServiceAsync service;
-	private final String SERVICEURL = "operatorService";
+	private UserServiceAsync service;
+	private final String SERVICEURL = "userService";
 	
 	@UiField
 	public VerticalPanel content;
@@ -71,7 +72,7 @@ public class RawMaterialsView extends Composite
 				String selected = cellList.selected();
 				int userIdFromSelect = Integer.parseInt(selected.split(" : ")[0].replace(" ", ""));
 				
-				service.getOperatoer(userIdFromSelect, new AsyncCallback<UserDTO>()
+				service.getUser(userIdFromSelect, token, new AsyncCallback<UserDTO>()
 				{
 					
 					@Override
@@ -83,13 +84,9 @@ public class RawMaterialsView extends Composite
 					@Override
 					public void onSuccess(UserDTO result)
 					{
-						userId.setText(new Integer(result.userId).toString());
-						firstName.setText(result.firstName);
-						lastName.setText(result.lastName);
-						ini.setText(result.ini);
-						cpr.setText(result.cpr);
-						password.setText(result.password);
-						userLevel.setText(new Integer(result.userLevel).toString());
+						raavareId.setText(new Integer(result.userId).toString());
+						raavareNavn.setText(result.firstName);
+						leverandoer.setText(result.lastName);
 						actionButton.setText("Gem");
 					}
 					
@@ -98,40 +95,35 @@ public class RawMaterialsView extends Composite
 		};
 	}
 	
-	@UiHandler("actionButton")
-	public void actionButtonClick(ClickEvent event)
-	{
-		UserDTO user = new UserDTO(0, firstName.getText(), lastName.getText(), ini.getText(), cpr.getText(),
-				password.getText(), Integer.parseInt(userLevel.getText()));
-		
-		// New user
-		if (userId.getText().equals(""))
-		{
-			service.createOperator(user, actionCallback());
-		}
-		// Update user
-		else
-		{
-			user.userId = Integer.parseInt(userId.getText());
-			service.updateOperator(user, actionCallback());
-		}
-	}
+//	@UiHandler("actionButton")
+//	public void actionButtonClick(ClickEvent event)
+//	{
+//		RaavareDTO user = new RaavareDTO(0, raavareNavn.getText(), leverandoer.getText());
+//		
+//		// New user
+//		if (raavareId.getText().equals(""))
+//		{
+//			service.createRaavare(user, actionCallback());
+//		}
+//		// Update user
+//		else
+//		{
+//			user.raavareId = Integer.parseInt(raavareId.getText());
+//			service.updateRaavare(user, actionCallback());
+//		}
+//	}
 	
 	@UiHandler("newButton")
 	public void newButtonClick(ClickEvent event) {
-		userId.setText("");
-		firstName.setText("");
-		lastName.setText("");
-		ini.setText("");
-		cpr.setText("");
-		password.setText("");
-		userLevel.setText("");
+		raavareId.setText("");
+		raavareNavn.setText("");
+		leverandoer.setText("");
 		actionButton.setText("Opret");
 	}
 	
 	public void populateCellList()
 	{
-		service.listOperator(user.userId, token, new AsyncCallback<ArrayList<UserDTO>>()
+		service.listUser(user.userId, token, new AsyncCallback<ArrayList<UserDTO>>()
 		{
 			
 			@Override
@@ -172,23 +164,19 @@ public class RawMaterialsView extends Composite
 			{
 				populateCellList();
 				
-				userId.setText("");
-				firstName.setText("");
-				lastName.setText("");
-				ini.setText("");
-				cpr.setText("");
-				password.setText("");
-				userLevel.setText("");
+				raavareId.setText("");
+				raavareNavn.setText("");
+				leverandoer.setText("");
 				actionButton.setText("Opret");
 				
-				Window.alert("Din bruger er nu gemt");
+				Window.alert("Din raavare er nu gemt");
 			}
 		};
 	}
 	
 	public void getOperatorService()
 	{
-		this.service = GWT.create(OperatorService.class);
+		this.service = GWT.create(UserService.class);
 		ServiceDefTarget endpoint = (ServiceDefTarget) this.service;
 		endpoint.setServiceEntryPoint(GWT.getModuleBaseURL() + SERVICEURL);
 	}
