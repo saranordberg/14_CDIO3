@@ -8,11 +8,11 @@ import dto01917.UserDTO;
 
 public interface OperatorServiceAsync
 {
-	void getOperatoer(int oprId, AsyncCallback callback);
+	void getOperatoer(int userId, String token, AsyncCallback callback);
 	
-	void createOperator(UserDTO opr, AsyncCallback callback);
+	void createOperator(UserDTO user, String token, AsyncCallback callback);
 	
-	void updateOperator(UserDTO opr, AsyncCallback callback);
+	void updateOperator(UserDTO user, String token, AsyncCallback callback);
 	
 	void listOperator(int userID, String token, AsyncCallback callback);
 }

@@ -12,24 +12,24 @@ import dto01917.UserDTO;
 public class OperatorServiceImpl extends RemoteServiceServlet implements OperatorService
 {	
 	@Override
-	public UserDTO getOperatoer(int oprId) throws DALException
+	public UserDTO getOperatoer(int userId, String token) throws DALException
 	{
 		MySQLUserDAO conn = new MySQLUserDAO();
-		return conn.getUser(oprId);
+		return conn.getUser(userId);
 	}
 	
 	@Override
-	public void createOperator(UserDTO opr) throws DALException
+	public void createOperator(UserDTO user, String token) throws DALException
 	{
 		MySQLUserDAO conn = new MySQLUserDAO();
-		conn.createUser(opr);
+		conn.createUser(user);
 	}
 	
 	@Override
-	public void updateOperator(UserDTO opr) throws DALException
+	public void updateOperator(UserDTO user, String token) throws DALException
 	{
 		MySQLUserDAO conn = new MySQLUserDAO();
-		conn.updateUser(opr);
+		conn.updateUser(user);
 	}
 	
 	@Override

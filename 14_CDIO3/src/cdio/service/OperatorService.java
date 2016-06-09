@@ -12,12 +12,11 @@ import dto01917.UserDTO;
 @RemoteServiceRelativePath("operatorService")
 public interface OperatorService extends RemoteService
 {
-	UserDTO getOperatoer(int oprId) throws DALException;
+	UserDTO getOperatoer(int oprId, String token) throws DALException;
 	
-	void createOperator(UserDTO opr) throws DALException;
+	void createOperator(UserDTO opr, String token) throws DALException;
 	
-	void updateOperator(UserDTO opr) throws DALException;
+	void updateOperator(UserDTO opr, String token) throws DALException;
 	
 	List<UserDTO> listOperator(int userID, String token) throws DALException;
-	
 }
