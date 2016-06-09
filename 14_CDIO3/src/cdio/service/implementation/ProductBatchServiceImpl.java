@@ -10,7 +10,7 @@ import cdio.dal.dto.ProduktBatchDTO;
 import cdio.service.ProductBatchService;
 
 
-public class ProduktBatchServiceImpl extends RemoteServiceServlet implements ProductBatchService
+public class ProductBatchServiceImpl extends RemoteServiceServlet implements ProductBatchService
 {
 	@Override
 	public ProduktBatchDTO getProduktBatch(int pbId, String token) throws DALException

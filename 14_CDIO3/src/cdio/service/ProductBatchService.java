@@ -9,7 +9,7 @@ import cdio.dal.dao.interfaces.DALException;
 import cdio.dal.dto.ProduktBatchDTO;
 import cdio.dal.dto.ReceptDTO;
 
-@RemoteServiceRelativePath("ProduktBatchService")
+@RemoteServiceRelativePath("productBatchService")
 public interface ProductBatchService
 {
 	ProduktBatchDTO getProduktBatch(int pbId, String token) throws DALException;

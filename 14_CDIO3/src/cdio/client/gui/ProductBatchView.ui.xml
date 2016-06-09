@@ -1,0 +1,60 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+	    .scrollable {
+	      height: 400px;
+	      width: 250px;
+	      border: 1px solid #ccc;
+	      text-align: left;
+	    }
+	    
+	    .contactFormCell {
+	      padding-left: 20px;
+	    }
+	  </ui:style>
+	
+	<g:HTMLPanel>
+		<g:HorizontalPanel width="400px">
+			<g:VerticalPanel horizontalAlignment="ALIGN_LEFT" styleName="inner" width="200px" spacing="20">
+			<g:Cell horizontalAlignment="ALIGN_RIGHT">
+					<g:Button ui:field="newButton" width="200px" height="35px"
+						styleName="round_button">New</g:Button>
+				</g:Cell>
+				<g:Cell width="100%" horizontalAlignment="ALIGN_LEFT">
+					<g:VerticalPanel ui:field="content" width="100%" spacing="0" >
+					<g:Label ui:field="lbl" text="Loading..." />
+				</g:VerticalPanel>
+				</g:Cell>
+			</g:VerticalPanel>
+			
+			<g:VerticalPanel horizontalAlignment="ALIGN_LEFT" styleName="inner2" width="200px" spacing="0">
+				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
+					<g:Label ui:field="pbIdLabel" width="90%" horizontalAlignment="ALIGN_LEFT" >ProduktBatch ID:</g:Label>
+				</g:Cell>
+				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
+					<g:TextBox readOnly="true"  ui:field="pbId" width="90%"></g:TextBox>
+				</g:Cell>
+				
+				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
+					<g:Label ui:field="StatusLabel" width="90%" horizontalAlignment="ALIGN_LEFT">Status:</g:Label>
+				</g:Cell>
+				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
+					<g:TextBox ui:field="status" width="90%"/>
+				</g:Cell>
+				
+				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
+					<g:Label ui:field="receptIDLabel" width="90%" horizontalAlignment="ALIGN_LEFT">Recept ID:</g:Label>
+				</g:Cell>
+				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
+					<g:TextBox ui:field="receptID" width="90%"/>
+				</g:Cell>
+				
+				
+				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_BOTTOM">
+					<g:Button ui:field="actionButton" width="190px" height="35px" styleName="rect_button">Opret</g:Button>
+				</g:Cell>
+			</g:VerticalPanel>
+		</g:HorizontalPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 
