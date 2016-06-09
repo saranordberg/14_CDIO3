@@ -1,27 +1,23 @@
 package cdio.client.gui;
 
-import java.util.UUID;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import cdio.client.helpers.UserLevels;
 import cdio.client.helpers.UserLevels.MenuLevel;
-import cdio.dal.dto.UserDTO;
 import cdio.service.OperatorService;
 import cdio.service.OperatorServiceAsync;
+import dto01917.UserDTO;
 
 public class MenuView extends Composite
 {
@@ -54,7 +50,7 @@ public class MenuView extends Composite
 	{
 		this.token = token;
 		this.user = user;
-		this.userLevel = user.userLevel;
+		this.userLevel = user.level;
 		
 		initWidget(uiBinder.createAndBindUi(this));
 		

@@ -1,6 +1,7 @@
 package cdio.client.gui;
 
 import java.util.ArrayList;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -11,7 +12,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -20,10 +20,9 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
 import cdio.client.helpers.CellListHelper;
-import cdio.dal.dto.UserDTO;
 import cdio.service.OperatorService;
 import cdio.service.OperatorServiceAsync;
-import dto01917.RaavareDTO;
+import dto01917.UserDTO;
 
 public class UserView extends Composite
 {
@@ -90,7 +89,7 @@ public class UserView extends Composite
 						ini.setText(result.ini);
 						cpr.setText(result.cpr);
 						password.setText(result.password);
-						userLevel.setText(new Integer(result.userLevel).toString());
+						userLevel.setText(new Integer(result.level).toString());
 						actionButton.setText("Gem");
 					}
 					
