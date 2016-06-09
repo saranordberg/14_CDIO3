@@ -20,22 +20,22 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
 import cdio.client.helpers.CellListHelper;
-import cdio.service.UserService;
-import cdio.service.UserServiceAsync;
+import cdio.service.OperatorService;
+import cdio.service.OperatorServiceAsync;
 import dto01917.RaavareDTO;
 import dto01917.UserDTO;
 
-public class RawMaterialsView extends Composite
+public class RaavareView extends Composite
 {
 	@UiTemplate("RawMaterialsView.ui.xml")
-	interface RawMaterialsUiBinder extends UiBinder<Widget, RawMaterialsView>
+	interface RawMaterialsUiBinder extends UiBinder<Widget, RaavareView>
 	{
 	}
 	
 	private static RawMaterialsUiBinder uiBinder = GWT.create(RawMaterialsUiBinder.class);
 	
-	private UserServiceAsync service;
-	private final String SERVICEURL = "userService";
+	private OperatorServiceAsync service;
+	private final String SERVICEURL = "operatorService";
 	
 	@UiField
 	public VerticalPanel content;
@@ -53,7 +53,7 @@ public class RawMaterialsView extends Composite
 	private CellListHelper cellList;
 	private SelectionChangeEvent.Handler selectionHandler = selectionHandler();
 	
-	public RawMaterialsView(UserDTO user, String token)
+	public RaavareView(UserDTO user, String token)
 	{
 		this.user = user;
 		this.token = token;
@@ -72,7 +72,7 @@ public class RawMaterialsView extends Composite
 				String selected = cellList.selected();
 				int userIdFromSelect = Integer.parseInt(selected.split(" : ")[0].replace(" ", ""));
 				
-				service.getUser(userIdFromSelect, token, new AsyncCallback<UserDTO>()
+				service.getOperatoer(userIdFromSelect, new AsyncCallback<UserDTO>()
 				{
 					
 					@Override
@@ -123,7 +123,7 @@ public class RawMaterialsView extends Composite
 	
 	public void populateCellList()
 	{
-		service.listUser(user.userId, token, new AsyncCallback<ArrayList<UserDTO>>()
+		service.listOperator(user.userId, token, new AsyncCallback<ArrayList<UserDTO>>()
 		{
 			
 			@Override
@@ -176,7 +176,7 @@ public class RawMaterialsView extends Composite
 	
 	public void getOperatorService()
 	{
-		this.service = GWT.create(UserService.class);
+		this.service = GWT.create(OperatorService.class);
 		ServiceDefTarget endpoint = (ServiceDefTarget) this.service;
 		endpoint.setServiceEntryPoint(GWT.getModuleBaseURL() + SERVICEURL);
 	}
