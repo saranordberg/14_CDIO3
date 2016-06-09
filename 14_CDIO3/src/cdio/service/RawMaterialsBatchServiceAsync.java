@@ -2,10 +2,7 @@ package cdio.service;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-import java.util.List;
-
-import dto01917.RaavareBatchDTO;
-import dto01917.RaavareDTO;
+import cdio.dal.dto.RaavareBatchDTO;
 
 public interface RawMaterialsBatchServiceAsync
 {
