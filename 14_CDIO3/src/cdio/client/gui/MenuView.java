@@ -84,6 +84,12 @@ public class MenuView extends Composite
 		content.add(new RaavareView(user, token));
 	}
 	
+	@UiHandler("prescriptions_button")
+	void prescriptionButtonClick(ClickEvent event) {
+		content.clear();
+		content.add(new ReceptView(user, token));
+	}
+	
 	public interface iMenuCallback
 	{
 	}
