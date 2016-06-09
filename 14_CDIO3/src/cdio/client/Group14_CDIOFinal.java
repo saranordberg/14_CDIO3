@@ -6,7 +6,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 
 import cdio.client.gui.LoginView;
 import cdio.client.gui.MenuView;
-import dto01917.UserDTO;
+import cdio.dal.dto.UserDTO;
 
 public class Group14_CDIOFinal implements EntryPoint, LoginView.iLoginCallback
 {

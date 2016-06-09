@@ -8,8 +8,8 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import cdio.dal.dao.interfaces.DALException;
 import cdio.dal.dto.RaavareBatchDTO;
 
-@RemoteServiceRelativePath("RawMaterialsBatchService")
-public interface RawMaterialsBatchService extends RemoteService
+@RemoteServiceRelativePath("rawMaterialBatchService")
+public interface RawMaterialBatchService extends RemoteService
 {
 	 RaavareBatchDTO getRaavareBatch (int rbID, String token) throws DALException;
 	 

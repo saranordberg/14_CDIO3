@@ -22,7 +22,6 @@ import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 import cdio.client.helpers.CellListHelper;
 import cdio.dal.dto.ReceptDTO;
 import cdio.dal.dto.UserDTO;
-import cdio.service.UserServiceAsync;
 
 public class ReceptView extends Composite
 {
@@ -33,7 +32,7 @@ public class ReceptView extends Composite
 	
 	private static ReceptViewUiBinder uiBinder = GWT.create(ReceptViewUiBinder.class);
 	
-	private UserServiceAsync service;
+	private ReceptServiceAsync service;
 	private final String SERVICEURL = "receptService";
 	
 	@UiField

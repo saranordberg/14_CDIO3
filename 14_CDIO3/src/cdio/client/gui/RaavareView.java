@@ -20,8 +20,10 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
 import cdio.client.helpers.CellListHelper;
+import cdio.dal.dto.RaavareDTO;
 import cdio.dal.dto.UserDTO;
-import cdio.service.UserServiceAsync;
+import cdio.service.RawMaterialService;
+import cdio.service.RawMaterialServiceAsync;
 
 public class RaavareView extends Composite
 {
@@ -32,8 +34,8 @@ public class RaavareView extends Composite
 	
 	private static RawMaterialsUiBinder uiBinder = GWT.create(RawMaterialsUiBinder.class);
 	
-	private UserServiceAsync service;
-	private final String SERVICEURL = "operatorService";
+	private RawMaterialServiceAsync service;
+	private final String SERVICEURL = "rawMaterialService";
 	
 	@UiField
 	public VerticalPanel content;
@@ -68,9 +70,9 @@ public class RaavareView extends Composite
 			public void onSelectionChange(SelectionChangeEvent event)
 			{
 				String selected = cellList.selected();
-				int userIdFromSelect = Integer.parseInt(selected.split(" : ")[0].replace(" ", ""));
+				int raavareIdFromSelect = Integer.parseInt(selected.split(" : ")[0].replace(" ", ""));
 				
-				service.getOperatoer(userIdFromSelect, new AsyncCallback<UserDTO>()
+				service.getRaavare(raavareIdFromSelect, token, new AsyncCallback<UserDTO>()
 				{
 					
 					@Override
@@ -93,23 +95,23 @@ public class RaavareView extends Composite
 		};
 	}
 	
-//	@UiHandler("actionButton")
-//	public void actionButtonClick(ClickEvent event)
-//	{
-//		RaavareDTO user = new RaavareDTO(0, raavareNavn.getText(), leverandoer.getText());
-//		
-//		// New user
-//		if (raavareId.getText().equals(""))
-//		{
-//			service.createRaavare(user, actionCallback());
-//		}
-//		// Update user
-//		else
-//		{
-//			user.raavareId = Integer.parseInt(raavareId.getText());
-//			service.updateRaavare(user, actionCallback());
-//		}
-//	}
+	@UiHandler("actionButton")
+	public void actionButtonClick(ClickEvent event)
+	{
+		RaavareDTO raavare = new RaavareDTO(0, raavareNavn.getText(), leverandoer.getText());
+		
+		// New user
+		if (raavareId.getText().equals(""))
+		{
+			service.createRaavare(raavare, token, actionCallback());
+		}
+		// Update user
+		else
+		{
+			raavare.raavareId = Integer.parseInt(raavareId.getText());
+			service.updateRaavare(raavare, token, actionCallback());
+		}
+	}
 	
 	@UiHandler("newButton")
 	public void newButtonClick(ClickEvent event) {
@@ -121,7 +123,7 @@ public class RaavareView extends Composite
 	
 	public void populateCellList()
 	{
-		service.listOperator(user.userId, token, new AsyncCallback<ArrayList<UserDTO>>()
+		service.listRaavare(token, new AsyncCallback<ArrayList<UserDTO>>()
 		{
 			
 			@Override
@@ -174,7 +176,7 @@ public class RaavareView extends Composite
 	
 	public void getOperatorService()
 	{
-		this.service = GWT.create(OperatorService.class);
+		this.service = GWT.create(RawMaterialService.class);
 		ServiceDefTarget endpoint = (ServiceDefTarget) this.service;
 		endpoint.setServiceEntryPoint(GWT.getModuleBaseURL() + SERVICEURL);
 	}

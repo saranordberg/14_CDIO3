@@ -28,7 +28,7 @@ public class LoginView extends Composite
 	private static LoginUiBinder uiBinder = GWT.create(LoginUiBinder.class);
 	
 	private UserServiceAsync service;
-	private final String SERVICEURL = "operatorService";
+	private final String SERVICEURL = "userService";
 	
 	@UiField
 	public TextBox userID, password;

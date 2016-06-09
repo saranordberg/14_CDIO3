@@ -1,6 +1,6 @@
 package cdio.service.implementation;
 
-public class RawMaterialsBatchServiceImpl
+public class RawMaterialBatchServiceImpl
 {
 
 }

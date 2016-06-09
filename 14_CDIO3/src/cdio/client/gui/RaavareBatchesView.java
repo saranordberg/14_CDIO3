@@ -21,19 +21,19 @@ import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
 import cdio.client.helpers.CellListHelper;
 import cdio.dal.dto.UserDTO;
-import cdio.service.UserServiceAsync;
+import cdio.service.RawMaterialBatchServiceAsync;
 
 public class RaavareBatchesView extends Composite
 {
 	@UiTemplate("RaavareBatchesView.ui.xml")
-	interface UserViewUiBinder extends UiBinder<Widget, RaavareBatchesView>
+	interface RaavareBatchesViewUiBinder extends UiBinder<Widget, RaavareBatchesView>
 	{
 	}
 	
 	private static RaavareBatchesViewUiBinder uiBinder = GWT.create(RaavareBatchesViewUiBinder.class);
 	
-	private UserServiceAsync service;
-	private final String SERVICEURL = "operatorService";
+	private RawMaterialBatchServiceAsync service;
+	private final String SERVICEURL = "rawMaterialBatchService";
 	
 	@UiField
 	public VerticalPanel content;
