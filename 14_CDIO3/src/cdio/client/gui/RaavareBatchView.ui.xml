@@ -30,24 +30,24 @@
 			
 			<g:VerticalPanel horizontalAlignment="ALIGN_LEFT" styleName="inner2" width="200px" spacing="0">
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:Label ui:field="userIdLabel" width="90%" horizontalAlignment="ALIGN_LEFT" >Raavare ID:</g:Label>
+					<g:Label ui:field="rbIdLabel" width="90%" horizontalAlignment="ALIGN_LEFT" >Raavarebatch ID:</g:Label>
 				</g:Cell>
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:TextBox readOnly="true"  ui:field="raavareId" width="90%"></g:TextBox>
-				</g:Cell>
-				
-				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:Label ui:field="firtNameLabel" width="90%" horizontalAlignment="ALIGN_LEFT">Raavare Navn:</g:Label>
-				</g:Cell>
-				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:TextBox ui:field="raavareNavn" width="90%"/>
+					<g:TextBox readOnly="true"  ui:field="rb_Id" width="90%"></g:TextBox>
 				</g:Cell>
 				
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:Label ui:field="lastNameLabel" width="90%" horizontalAlignment="ALIGN_LEFT">Leverandoer:</g:Label>
+					<g:Label ui:field="raavareIdLabel" width="90%" horizontalAlignment="ALIGN_LEFT">Raavare ID:</g:Label>
 				</g:Cell>
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:TextBox ui:field="leverandoer" width="90%"/>
+					<g:TextBox ui:field="raavare_Id" width="90%"/>
+				</g:Cell>
+				
+				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
+					<g:Label ui:field="MaengdeLabel" width="90%" horizontalAlignment="ALIGN_LEFT">Mængde:</g:Label>
+				</g:Cell>
+				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
+					<g:TextBox ui:field="maengde" width="90%"/>
 				</g:Cell>
 				
 				
