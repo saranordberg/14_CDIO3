@@ -90,6 +90,12 @@ public class MenuView extends Composite
 		content.add(new ReceptView(user, token));
 	}
 	
+	@UiHandler("product_batches_button")
+	void pbButtonClick(ClickEvent event) {
+		content.clear();
+		content.add(new ProductBatchView(user, token));
+	}
+	
 	public interface iMenuCallback
 	{
 	}

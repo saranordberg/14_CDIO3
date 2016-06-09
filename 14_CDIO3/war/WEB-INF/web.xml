@@ -22,6 +22,10 @@
  	<servlet-name>prescriptionServlet</servlet-name>
  	<servlet-class>cdio.service.implementation.PrescriptionServiceImpl</servlet-class>
  </servlet>
+ <servlet>
+ 	<servlet-name>productBatchServlet</servlet-name>
+ 	<servlet-class>cdio.service.implementation.ProductBatchServiceImpl</servlet-class>
+ </servlet>
  
  <servlet-mapping>
  	<servlet-name>userServlet</servlet-name>
@@ -38,6 +42,10 @@
  <servlet-mapping>
  	<servlet-name>prescriptionServlet</servlet-name>
  	<url-pattern>/Group14_CDIOFinal/prescriptionService</url-pattern>
+ </servlet-mapping>
+ <servlet-mapping>
+ 	<servlet-name>productBatchServlet</servlet-name>
+ 	<url-pattern>/Group14_CDIOFinal/productBatchService</url-pattern>
  </servlet-mapping>
   
   

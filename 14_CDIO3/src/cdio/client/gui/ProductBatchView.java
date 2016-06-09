@@ -38,7 +38,7 @@ public class ProductBatchView extends Composite
 	private static ProductBatchViewUiBinder uiBinder = GWT.create(ProductBatchViewUiBinder.class);
 	
 	private ProductBatchServiceAsync service;
-	private final String SERVICEURL = "ProductBatchService";
+	private final String SERVICEURL = "productBatchService";
 	
 	@UiField
 	public VerticalPanel content;
@@ -47,7 +47,7 @@ public class ProductBatchView extends Composite
 	@UiField
 	public Button actionButton;
 	
-	private ProduktBatchDTO pb;
+	private UserDTO user;
 	private String token;
 	
 	/*
@@ -56,9 +56,9 @@ public class ProductBatchView extends Composite
 	private CellListHelper cellList;
 	private SelectionChangeEvent.Handler selectionHandler = selectionHandler();
 	
-	public ProductBatchView(ProduktBatchDTO pb, String token)
+	public ProductBatchView(UserDTO user, String token)
 	{
-		this.pb = pb;
+		this.user = user;
 		this.token = token;
 		
 		getProductBatchService();
