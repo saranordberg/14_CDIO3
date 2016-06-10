@@ -40,12 +40,14 @@ public class ReceptView extends Composite
 	@UiField
 	public VerticalPanel content;
 	@UiField
-	public TextBox receptId, recept_navn;
+	public TextBox receptId, recept_navn, receptKomponentId, nomNetto, tolerance;
 	@UiField
 	public Button actionButton;
 	
 	private UserDTO user;
 	private String token;
+	
+	private ArrayList<ArrayList<TextBox>> receptKomponents;
 	
 	/*
 	 * SelectList variables
@@ -61,6 +63,11 @@ public class ReceptView extends Composite
 		getReceptService();
 		initWidget(uiBinder.createAndBindUi(this));
 		populateCellList();
+		
+//		receptKomponents.add(new ArrayList<TextBox>());
+//		receptKomponents.get(0).add(receptKomponentId);
+//		receptKomponents.get(0).add(nomNetto);
+//		receptKomponents.get(0).add(tolerance);
 	}
 	
 	private Handler selectionHandler()
