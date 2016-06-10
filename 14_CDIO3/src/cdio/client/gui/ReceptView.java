@@ -78,6 +78,7 @@ public class ReceptView extends Composite
 					@Override
 					public void onFailure(Throwable caught)
 					{
+						GWT.log(caught.getMessage());
 						Window.alert("Der skete en fejl. Kontakt venligst administratoren");
 					}
 					
@@ -127,6 +128,7 @@ public class ReceptView extends Composite
 			@Override
 			public void onFailure(Throwable caught)
 			{
+				GWT.log(caught.getMessage());
 				Window.alert("Der skete en fejl. Kontakt venligst administratoren");
 			}
 			

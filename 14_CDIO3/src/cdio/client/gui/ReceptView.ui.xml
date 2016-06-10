@@ -55,6 +55,20 @@
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
 					<g:TextBox readOnly="true"  ui:field="receptkomponent1" width="90%"></g:TextBox>
 				</g:Cell>
+				
+				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
+					<g:Label ui:field="nomNettoLabel" width="90%" horizontalAlignment="ALIGN_LEFT">Nom netto:</g:Label>
+				</g:Cell>
+				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
+					<g:TextBox ui:field="nomNetto" width="90%"/>
+				</g:Cell>
+				
+				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
+					<g:Label ui:field="toleranceLabel" width="90%" horizontalAlignment="ALIGN_LEFT">Tolerance:</g:Label>
+				</g:Cell>
+				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
+					<g:TextBox ui:field="tolerance" width="90%"/>
+				</g:Cell>
 			</g:VerticalPanel>
 		</g:HorizontalPanel>
 	</g:HTMLPanel>

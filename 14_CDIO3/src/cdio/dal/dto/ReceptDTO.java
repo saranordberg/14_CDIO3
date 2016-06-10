@@ -1,6 +1,7 @@
 package cdio.dal.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Recept Data Objekt
@@ -16,6 +17,7 @@ public class ReceptDTO  implements Serializable
 	/** Receptnavn min. 2 max. 20 karakterer */
 	public String receptNavn;
 	/** liste af kompenenter i recepten */
+	public ReceptKompDTO[] receptKomponents;
 	
     
 	public ReceptDTO() { }
