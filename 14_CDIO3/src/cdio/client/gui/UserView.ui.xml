@@ -61,7 +61,7 @@
 					<g:Label ui:field="cprLabel" width="90%" horizontalAlignment="ALIGN_LEFT">Cpr-nummer(10 karakterer):</g:Label>
 				</g:Cell>
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:CustomTextBox maxLength="10" ui:field="cpr" width="90%"/>
+					<g:TextBox maxLength="10" ui:field="cpr" width="90%"/>
 				</g:Cell>
 				
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
