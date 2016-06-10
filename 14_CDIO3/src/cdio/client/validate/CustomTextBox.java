@@ -9,7 +9,7 @@ public class CustomTextBox extends TextBox{
 
 private static final String TEXTBOX_VALIDATION_ERROR_STYLE = "error-text-box";
 private String errorMessage = "";
-private List<Validator> validators = new ArrayList<Validator>();
+private List<IValidator> validators = new ArrayList<IValidator>();
 
 public CustomTextBox() {
    }
@@ -26,13 +26,13 @@ public void setErrorMessage(String errorMessage) {
     this.errorMessage = errorMessage;
 }
 
-public void addValidator(Validator validator) {
+public void addValidator(IValidator validator) {
     validators.add(validator);
 }
 
 public boolean validate() {
     boolean validationResult = true;
-    for (Validator validator : validators) {
+    for (IValidator validator : validators) {
         validationResult = validator.validate(getValue().trim());
         if (!validationResult) {
             errorMessage = validator.getErrorMessage();

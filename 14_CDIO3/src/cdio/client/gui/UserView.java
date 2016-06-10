@@ -57,6 +57,7 @@ public class UserView extends Composite
 	
 	public UserView(UserDTO user, String token)
 	{
+		
 		this.user = user;
 		this.token = token;
 		
