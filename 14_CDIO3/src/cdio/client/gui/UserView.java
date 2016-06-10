@@ -20,6 +20,7 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
 import cdio.client.helpers.CellListHelper;
+import cdio.client.validate.CustomTextBox;
 import cdio.dal.dto.UserDTO;
 import cdio.service.UserService;
 import cdio.service.UserServiceAsync;
@@ -39,7 +40,9 @@ public class UserView extends Composite
 	@UiField
 	public VerticalPanel content;
 	@UiField
-	public TextBox userId, firstName, lastName, ini, cpr, password, userLevel;
+	public TextBox userId, firstName, lastName, ini, password, userLevel;
+	@UiField
+	public CustomTextBox cpr;
 	@UiField
 	public Button actionButton;
 	
