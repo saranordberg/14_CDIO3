@@ -17,7 +17,7 @@ public class ReceptDTO  implements Serializable
 	/** Receptnavn min. 2 max. 20 karakterer */
 	public String receptNavn;
 	/** liste af kompenenter i recepten */
-	public ReceptKompDTO[] receptKomponents;
+	public ReceptKompDTO[] receptKomps;
 	
     
 	public ReceptDTO() { }
@@ -25,6 +25,13 @@ public class ReceptDTO  implements Serializable
 	{
         this.receptId = receptId;
         this.receptNavn = receptNavn;
+    }
+	
+	public ReceptDTO(int receptId, String receptNavn, ReceptKompDTO[] receptKomps)
+	{
+        this.receptId = receptId;
+        this.receptNavn = receptNavn;
+        this.receptKomps = receptKomps;
     }
 
 	public String toString() { 

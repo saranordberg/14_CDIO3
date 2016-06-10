@@ -3,6 +3,7 @@ package cdio.client.gui;
 import java.util.ArrayList;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dev.util.Pair;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -13,6 +14,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -20,7 +22,9 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
 import cdio.client.helpers.CellListHelper;
+import cdio.client.helpers.Tuple;
 import cdio.dal.dto.ReceptDTO;
+import cdio.dal.dto.ReceptKompDTO;
 import cdio.dal.dto.UserDTO;
 import cdio.service.PrescriptionService;
 import cdio.service.PrescriptionServiceAsync;
@@ -40,14 +44,17 @@ public class ReceptView extends Composite
 	@UiField
 	public VerticalPanel content;
 	@UiField
-	public TextBox receptId, recept_navn, receptKomponentId, nomNetto, tolerance;
+	public TextBox receptId, recept_navn, raavareId, nomNetto, tolerance;
+	@UiField
+	public Label raavareIdLabel, nomNettoLabel, toleranceLabel;
+	@UiField VerticalPanel receptKomponentPanel;
 	@UiField
 	public Button actionButton;
 	
 	private UserDTO user;
 	private String token;
 	
-	private ArrayList<ArrayList<TextBox>> receptKomponents;
+	private ArrayList<ArrayList<Tuple<TextBox, Label>>> receptKomponents = new ArrayList<ArrayList<Tuple<TextBox, Label>>>();
 	
 	/*
 	 * SelectList variables
@@ -63,11 +70,10 @@ public class ReceptView extends Composite
 		getReceptService();
 		initWidget(uiBinder.createAndBindUi(this));
 		populateCellList();
-		
-//		receptKomponents.add(new ArrayList<TextBox>());
-//		receptKomponents.get(0).add(receptKomponentId);
-//		receptKomponents.get(0).add(nomNetto);
-//		receptKomponents.get(0).add(tolerance);
+		receptKomponents.add(new ArrayList<Tuple<TextBox,Label>>());
+		receptKomponents.get(0).add(new Tuple<TextBox, Label>(raavareId, raavareIdLabel));
+		receptKomponents.get(0).add(new Tuple<TextBox, Label>(nomNetto, nomNettoLabel));
+		receptKomponents.get(0).add(new Tuple<TextBox, Label>(tolerance, toleranceLabel));
 	}
 	
 	private Handler selectionHandler()
@@ -79,7 +85,7 @@ public class ReceptView extends Composite
 				String selected = cellList.selected();
 				int receptIdFromSelect = Integer.parseInt(selected.split(" : ")[0].replace(" ", ""));
 				
-				service.getRecept(receptIdFromSelect, token,  new AsyncCallback<ReceptDTO>()
+				service.getRecept(receptIdFromSelect, token, new AsyncCallback<ReceptDTO>()
 				{
 					
 					@Override
@@ -92,6 +98,50 @@ public class ReceptView extends Composite
 					@Override
 					public void onSuccess(ReceptDTO result)
 					{
+						for (ArrayList<Tuple<TextBox, Label>> receptKomp : receptKomponents)
+						{
+							for(Tuple<TextBox, Label> tuple : receptKomp) {
+								tuple.x.removeFromParent();
+								tuple.y.removeFromParent();
+							}
+						}
+						
+						receptKomponents = new ArrayList<ArrayList<Tuple<TextBox, Label>>>();
+						
+						for (ReceptKompDTO receptKomp : result.receptKomps)
+						{
+							Label raavareIdLabel = new Label();
+							raavareIdLabel.setText("Råvare ID:");
+							receptKomponentPanel.add(raavareIdLabel);
+							
+							TextBox raavareId = new TextBox();
+							raavareId.setText(receptKomp.raavareId+"");
+							receptKomponentPanel.add(raavareId);
+							
+							Label nomNettoLabel = new Label();
+							nomNettoLabel.setText("Nom netto:");
+							receptKomponentPanel.add(nomNettoLabel);
+							
+							TextBox nomNetto = new TextBox();
+							nomNetto.setText(receptKomp.nomNetto+"");
+							receptKomponentPanel.add(nomNetto);
+							
+							Label toleranceLabel = new Label();
+							toleranceLabel.setText("Tolerance:");
+							receptKomponentPanel.add(toleranceLabel);
+							
+							TextBox tolerance = new TextBox();
+							tolerance.setText(receptKomp.tolerance+"");
+							receptKomponentPanel.add(tolerance);
+							
+							ArrayList<Tuple<TextBox, Label>> receptKompArray = new ArrayList<Tuple<TextBox,Label>>();
+							receptKompArray.add(new Tuple<TextBox, Label>(raavareId, raavareIdLabel));
+							receptKompArray.add(new Tuple<TextBox, Label>(nomNetto, nomNettoLabel));
+							receptKompArray.add(new Tuple<TextBox, Label>(tolerance, toleranceLabel));
+							
+							receptKomponents.add(receptKompArray);
+						}
+						
 						receptId.setText(new Integer(result.receptId).toString());
 						recept_navn.setText(result.receptNavn);
 						actionButton.setText("Gem");
@@ -121,7 +171,8 @@ public class ReceptView extends Composite
 	}
 	
 	@UiHandler("newButton")
-	public void newButtonClick(ClickEvent event) {
+	public void newButtonClick(ClickEvent event)
+	{
 		receptId.setText("");
 		recept_navn.setText("");
 		actionButton.setText("Opret");
@@ -156,16 +207,18 @@ public class ReceptView extends Composite
 		});
 	}
 	
-	public AsyncCallback<Void> actionCallback() {
-		return new AsyncCallback<Void>() {
-
+	public AsyncCallback<Void> actionCallback()
+	{
+		return new AsyncCallback<Void>()
+		{
+			
 			@Override
 			public void onFailure(Throwable caught)
 			{
 				Window.alert("Der skete en fejl. Kontakt venligst administratoren");
 				GWT.log(caught.getMessage());
 			}
-
+			
 			@Override
 			public void onSuccess(Void result)
 			{

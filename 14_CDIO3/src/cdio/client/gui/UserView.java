@@ -40,9 +40,9 @@ public class UserView extends Composite
 	@UiField
 	public VerticalPanel content;
 	@UiField
-	public TextBox userId, firstName, lastName, ini, password, userLevel;
-	@UiField
-	public CustomTextBox cpr;
+	public TextBox userId, cpr, firstName, lastName, ini, password, userLevel;
+//	@UiField
+//	public CustomTextBox cpr;
 	@UiField
 	public Button actionButton;
 	

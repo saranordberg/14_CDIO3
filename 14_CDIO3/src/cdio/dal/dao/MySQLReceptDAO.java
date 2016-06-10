@@ -9,6 +9,7 @@ import cdio.dal.connection.Connector;
 import cdio.dal.dao.interfaces.DALException;
 import cdio.dal.dao.interfaces.ReceptDAO;
 import cdio.dal.dto.ReceptDTO;
+import cdio.dal.dto.ReceptKompDTO;
 
 public class MySQLReceptDAO implements ReceptDAO
 {
@@ -18,12 +19,29 @@ public class MySQLReceptDAO implements ReceptDAO
 	{
 		try
 		{
-			ResultSet rs = Connector.getInstance().doQuery("SELECT recept_navn FROM recept WHERE recept_id = ?",
+			ResultSet rs = Connector.getInstance().doQuery("SELECT R.recept_id, R.recept_navn, RK.raavare_id, RK.nom_netto, RK.tolerance FROM recept AS R"
+					+ " LEFT OUTER JOIN receptkomponent AS RK ON R.recept_id = RK.recept_id"
+					+ " WHERE R.recept_id = ?",
 					receptId);
+			
+			ReceptDTO recept = null;
+			ArrayList<ReceptKompDTO> receptKomps = new ArrayList<ReceptKompDTO>();
+			
 			if (!rs.first())
 				throw new DALException("Recepten " + receptId + " findes ikke");
+			else {
+				recept = new ReceptDTO(receptId, rs.getString("recept_navn"));
+				receptKomps.add(new ReceptKompDTO(rs.getInt("recept_id"), rs.getInt("raavare_id"), rs.getDouble("nom_netto"), rs.getDouble("tolerance")));
+			}
 			
-			return new ReceptDTO(receptId, rs.getString("recept_navn"));
+			while(rs.next()) {
+				receptKomps.add(new ReceptKompDTO(rs.getInt("recept_id"), rs.getInt("raavare_id"), rs.getDouble("nom_netto"), rs.getDouble("tolerance")));
+			}
+			
+			recept.receptKomps = new ReceptKompDTO[receptKomps.size()];
+			recept.receptKomps = receptKomps.toArray(recept.receptKomps);
+			
+			return recept;
 		}
 		catch (Exception e)
 		{

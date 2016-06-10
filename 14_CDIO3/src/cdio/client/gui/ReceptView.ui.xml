@@ -48,12 +48,12 @@
 					<g:Button ui:field="actionButton" width="190px" height="35px" styleName="rect_button">Opret</g:Button>
 				</g:Cell>
 			</g:VerticalPanel>
-			<g:VerticalPanel horizontalAlignment="ALIGN_LEFT" styleName="inner2" width="200px" spacing="0">
+			<g:VerticalPanel ui:field="receptKomponentPanel" horizontalAlignment="ALIGN_LEFT" styleName="inner2" width="200px" spacing="0">
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:Label ui:field="receptKomponentId" width="90%" horizontalAlignment="ALIGN_LEFT" >Receptkomponent ID:</g:Label>
+					<g:Label ui:field="raavareIdLabel" width="90%" horizontalAlignment="ALIGN_LEFT" >Råvare ID:</g:Label>
 				</g:Cell>
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:TextBox readOnly="true"  ui:field="receptkomponent1" width="90%"></g:TextBox>
+					<g:TextBox readOnly="true"  ui:field="raavareId" width="90%"></g:TextBox>
 				</g:Cell>
 				
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
