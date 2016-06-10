@@ -13,20 +13,18 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
-import cdio.client.gui.UserView.UserViewUiBinder;
 import cdio.client.helpers.CellListHelper;
 import cdio.dal.dto.ProduktBatchDTO;
 import cdio.dal.dto.UserDTO;
 import cdio.service.ProductBatchService;
 import cdio.service.ProductBatchServiceAsync;
-import cdio.service.UserService;
-import cdio.service.UserServiceAsync;
 
 public class ProductBatchView extends Composite
 {
@@ -43,7 +41,9 @@ public class ProductBatchView extends Composite
 	@UiField
 	public VerticalPanel content;
 	@UiField
-	public TextBox pbId, status, receptID;
+	public TextBox pbId, receptID;
+	@UiField
+	public ListBox status;
 	@UiField
 	public Button actionButton;
 	
@@ -88,7 +88,7 @@ public class ProductBatchView extends Composite
 					public void onSuccess(ProduktBatchDTO result)
 					{
 						pbId.setText(new Integer(result.pbId).toString());
-						status.setText(new Integer (result.status).toString());
+						status.setSelectedIndex(result.status);
 						receptID.setText(new Integer (result.receptId).toString());
 						actionButton.setText("Gem");
 					}
@@ -101,7 +101,7 @@ public class ProductBatchView extends Composite
 	@UiHandler("actionButton")
 	public void actionButtonClick(ClickEvent event)
 	{
-		ProduktBatchDTO pb = new ProduktBatchDTO(Integer.parseInt(pbId.getText()), Integer.parseInt(status.getText()), Integer.parseInt(receptID.getText()));
+		ProduktBatchDTO pb = new ProduktBatchDTO(Integer.parseInt(pbId.getText()), Integer.parseInt(status.getSelectedValue()), Integer.parseInt(receptID.getText()));
 		
 		// New productBatch
 		if (pbId.getText().equals(""))
@@ -119,7 +119,7 @@ public class ProductBatchView extends Composite
 	@UiHandler("newButton")
 	public void newButtonClick(ClickEvent event) {
 		pbId.setText("");
-		status.setText("");
+		status.setSelectedIndex(0);
 		receptID.setText("");
 		actionButton.setText("Opret");
 	}
@@ -168,7 +168,7 @@ public class ProductBatchView extends Composite
 				populateCellList();
 				
 				pbId.setText("");
-				status.setText("");
+				status.setSelectedIndex(1);
 				receptID.setText("");
 				actionButton.setText("Opret");
 				

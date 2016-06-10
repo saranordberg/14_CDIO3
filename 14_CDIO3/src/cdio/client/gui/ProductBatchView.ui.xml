@@ -40,8 +40,20 @@
 					<g:Label ui:field="StatusLabel" width="90%" horizontalAlignment="ALIGN_LEFT">Status:</g:Label>
 				</g:Cell>
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:TextBox ui:field="status" width="90%"/>
+					<g:ListBox ui:field="status" width="90%">
+					  <g:item value='0'>
+					    Oprettet
+					  </g:item>
+					  <g:item value='1'>
+					    Under produktion
+					  </g:item>
+					  <g:item value='2'>
+					    Afsluttet
+					  </g:item>
+					</g:ListBox>
 				</g:Cell>
+				
+				
 				
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
 					<g:Label ui:field="receptIDLabel" width="90%" horizontalAlignment="ALIGN_LEFT">Recept ID:</g:Label>

@@ -58,7 +58,7 @@ public class RaavareBatchView extends Composite
 		this.user = user;
 		this.token = token;
 		
-		getOperatorService();
+		getService();
 		initWidget(uiBinder.createAndBindUi(this));
 		populateCellList();
 	}
@@ -174,7 +174,7 @@ public class RaavareBatchView extends Composite
 		};
 	}
 	
-	public void getOperatorService()
+	public void getService()
 	{
 		this.service = GWT.create(RawMaterialBatchService.class);
 		ServiceDefTarget endpoint = (ServiceDefTarget) this.service;

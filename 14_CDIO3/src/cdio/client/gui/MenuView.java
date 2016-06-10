@@ -84,6 +84,12 @@ public class MenuView extends Composite
 		content.add(new RaavareView(user, token));
 	}
 	
+	@UiHandler("raw_materials_batches_button")
+	void RawMaterialBatchButtonClick(ClickEvent event) {
+		content.clear();
+		content.add(new RaavareBatchView(user, token));
+	}
+	
 	@UiHandler("prescriptions_button")
 	void prescriptionButtonClick(ClickEvent event) {
 		content.clear();
