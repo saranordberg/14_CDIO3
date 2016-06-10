@@ -87,7 +87,7 @@ public class MySQLProduktBatchKompDAO implements ProduktBatchKompDAO
 		{
 			Connector.getInstance().doUpdate(
 					"INSERT INTO produktbatchkomponent (pb_id, rb_id, tara, netto, user_id) VALUES (?,?,?,?,?)",
-					pbKomp.pbId, pbKomp.rbId, pbKomp.tara, pbKomp.netto, pbKomp.oprId);
+					pbKomp.pbId, pbKomp.rbId, pbKomp.tara, pbKomp.netto, pbKomp.user_id);
 		}
 		catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e)
 		{
@@ -103,7 +103,7 @@ public class MySQLProduktBatchKompDAO implements ProduktBatchKompDAO
 		{
 			Connector.getInstance().doUpdate(
 					"UPDATE produktbatchkomponent set tara = ?, netto = ?, user_id = ? WHERE pb_id = ? AND rb_id = ?",
-					pbKomp.tara, pbKomp.netto, pbKomp.oprId, pbKomp.pbId, pbKomp.rbId);
+					pbKomp.tara, pbKomp.netto, pbKomp.user_id, pbKomp.pbId, pbKomp.rbId);
 		}
 		catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e)
 		{
