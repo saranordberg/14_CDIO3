@@ -1,17 +1,50 @@
 package cdio.client.validate;
 
-public class LengthValidator implements IValidator
+import com.google.gwt.core.client.GWT;
+
+public class LengthValidator extends Validator
 {
 	
-	public String validate(String value, Object... parameters )
+	public LengthValidator(Object[] parameters)
 	{
-		if (value.length() == (int)parameters[0])
-		{
-			return null;
+		super(parameters);
+	}
+	
+	public String validate(String value, String name)
+	{
+		GWT.log(parameters[1].toString());
+		GWT.log((Integer)parameters[0]+"");
+		switch ((char)parameters[1]) {
+			case '>':
+				if(value.length() > (Integer)parameters[0])
+				{
+					return null;
+				}
+				else
+				{
+					return name + " must be  than " + (Integer)parameters[0] + " characters";
+				}
+			case '<':
+				if(value.length() < (Integer)parameters[0])
+				{
+					return null;
+				}
+				else
+				{
+					return name + " must be less than " + (Integer)parameters[0] + " characters";
+				}
+			case '=':
+				if(value.length() == (Integer)parameters[0])
+				{
+					return null;
+				}
+				else
+				{
+					return name + " must be " + (Integer)parameters[0] + " characters";
+				}
+			default:
+				return null;
 		}
-		else
-		{
-			return "Enter valid CPR, 10 characters";
-		}
+		
 	}
 }

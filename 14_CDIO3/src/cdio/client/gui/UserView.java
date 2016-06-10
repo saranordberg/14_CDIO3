@@ -20,7 +20,11 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
 import cdio.client.helpers.CellListHelper;
-import cdio.client.validate.CustomTextBox;
+import cdio.client.validate.CharactersValidator;
+import cdio.client.validate.LengthValidator;
+import cdio.client.validate.NumberValidator;
+import cdio.client.validate.Validator;
+import cdio.client.validate.ValidatorHelper;
 import cdio.dal.dto.UserDTO;
 import cdio.service.UserService;
 import cdio.service.UserServiceAsync;
@@ -48,6 +52,7 @@ public class UserView extends Composite
 	
 	private UserDTO user;
 	private String token;
+	public ValidatorHelper validatorHelper = new ValidatorHelper();
 	
 	/*
 	 * SelectList variables
@@ -57,13 +62,24 @@ public class UserView extends Composite
 	
 	public UserView(UserDTO user, String token)
 	{
+		getUserService();
+		initWidget(uiBinder.createAndBindUi(this));
 		
 		this.user = user;
 		this.token = token;
 		
-		getOperatorService();
-		initWidget(uiBinder.createAndBindUi(this));
 		populateCellList();
+		ArrayList<Validator> cprValidators = new ArrayList<Validator>();
+		ArrayList<Validator> nameValidators = new ArrayList<Validator>();
+
+		cprValidators.add(new LengthValidator(new Object[] { new Integer( 10 ), '=' }));
+		cprValidators.add(new NumberValidator(null));
+		validatorHelper.add("CPR nummer", cpr, cprValidators);
+		
+		nameValidators.add(new LengthValidator(new Object[] { new Integer( 50 ), '<' }));
+		nameValidators.add(new CharactersValidator(null));
+		validatorHelper.add("First name", firstName, nameValidators );
+		validatorHelper.add("Last name", lastName, nameValidators );
 	}
 	
 	private Handler selectionHandler()
@@ -107,6 +123,10 @@ public class UserView extends Composite
 	{
 		UserDTO user = new UserDTO(0, firstName.getText(), lastName.getText(), ini.getText(), cpr.getText(),
 				password.getText(), Integer.parseInt(userLevel.getText()));
+		
+		
+		if(!validatorHelper.validate())
+			return;
 		
 		// New user
 		if (userId.getText().equals(""))
@@ -190,7 +210,7 @@ public class UserView extends Composite
 		};
 	}
 	
-	public void getOperatorService()
+	public void getUserService()
 	{
 		this.service = GWT.create(UserService.class);
 		ServiceDefTarget endpoint = (ServiceDefTarget) this.service;
