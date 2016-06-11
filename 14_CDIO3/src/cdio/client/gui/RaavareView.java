@@ -69,7 +69,6 @@ public class RaavareView extends Composite
 		ArrayList<Validator> textValidators = new ArrayList<Validator>();
 		
 		textValidators.add(new LengthValidator(new Object[] { new Integer( 30 ), '<' }));
-		textValidators.add(new CharactersValidator(null));
 		validatorHelper.add("Råvare navn", raavareNavn, textValidators );
 		validatorHelper.add("Leverandør", leverandoer, textValidators );
 	}
@@ -111,6 +110,8 @@ public class RaavareView extends Composite
 	{
 		RaavareDTO raavare = new RaavareDTO(0, raavareNavn.getText(), leverandoer.getText());
 		
+		if(!validatorHelper.validate())
+			return;
 		// New user
 		if (raavareId.getText().equals(""))
 		{
