@@ -71,6 +71,8 @@ public class UserView extends Composite
 		populateCellList();
 		ArrayList<Validator> cprValidators = new ArrayList<Validator>();
 		ArrayList<Validator> nameValidators = new ArrayList<Validator>();
+		ArrayList<Validator> iniValidators = new ArrayList<Validator>();
+		ArrayList<Validator> niveauValidators = new ArrayList<Validator>();
 
 		cprValidators.add(new LengthValidator(new Object[] { new Integer( 10 ), '=' }));
 		cprValidators.add(new NumberValidator(null));
@@ -80,6 +82,17 @@ public class UserView extends Composite
 		nameValidators.add(new CharactersValidator(null));
 		validatorHelper.add("First name", firstName, nameValidators );
 		validatorHelper.add("Last name", lastName, nameValidators );
+		
+		iniValidators.add(new LengthValidator(new Object[] { new Integer ( 5 ), '<' }));
+		iniValidators.add(new CharactersValidator(null));
+		validatorHelper.add("Initialer", ini, iniValidators);
+		
+		niveauValidators.add(new LengthValidator(new Object[] { new Integer( 4 ), '<' }));
+		niveauValidators.add(new NumberValidator(null));
+		validatorHelper.add("Bruger niveau", userLevel, niveauValidators);
+		
+		
+		
 	}
 	
 	private Handler selectionHandler()
