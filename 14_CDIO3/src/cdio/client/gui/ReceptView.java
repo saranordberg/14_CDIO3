@@ -23,6 +23,11 @@ import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
 import cdio.client.helpers.CellListHelper;
 import cdio.client.helpers.Tuple;
+import cdio.client.validate.CharactersValidator;
+import cdio.client.validate.LengthValidator;
+import cdio.client.validate.NumberValidator;
+import cdio.client.validate.Validator;
+import cdio.client.validate.ValidatorHelper;
 import cdio.dal.dto.ReceptDTO;
 import cdio.dal.dto.ReceptKompDTO;
 import cdio.dal.dto.UserDTO;
@@ -53,6 +58,7 @@ public class ReceptView extends Composite
 	
 	private UserDTO user;
 	private String token;
+	public ValidatorHelper validatorHelper = new ValidatorHelper();
 	
 	private ArrayList<ArrayList<Tuple<TextBox, Label>>> receptKomponents = new ArrayList<ArrayList<Tuple<TextBox, Label>>>();
 	
@@ -64,16 +70,29 @@ public class ReceptView extends Composite
 	
 	public ReceptView(UserDTO user, String token)
 	{
+		getReceptService();
+		initWidget(uiBinder.createAndBindUi(this));
+		
 		this.user = user;
 		this.token = token;
 		
-		getReceptService();
-		initWidget(uiBinder.createAndBindUi(this));
+		
 		populateCellList();
 		receptKomponents.add(new ArrayList<Tuple<TextBox,Label>>());
 		receptKomponents.get(0).add(new Tuple<TextBox, Label>(raavareId, raavareIdLabel));
 		receptKomponents.get(0).add(new Tuple<TextBox, Label>(nomNetto, nomNettoLabel));
 		receptKomponents.get(0).add(new Tuple<TextBox, Label>(tolerance, toleranceLabel));
+		
+		ArrayList<Validator> textValidators = new ArrayList<Validator>();
+		ArrayList<Validator> idValidators = new ArrayList<Validator>();
+		
+		textValidators.add(new LengthValidator(new Object[] { new Integer( 50 ), '<' }));
+		textValidators.add(new CharactersValidator(null));
+		validatorHelper.add("Recept navn", recept_navn, textValidators );
+		
+		idValidators.add(new LengthValidator(new Object[] { new Integer( 50 ), '<' }));
+		idValidators.add(new NumberValidator(null));
+		validatorHelper.add("Raavare ID", raavareId, idValidators );
 	}
 	
 	private Handler selectionHandler()
@@ -156,6 +175,9 @@ public class ReceptView extends Composite
 	public void actionButtonClick(ClickEvent event)
 	{
 		ReceptDTO recept = new ReceptDTO(0, recept_navn.getText());
+		
+		if(!validatorHelper.validate())
+			return;
 		
 		// New user
 		if (receptId.getText().equals(""))
