@@ -20,6 +20,10 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
 import cdio.client.helpers.CellListHelper;
+import cdio.client.validate.LengthValidator;
+import cdio.client.validate.NumberValidator;
+import cdio.client.validate.Validator;
+import cdio.client.validate.ValidatorHelper;
 import cdio.dal.dto.RaavareBatchDTO;
 import cdio.dal.dto.UserDTO;
 import cdio.service.RawMaterialBatchService;
@@ -46,6 +50,7 @@ public class RaavareBatchView extends Composite
 	
 	private UserDTO user;
 	private String token;
+	public ValidatorHelper validatorHelper = new ValidatorHelper();
 	
 	/*
 	 * SelectList variables
@@ -55,12 +60,23 @@ public class RaavareBatchView extends Composite
 	
 	public RaavareBatchView(UserDTO user, String token)
 	{
+		getService();
+		initWidget(uiBinder.createAndBindUi(this));
+		
 		this.user = user;
 		this.token = token;
 		
-		getService();
-		initWidget(uiBinder.createAndBindUi(this));
 		populateCellList();
+		ArrayList<Validator> idValidators = new ArrayList<Validator>();
+		ArrayList<Validator> maengdeValidators = new ArrayList<Validator>();
+		
+//		idValidators.add(new LengthValidator(new Object[] { new Integer( 10 ), '<' }));
+		idValidators.add(new NumberValidator(null));
+		validatorHelper.add("Raavare id", raavare_Id, idValidators);
+		
+		maengdeValidators.add(new LengthValidator(new Object[] { new Integer( 21 ), '<' }));
+		maengdeValidators.add(new NumberValidator(null));
+		validatorHelper.add("Mængde", maengde, maengdeValidators);
 	}
 	
 	private Handler selectionHandler()
@@ -99,6 +115,9 @@ public class RaavareBatchView extends Composite
 	public void actionButtonClick(ClickEvent event)
 	{
 		RaavareBatchDTO raavareBatch = new RaavareBatchDTO(0, Integer.parseInt(raavare_Id.getText()), Double.parseDouble(maengde.getText()));
+		
+		if(!validatorHelper.validate())
+			return;
 		
 		// New user
 		if (rb_Id.getText().equals(""))
