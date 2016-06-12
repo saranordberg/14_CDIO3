@@ -37,7 +37,8 @@ public class Connector
 		
 		return instance == null ? instance = new Connector() : instance;
 	}
-//	
+	
+	//
 	private Connection connectToDatabase(String url, String username, String password)
 			throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException
 	{
@@ -48,13 +49,12 @@ public class Connector
 		return (Connection) DriverManager.getConnection(url, username, password);
 	}
 	
-	private Connector()
-			throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException
+	private Connector() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException
 	{
-		conn = connectToDatabase("jdbc:mysql://" + Constant.server + ":" + Constant.port + "/" + Constant.database, Constant.username, Constant.password);
+		conn = connectToDatabase("jdbc:mysql://" + Constant.server + ":" + Constant.port + "/" + Constant.database,
+				Constant.username, Constant.password);
 		stm = conn.createStatement();
 	}
-
 	
 	public ResultSet doQuery(String query, Object... parameters) throws DALException
 	{

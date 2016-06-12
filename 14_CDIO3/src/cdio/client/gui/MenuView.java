@@ -32,7 +32,8 @@ public class MenuView extends Composite
 	}
 	
 	@UiField
-	Button opr_button, prescriptions_button, raw_materials_button, raw_materials_batches_button, product_batches_button, example_button;
+	Button opr_button, prescriptions_button, raw_materials_button, raw_materials_batches_button, product_batches_button,
+			example_button;
 	@UiField
 	VerticalPanel content;
 	@UiField
@@ -55,8 +56,8 @@ public class MenuView extends Composite
 		initWidget(uiBinder.createAndBindUi(this));
 		
 		name.setText(user.firstName + " " + user.lastName);
-		GWT.log(this.userLevel+"");
-		GWT.log(""+UserLevels.HasRight(this.userLevel, MenuLevel.AFVEJNING));
+		GWT.log(this.userLevel + "");
+		GWT.log("" + UserLevels.HasRight(this.userLevel, MenuLevel.AFVEJNING));
 		opr_button.setVisible(UserLevels.HasRight(this.userLevel, MenuLevel.AFVEJNING));
 		prescriptions_button.setVisible(UserLevels.HasRight(this.userLevel, MenuLevel.RECEPT));
 		raw_materials_button.setVisible(UserLevels.HasRight(this.userLevel, MenuLevel.RAAVARE));
@@ -73,31 +74,36 @@ public class MenuView extends Composite
 	}
 	
 	@UiHandler("opr_button")
-	void userButtonClick(ClickEvent event) {
+	void userButtonClick(ClickEvent event)
+	{
 		content.clear();
 		content.add(new UserView(user, token));
 	}
 	
 	@UiHandler("raw_materials_button")
-	void RawButtonClick(ClickEvent event) {
+	void RawButtonClick(ClickEvent event)
+	{
 		content.clear();
 		content.add(new RaavareView(user, token));
 	}
 	
 	@UiHandler("raw_materials_batches_button")
-	void RawMaterialBatchButtonClick(ClickEvent event) {
+	void RawMaterialBatchButtonClick(ClickEvent event)
+	{
 		content.clear();
 		content.add(new RaavareBatchView(user, token));
 	}
 	
 	@UiHandler("prescriptions_button")
-	void prescriptionButtonClick(ClickEvent event) {
+	void prescriptionButtonClick(ClickEvent event)
+	{
 		content.clear();
 		content.add(new ReceptView(user, token));
 	}
 	
 	@UiHandler("product_batches_button")
-	void pbButtonClick(ClickEvent event) {
+	void pbButtonClick(ClickEvent event)
+	{
 		content.clear();
 		content.add(new ProductBatchView(user, token));
 	}

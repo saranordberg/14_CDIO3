@@ -9,7 +9,6 @@ import cdio.dal.dao.interfaces.DALException;
 import cdio.dal.dto.ProduktBatchDTO;
 import cdio.service.ProductBatchService;
 
-
 public class ProductBatchServiceImpl extends RemoteServiceServlet implements ProductBatchService
 {
 	@Override

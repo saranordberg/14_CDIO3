@@ -14,29 +14,37 @@ import cdio.dal.dao.MySQLProduktBatchDAO;
 import cdio.dal.dao.interfaces.DALException;
 import cdio.dal.dto.ProduktBatchDTO;
 
-public class ProduktBatch {
+public class ProduktBatch
+{
 	Connector db;
+	
 	@Test
-	public void GetProduktBatch() throws DALException {
+	public void GetProduktBatch() throws DALException
+	{
 		MySQLProduktBatchDAO conn = new MySQLProduktBatchDAO();
-		ProduktBatchDTO  op = conn.getProduktBatch(1);
+		ProduktBatchDTO op = conn.getProduktBatch(1);
 		assertNotNull(op);
 	}
+	
 	@Test
-	public void GetProduktBatchKList() throws DALException {
+	public void GetProduktBatchKList() throws DALException
+	{
 		MySQLProduktBatchDAO conn = new MySQLProduktBatchDAO();
 		List<ProduktBatchDTO> op = conn.getProduktBatchList();
 		assertNotNull(op);
 	}
 	
 	@Test
-	public void UpdateProduktBatch() throws DALException {
+	public void UpdateProduktBatch() throws DALException
+	{
 		ProduktBatchDTO x = new ProduktBatchDTO(1, 2, 1);
 		MySQLProduktBatchDAO conn = new MySQLProduktBatchDAO();
 		conn.updateProduktBatch(x);
 	}
+	
 	@Test
-	public void createProduktBatchKomp() throws DALException {
+	public void createProduktBatchKomp() throws DALException
+	{
 		ProduktBatchDTO x = new ProduktBatchDTO(0, 3, 3);
 		MySQLProduktBatchDAO conn = new MySQLProduktBatchDAO();
 		conn.createProduktBatch(x);

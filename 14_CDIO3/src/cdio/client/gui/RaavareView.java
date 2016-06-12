@@ -68,9 +68,9 @@ public class RaavareView extends Composite
 		populateCellList();
 		ArrayList<Validator> textValidators = new ArrayList<Validator>();
 		
-		textValidators.add(new LengthValidator(new Object[] { new Integer( 30 ), '<' }));
-		validatorHelper.add("Råvare navn", raavareNavn, textValidators );
-		validatorHelper.add("Leverandør", leverandoer, textValidators );
+		textValidators.add(new LengthValidator(new Object[] { new Integer(30), '<' }));
+		validatorHelper.add("Råvare navn", raavareNavn, textValidators);
+		validatorHelper.add("Leverandør", leverandoer, textValidators);
 	}
 	
 	private Handler selectionHandler()
@@ -110,7 +110,7 @@ public class RaavareView extends Composite
 	{
 		RaavareDTO raavare = new RaavareDTO(0, raavareNavn.getText(), leverandoer.getText());
 		
-		if(!validatorHelper.validate())
+		if (!validatorHelper.validate())
 			return;
 		// New user
 		if (raavareId.getText().equals(""))
@@ -126,7 +126,8 @@ public class RaavareView extends Composite
 	}
 	
 	@UiHandler("newButton")
-	public void newButtonClick(ClickEvent event) {
+	public void newButtonClick(ClickEvent event)
+	{
 		raavareId.setText("");
 		raavareNavn.setText("");
 		leverandoer.setText("");
@@ -151,7 +152,6 @@ public class RaavareView extends Composite
 				
 				for (RaavareDTO result : results)
 					values.add(result.raavareId + " : " + result.raavareNavn);
-			
 				
 				cellList = new CellListHelper(values, selectionHandler);
 				
@@ -162,16 +162,18 @@ public class RaavareView extends Composite
 		});
 	}
 	
-	public AsyncCallback<Void> actionCallback() {
-		return new AsyncCallback<Void>() {
-
+	public AsyncCallback<Void> actionCallback()
+	{
+		return new AsyncCallback<Void>()
+		{
+			
 			@Override
 			public void onFailure(Throwable caught)
 			{
 				Window.alert("Der skete en fejl. Kontakt venligst administratoren");
 				GWT.log(caught.getMessage());
 			}
-
+			
 			@Override
 			public void onSuccess(Void result)
 			{

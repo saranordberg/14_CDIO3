@@ -19,9 +19,10 @@ public class MySQLReceptDAO implements ReceptDAO
 	{
 		try
 		{
-			ResultSet rs = Connector.getInstance().doQuery("SELECT R.recept_id, R.recept_navn, RK.raavare_id, RK.nom_netto, RK.tolerance FROM recept AS R"
-					+ " LEFT OUTER JOIN receptkomponent AS RK ON R.recept_id = RK.recept_id"
-					+ " WHERE R.recept_id = ?",
+			ResultSet rs = Connector.getInstance().doQuery(
+					"SELECT R.recept_id, R.recept_navn, RK.raavare_id, RK.nom_netto, RK.tolerance FROM recept AS R"
+							+ " LEFT OUTER JOIN receptkomponent AS RK ON R.recept_id = RK.recept_id"
+							+ " WHERE R.recept_id = ?",
 					receptId);
 			
 			ReceptDTO recept = null;
@@ -29,13 +30,17 @@ public class MySQLReceptDAO implements ReceptDAO
 			
 			if (!rs.first())
 				throw new DALException("Recepten " + receptId + " findes ikke");
-			else {
+			else
+			{
 				recept = new ReceptDTO(receptId, rs.getString("recept_navn"));
-				receptKomps.add(new ReceptKompDTO(rs.getInt("recept_id"), rs.getInt("raavare_id"), rs.getDouble("nom_netto"), rs.getDouble("tolerance")));
+				receptKomps.add(new ReceptKompDTO(rs.getInt("recept_id"), rs.getInt("raavare_id"),
+						rs.getDouble("nom_netto"), rs.getDouble("tolerance")));
 			}
 			
-			while(rs.next()) {
-				receptKomps.add(new ReceptKompDTO(rs.getInt("recept_id"), rs.getInt("raavare_id"), rs.getDouble("nom_netto"), rs.getDouble("tolerance")));
+			while (rs.next())
+			{
+				receptKomps.add(new ReceptKompDTO(rs.getInt("recept_id"), rs.getInt("raavare_id"),
+						rs.getDouble("nom_netto"), rs.getDouble("tolerance")));
 			}
 			
 			recept.receptKomps = new ReceptKompDTO[receptKomps.size()];

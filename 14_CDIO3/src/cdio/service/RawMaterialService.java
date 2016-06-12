@@ -8,15 +8,14 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import cdio.dal.dao.interfaces.DALException;
 import cdio.dal.dto.RaavareDTO;
 
-
 @RemoteServiceRelativePath("rawMaterialService")
 public interface RawMaterialService extends RemoteService
 {
-	 RaavareDTO getRaavare (int raavareID, String token) throws DALException;
-	 
-	 void createRaavare (RaavareDTO raavare, String token) throws DALException;
-	 
-	 void updateRaavare (RaavareDTO raavare, String token) throws DALException;
-	 
-	 List<RaavareDTO> listRaavare(String token) throws DALException;
+	RaavareDTO getRaavare(int raavareID, String token) throws DALException;
+	
+	void createRaavare(RaavareDTO raavare, String token) throws DALException;
+	
+	void updateRaavare(RaavareDTO raavare, String token) throws DALException;
+	
+	List<RaavareDTO> listRaavare(String token) throws DALException;
 }

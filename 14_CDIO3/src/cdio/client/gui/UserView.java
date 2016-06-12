@@ -45,8 +45,8 @@ public class UserView extends Composite
 	public VerticalPanel content;
 	@UiField
 	public TextBox userId, cpr, firstName, lastName, ini, password, userLevel;
-//	@UiField
-//	public CustomTextBox cpr;
+	// @UiField
+	// public CustomTextBox cpr;
 	@UiField
 	public Button actionButton;
 	
@@ -73,25 +73,23 @@ public class UserView extends Composite
 		ArrayList<Validator> nameValidators = new ArrayList<Validator>();
 		ArrayList<Validator> iniValidators = new ArrayList<Validator>();
 		ArrayList<Validator> niveauValidators = new ArrayList<Validator>();
-
-		cprValidators.add(new LengthValidator(new Object[] { new Integer( 10 ), '=' }));
+		
+		cprValidators.add(new LengthValidator(new Object[] { new Integer(10), '=' }));
 		cprValidators.add(new NumberValidator(null));
 		validatorHelper.add("CPR nummer", cpr, cprValidators);
 		
-		nameValidators.add(new LengthValidator(new Object[] { new Integer( 50 ), '<' }));
+		nameValidators.add(new LengthValidator(new Object[] { new Integer(50), '<' }));
 		nameValidators.add(new CharactersValidator(null));
-		validatorHelper.add("First name", firstName, nameValidators );
-		validatorHelper.add("Last name", lastName, nameValidators );
+		validatorHelper.add("First name", firstName, nameValidators);
+		validatorHelper.add("Last name", lastName, nameValidators);
 		
-		iniValidators.add(new LengthValidator(new Object[] { new Integer ( 5 ), '<' }));
+		iniValidators.add(new LengthValidator(new Object[] { new Integer(5), '<' }));
 		iniValidators.add(new CharactersValidator(null));
 		validatorHelper.add("Initialer", ini, iniValidators);
 		
-		niveauValidators.add(new LengthValidator(new Object[] { new Integer( 4 ), '<' }));
+		niveauValidators.add(new LengthValidator(new Object[] { new Integer(4), '<' }));
 		niveauValidators.add(new NumberValidator(null));
 		validatorHelper.add("Bruger niveau", userLevel, niveauValidators);
-		
-		
 		
 	}
 	
@@ -137,8 +135,7 @@ public class UserView extends Composite
 		UserDTO user = new UserDTO(0, firstName.getText(), lastName.getText(), ini.getText(), cpr.getText(),
 				password.getText(), Integer.parseInt(userLevel.getText()));
 		
-		
-		if(!validatorHelper.validate())
+		if (!validatorHelper.validate())
 			return;
 		
 		// New user
@@ -155,7 +152,8 @@ public class UserView extends Composite
 	}
 	
 	@UiHandler("newButton")
-	public void newButtonClick(ClickEvent event) {
+	public void newButtonClick(ClickEvent event)
+	{
 		userId.setText("");
 		firstName.setText("");
 		lastName.setText("");
@@ -194,16 +192,18 @@ public class UserView extends Composite
 		});
 	}
 	
-	public AsyncCallback<Void> actionCallback() {
-		return new AsyncCallback<Void>() {
-
+	public AsyncCallback<Void> actionCallback()
+	{
+		return new AsyncCallback<Void>()
+		{
+			
 			@Override
 			public void onFailure(Throwable caught)
 			{
 				Window.alert("Der skete en fejl. Kontakt venligst administratoren");
 				GWT.log(caught.getMessage());
 			}
-
+			
 			@Override
 			public void onSuccess(Void result)
 			{

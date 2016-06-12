@@ -70,11 +70,12 @@ public class RaavareBatchView extends Composite
 		ArrayList<Validator> idValidators = new ArrayList<Validator>();
 		ArrayList<Validator> maengdeValidators = new ArrayList<Validator>();
 		
-//		idValidators.add(new LengthValidator(new Object[] { new Integer( 10 ), '<' }));
+		// idValidators.add(new LengthValidator(new Object[] { new Integer( 10
+		// ), '<' }));
 		idValidators.add(new NumberValidator(null));
 		validatorHelper.add("Raavare id", raavare_Id, idValidators);
 		
-		maengdeValidators.add(new LengthValidator(new Object[] { new Integer( 21 ), '<' }));
+		maengdeValidators.add(new LengthValidator(new Object[] { new Integer(21), '<' }));
 		maengdeValidators.add(new NumberValidator(null));
 		validatorHelper.add("Mængde", maengde, maengdeValidators);
 	}
@@ -88,7 +89,7 @@ public class RaavareBatchView extends Composite
 				String selected = cellList.selected();
 				int raavareBatchIdFromSelect = Integer.parseInt(selected.split(" : ")[0].replace(" ", ""));
 				
-				service.getRaavareBatch(raavareBatchIdFromSelect,token, new AsyncCallback<RaavareBatchDTO>()
+				service.getRaavareBatch(raavareBatchIdFromSelect, token, new AsyncCallback<RaavareBatchDTO>()
 				{
 					
 					@Override
@@ -101,8 +102,8 @@ public class RaavareBatchView extends Composite
 					public void onSuccess(RaavareBatchDTO result)
 					{
 						rb_Id.setText(new Integer(result.rbId).toString());
-						raavare_Id.setText(new Integer (result.raavareId).toString());
-						maengde.setText(new Double (result.maengde).toString());
+						raavare_Id.setText(new Integer(result.raavareId).toString());
+						maengde.setText(new Double(result.maengde).toString());
 						actionButton.setText("Gem");
 					}
 					
@@ -114,15 +115,16 @@ public class RaavareBatchView extends Composite
 	@UiHandler("actionButton")
 	public void actionButtonClick(ClickEvent event)
 	{
-		RaavareBatchDTO raavareBatch = new RaavareBatchDTO(0, Integer.parseInt(raavare_Id.getText()), Double.parseDouble(maengde.getText()));
+		RaavareBatchDTO raavareBatch = new RaavareBatchDTO(0, Integer.parseInt(raavare_Id.getText()),
+				Double.parseDouble(maengde.getText()));
 		
-		if(!validatorHelper.validate())
+		if (!validatorHelper.validate())
 			return;
 		
 		// New user
 		if (rb_Id.getText().equals(""))
 		{
-			service.createRaavareBatch(raavareBatch,token, actionCallback());
+			service.createRaavareBatch(raavareBatch, token, actionCallback());
 		}
 		// Update user
 		else
@@ -133,7 +135,8 @@ public class RaavareBatchView extends Composite
 	}
 	
 	@UiHandler("newButton")
-	public void newButtonClick(ClickEvent event) {
+	public void newButtonClick(ClickEvent event)
+	{
 		rb_Id.setText("");
 		raavare_Id.setText("");
 		maengde.setText("");
@@ -168,16 +171,18 @@ public class RaavareBatchView extends Composite
 		});
 	}
 	
-	public AsyncCallback<Void> actionCallback() {
-		return new AsyncCallback<Void>() {
-
+	public AsyncCallback<Void> actionCallback()
+	{
+		return new AsyncCallback<Void>()
+		{
+			
 			@Override
 			public void onFailure(Throwable caught)
 			{
 				Window.alert("Der skete en fejl. Kontakt venligst administratoren");
 				GWT.log(caught.getMessage());
 			}
-
+			
 			@Override
 			public void onSuccess(Void result)
 			{

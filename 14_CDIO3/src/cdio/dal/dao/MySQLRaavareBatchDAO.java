@@ -18,7 +18,8 @@ public class MySQLRaavareBatchDAO implements RaavareBatchDAO
 	{
 		try
 		{
-			ResultSet rs = Connector.getInstance().doQuery("Select rb_id, maengde, raavare_id FROM raavarebatch WHERE rb_id = ?", rbId);
+			ResultSet rs = Connector.getInstance()
+					.doQuery("Select rb_id, maengde, raavare_id FROM raavarebatch WHERE rb_id = ?", rbId);
 			if (!rs.first())
 				throw new DALException("Raavaretbatchen" + rbId + "findes ikke");
 			
@@ -57,8 +58,8 @@ public class MySQLRaavareBatchDAO implements RaavareBatchDAO
 		
 		try
 		{
-			ResultSet rs = Connector.getInstance().doQuery("SELECT rb_id, maengde, raavare_id FROM raavareBatch WHERE raavare_id = ?",
-					raavareId);
+			ResultSet rs = Connector.getInstance()
+					.doQuery("SELECT rb_id, maengde, raavare_id FROM raavareBatch WHERE raavare_id = ?", raavareId);
 			while (rs.next())
 			{
 				list.add(new RaavareBatchDTO(rs.getInt("rb_id"), rs.getInt("raavare_id"), rs.getFloat("maengde")));
@@ -76,8 +77,8 @@ public class MySQLRaavareBatchDAO implements RaavareBatchDAO
 	{
 		try
 		{
-			Connector.getInstance().doUpdate("INSERT INTO raavarebatch(rb_id, maengde, raavare_id) VALUES (?,?,?)", raavarebatch.rbId,
-					raavarebatch.maengde, raavarebatch.raavareId);
+			Connector.getInstance().doUpdate("INSERT INTO raavarebatch(rb_id, maengde, raavare_id) VALUES (?,?,?)",
+					raavarebatch.rbId, raavarebatch.maengde, raavarebatch.raavareId);
 		}
 		catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e)
 		{
@@ -92,8 +93,8 @@ public class MySQLRaavareBatchDAO implements RaavareBatchDAO
 	{
 		try
 		{
-			Connector.getInstance().doUpdate("UPDATE raavarebatch SET maengde = ?,  raavare_id = ? WHERE rb_id = ?", raavarebatch.maengde,
-					raavarebatch.raavareId, raavarebatch.rbId);
+			Connector.getInstance().doUpdate("UPDATE raavarebatch SET maengde = ?,  raavare_id = ? WHERE rb_id = ?",
+					raavarebatch.maengde, raavarebatch.raavareId, raavarebatch.rbId);
 		}
 		catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e)
 		{

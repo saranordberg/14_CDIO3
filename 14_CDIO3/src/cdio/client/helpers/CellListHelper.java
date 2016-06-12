@@ -22,18 +22,20 @@ public class CellListHelper
 	
 	public void createCellList(ArrayList<String> values, SelectionChangeEvent.Handler selectionHandler)
 	{
-	    cellList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
-
-	    // Add a selection model to handle user selection.
-	    cellList.setSelectionModel(selectionModel);
-	    selectionModel.addSelectionChangeHandler(selectionHandler);
-
-	    // Set the total row count. This isn't strictly necessary, but it affects
-	    // paging calculations, so its good habit to keep the row count up to date.
-	    cellList.setRowCount(values.size(), true);
-
-	    // Push the data into the widget.
-	    cellList.setRowData(0, values);
+		cellList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
+		
+		// Add a selection model to handle user selection.
+		cellList.setSelectionModel(selectionModel);
+		selectionModel.addSelectionChangeHandler(selectionHandler);
+		
+		// Set the total row count. This isn't strictly necessary, but it
+		// affects
+		// paging calculations, so its good habit to keep the row count up to
+		// date.
+		cellList.setRowCount(values.size(), true);
+		
+		// Push the data into the widget.
+		cellList.setRowData(0, values);
 	}
 	
 	public CellList get()
@@ -41,7 +43,8 @@ public class CellListHelper
 		return cellList;
 	}
 	
-	public String selected() {
+	public String selected()
+	{
 		return selectionModel.getSelectedObject();
 	}
 }

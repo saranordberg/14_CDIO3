@@ -72,8 +72,9 @@ public class MySQLRaavareDAO implements RaavareDAO
 	{
 		try
 		{
-			Connector.getInstance().doUpdate("UPDATE raavare SET raavare_navn =  ?, leverandoer = ? WHERE raavare_id = ?",
-					raavare.raavareNavn, raavare.leverandoer, raavare.raavareId);
+			Connector.getInstance().doUpdate(
+					"UPDATE raavare SET raavare_navn =  ?, leverandoer = ? WHERE raavare_id = ?", raavare.raavareNavn,
+					raavare.leverandoer, raavare.raavareId);
 		}
 		catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e)
 		{

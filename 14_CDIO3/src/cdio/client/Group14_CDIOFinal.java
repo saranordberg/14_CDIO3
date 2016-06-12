@@ -1,6 +1,5 @@
 package cdio.client;
 
-
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootPanel;
 
@@ -11,21 +10,22 @@ import cdio.dal.dto.UserDTO;
 public class Group14_CDIOFinal implements EntryPoint, LoginView.iLoginCallback
 {
 	
-//	private MainGUI mView = new MainGUI();
+	// private MainGUI mView = new MainGUI();
 	
 	public void onModuleLoad()
 	{
-//		RootPanel.get().add(mView);
+		// RootPanel.get().add(mView);
 		loginView();
 	}
 	
-	public void loginView() {
+	public void loginView()
+	{
 		this.clear();
 		
 		LoginView login = new LoginView(this);
 		RootPanel.get().add(login);
 	}
-
+	
 	@Override
 	public void login(UserDTO user, String token)
 	{
@@ -33,9 +33,8 @@ public class Group14_CDIOFinal implements EntryPoint, LoginView.iLoginCallback
 		RootPanel.get().add(new MenuView(user, token));
 	}
 	
-	
-	
-	private void clear() {
+	private void clear()
+	{
 		RootPanel.get().clear();
 	}
 }

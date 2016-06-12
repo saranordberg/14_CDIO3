@@ -1,4 +1,5 @@
 package cdio.service;
+
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -16,5 +17,5 @@ public interface PrescriptionService extends RemoteService
 	
 	void updateRecept(ReceptDTO recept, String token) throws DALException;
 	
-	List<ReceptDTO> listRecept (String token) throws DALException;
+	List<ReceptDTO> listRecept(String token) throws DALException;
 }

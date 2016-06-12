@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * @version 1.2
  */
 
-public class ReceptDTO  implements Serializable
+public class ReceptDTO implements Serializable
 {
 	/** Recept nr i omraadet 1-99999999 */
 	public int receptId;
@@ -19,22 +19,25 @@ public class ReceptDTO  implements Serializable
 	/** liste af kompenenter i recepten */
 	public ReceptKompDTO[] receptKomps;
 	
-    
-	public ReceptDTO() { }
+	public ReceptDTO()
+	{
+	}
+	
 	public ReceptDTO(int receptId, String receptNavn)
 	{
-        this.receptId = receptId;
-        this.receptNavn = receptNavn;
-    }
+		this.receptId = receptId;
+		this.receptNavn = receptNavn;
+	}
 	
 	public ReceptDTO(int receptId, String receptNavn, ReceptKompDTO[] receptKomps)
 	{
-        this.receptId = receptId;
-        this.receptNavn = receptNavn;
-        this.receptKomps = receptKomps;
-    }
-
-	public String toString() { 
-		return receptId + "\t" + receptNavn; 
+		this.receptId = receptId;
+		this.receptNavn = receptNavn;
+		this.receptKomps = receptKomps;
+	}
+	
+	public String toString()
+	{
+		return receptId + "\t" + receptNavn;
 	}
 }

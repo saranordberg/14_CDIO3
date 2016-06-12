@@ -73,9 +73,9 @@ public class ProductBatchView extends Composite
 		
 		ArrayList<Validator> idValidators = new ArrayList<Validator>();
 		
-		idValidators.add(new LengthValidator(new Object[] { new Integer( 30 ), '<' }));
+		idValidators.add(new LengthValidator(new Object[] { new Integer(30), '<' }));
 		idValidators.add(new NumberValidator(null));
-		validatorHelper.add("Recept ID", receptID, idValidators );
+		validatorHelper.add("Recept ID", receptID, idValidators);
 	}
 	
 	private Handler selectionHandler()
@@ -101,7 +101,7 @@ public class ProductBatchView extends Composite
 					{
 						pbId.setText(new Integer(result.pbId).toString());
 						status.setSelectedIndex(result.status);
-						receptID.setText(new Integer (result.receptId).toString());
+						receptID.setText(new Integer(result.receptId).toString());
 						actionButton.setText("Gem");
 					}
 					
@@ -113,9 +113,10 @@ public class ProductBatchView extends Composite
 	@UiHandler("actionButton")
 	public void actionButtonClick(ClickEvent event)
 	{
-		ProduktBatchDTO pb = new ProduktBatchDTO(Integer.parseInt(pbId.getText()), Integer.parseInt(status.getSelectedValue()), Integer.parseInt(receptID.getText()));
+		ProduktBatchDTO pb = new ProduktBatchDTO(Integer.parseInt(pbId.getText()),
+				Integer.parseInt(status.getSelectedValue()), Integer.parseInt(receptID.getText()));
 		
-		if(!validatorHelper.validate())
+		if (!validatorHelper.validate())
 			return;
 		// New productBatch
 		if (pbId.getText().equals(""))
@@ -131,7 +132,8 @@ public class ProductBatchView extends Composite
 	}
 	
 	@UiHandler("newButton")
-	public void newButtonClick(ClickEvent event) {
+	public void newButtonClick(ClickEvent event)
+	{
 		pbId.setText("");
 		status.setSelectedIndex(0);
 		receptID.setText("");
@@ -166,16 +168,18 @@ public class ProductBatchView extends Composite
 		});
 	}
 	
-	public AsyncCallback<Void> actionCallback() {
-		return new AsyncCallback<Void>() {
-
+	public AsyncCallback<Void> actionCallback()
+	{
+		return new AsyncCallback<Void>()
+		{
+			
 			@Override
 			public void onFailure(Throwable caught)
 			{
 				Window.alert("Der skete en fejl. Kontakt venligst administratoren");
 				GWT.log(caught.getMessage());
 			}
-
+			
 			@Override
 			public void onSuccess(Void result)
 			{

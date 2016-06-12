@@ -18,5 +18,5 @@ public interface ProductBatchService extends RemoteService
 	
 	void updateProduktBatch(ProduktBatchDTO pb, String token) throws DALException;
 	
-	List<ProduktBatchDTO> listProduktBatch (String token) throws DALException;
+	List<ProduktBatchDTO> listProduktBatch(String token) throws DALException;
 }

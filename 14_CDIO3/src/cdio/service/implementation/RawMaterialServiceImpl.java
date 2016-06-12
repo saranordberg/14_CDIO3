@@ -9,7 +9,6 @@ import cdio.dal.dao.interfaces.DALException;
 import cdio.dal.dto.RaavareDTO;
 import cdio.service.RawMaterialService;
 
-
 public class RawMaterialServiceImpl extends RemoteServiceServlet implements RawMaterialService
 {
 	@Override
@@ -40,5 +39,4 @@ public class RawMaterialServiceImpl extends RemoteServiceServlet implements RawM
 		return conn.getRaavareList();
 	}
 	
-
 }

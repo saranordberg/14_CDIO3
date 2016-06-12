@@ -13,5 +13,5 @@ public interface RawMaterialBatchServiceAsync
 	void updateRaavareBatch(RaavareBatchDTO rb, String token, AsyncCallback callback);
 	
 	void listRaavareBatch(String token, AsyncCallback callback);
-
+	
 }

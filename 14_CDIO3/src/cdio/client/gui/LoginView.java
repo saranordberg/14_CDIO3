@@ -51,7 +51,6 @@ public class LoginView extends Composite
 		this.userID.setText("1");
 		this.password.setText("Test");
 		
-		
 		getOperatorService();
 	}
 	
@@ -71,9 +70,8 @@ public class LoginView extends Composite
 			
 			user.userId = 1;
 			user.level = 100;
-			//TODO: FIX LOGIN
+			// TODO: FIX LOGIN
 			callback.login(user, Document.get().createUniqueId());
-			
 			
 		}
 		catch (NumberFormatException e)

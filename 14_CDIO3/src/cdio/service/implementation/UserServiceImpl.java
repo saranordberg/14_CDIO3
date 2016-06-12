@@ -10,7 +10,7 @@ import cdio.dal.dto.UserDTO;
 import cdio.service.UserService;
 
 public class UserServiceImpl extends RemoteServiceServlet implements UserService
-{	
+{
 	@Override
 	public UserDTO getUser(int userId, String token) throws DALException
 	{

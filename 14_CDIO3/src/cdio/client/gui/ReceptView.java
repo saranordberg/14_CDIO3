@@ -51,7 +51,8 @@ public class ReceptView extends Composite
 	public TextBox receptId, recept_navn, raavareId, nomNetto, tolerance;
 	@UiField
 	public Label raavareIdLabel, nomNettoLabel, toleranceLabel;
-	@UiField VerticalPanel receptKomponentPanel;
+	@UiField
+	VerticalPanel receptKomponentPanel;
 	@UiField
 	public Button actionButton;
 	
@@ -76,9 +77,8 @@ public class ReceptView extends Composite
 		this.user = user;
 		this.token = token;
 		
-		
 		populateCellList();
-		receptKomponents.add(new ArrayList<Tuple<TextBox,Label>>());
+		receptKomponents.add(new ArrayList<Tuple<TextBox, Label>>());
 		receptKomponents.get(0).add(new Tuple<TextBox, Label>(raavareId, raavareIdLabel));
 		receptKomponents.get(0).add(new Tuple<TextBox, Label>(nomNetto, nomNettoLabel));
 		receptKomponents.get(0).add(new Tuple<TextBox, Label>(tolerance, toleranceLabel));
@@ -86,13 +86,13 @@ public class ReceptView extends Composite
 		ArrayList<Validator> textValidators = new ArrayList<Validator>();
 		ArrayList<Validator> idValidators = new ArrayList<Validator>();
 		
-		textValidators.add(new LengthValidator(new Object[] { new Integer( 50 ), '<' }));
+		textValidators.add(new LengthValidator(new Object[] { new Integer(50), '<' }));
 		textValidators.add(new CharactersValidator(null));
-		validatorHelper.add("Recept navn", recept_navn, textValidators );
+		validatorHelper.add("Recept navn", recept_navn, textValidators);
 		
-		idValidators.add(new LengthValidator(new Object[] { new Integer( 50 ), '<' }));
+		idValidators.add(new LengthValidator(new Object[] { new Integer(50), '<' }));
 		idValidators.add(new NumberValidator(null));
-		validatorHelper.add("Raavare ID", raavareId, idValidators );
+		validatorHelper.add("Raavare ID", raavareId, idValidators);
 	}
 	
 	private Handler selectionHandler()
@@ -119,7 +119,8 @@ public class ReceptView extends Composite
 					{
 						for (ArrayList<Tuple<TextBox, Label>> receptKomp : receptKomponents)
 						{
-							for(Tuple<TextBox, Label> tuple : receptKomp) {
+							for (Tuple<TextBox, Label> tuple : receptKomp)
+							{
 								tuple.x.removeFromParent();
 								tuple.y.removeFromParent();
 							}
@@ -136,7 +137,7 @@ public class ReceptView extends Composite
 							receptKomponentPanel.add(raavareIdLabel);
 							
 							TextBox raavareId = new TextBox();
-							raavareId.setText(receptKomp.raavareId+"");
+							raavareId.setText(receptKomp.raavareId + "");
 							receptKomponentPanel.add(raavareId);
 							
 							Label nomNettoLabel = new Label();
@@ -144,7 +145,7 @@ public class ReceptView extends Composite
 							receptKomponentPanel.add(nomNettoLabel);
 							
 							TextBox nomNetto = new TextBox();
-							nomNetto.setText(receptKomp.nomNetto+"");
+							nomNetto.setText(receptKomp.nomNetto + "");
 							receptKomponentPanel.add(nomNetto);
 							
 							Label toleranceLabel = new Label();
@@ -152,7 +153,7 @@ public class ReceptView extends Composite
 							receptKomponentPanel.add(toleranceLabel);
 							
 							TextBox tolerance = new TextBox();
-							tolerance.setText(receptKomp.tolerance+"");
+							tolerance.setText(receptKomp.tolerance + "");
 							receptKomponentPanel.add(tolerance);
 							
 							Label emptyLabel = new Label();
@@ -160,7 +161,7 @@ public class ReceptView extends Composite
 							receptKomponentPanel.add(emptyLabel);
 							emptyLabels.add(emptyLabel);
 							
-							ArrayList<Tuple<TextBox, Label>> receptKompArray = new ArrayList<Tuple<TextBox,Label>>();
+							ArrayList<Tuple<TextBox, Label>> receptKompArray = new ArrayList<Tuple<TextBox, Label>>();
 							receptKompArray.add(new Tuple<TextBox, Label>(raavareId, raavareIdLabel));
 							receptKompArray.add(new Tuple<TextBox, Label>(nomNetto, nomNettoLabel));
 							receptKompArray.add(new Tuple<TextBox, Label>(tolerance, toleranceLabel));
@@ -183,7 +184,7 @@ public class ReceptView extends Composite
 	{
 		ReceptDTO recept = new ReceptDTO(0, recept_navn.getText());
 		
-		if(!validatorHelper.validate())
+		if (!validatorHelper.validate())
 			return;
 		
 		// New user
@@ -262,8 +263,9 @@ public class ReceptView extends Composite
 		};
 	}
 	
-	public void removeEmptyLabels() {
-		for(Label emptyLabel : emptyLabels)
+	public void removeEmptyLabels()
+	{
+		for (Label emptyLabel : emptyLabels)
 			emptyLabel.removeFromParent();
 		
 		emptyLabels = new ArrayList<Label>();
