@@ -3,7 +3,6 @@ package cdio.client.gui;
 import java.util.ArrayList;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dev.util.Pair;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -55,6 +54,7 @@ public class ReceptView extends Composite
 	private String token;
 	
 	private ArrayList<ArrayList<Tuple<TextBox, Label>>> receptKomponents = new ArrayList<ArrayList<Tuple<TextBox, Label>>>();
+	private ArrayList<Label> emptyLabels = new ArrayList<Label>();
 	
 	/*
 	 * SelectList variables
@@ -106,6 +106,8 @@ public class ReceptView extends Composite
 							}
 						}
 						
+						removeEmptyLabels();
+						
 						receptKomponents = new ArrayList<ArrayList<Tuple<TextBox, Label>>>();
 						
 						for (ReceptKompDTO receptKomp : result.receptKomps)
@@ -133,6 +135,11 @@ public class ReceptView extends Composite
 							TextBox tolerance = new TextBox();
 							tolerance.setText(receptKomp.tolerance+"");
 							receptKomponentPanel.add(tolerance);
+							
+							Label emptyLabel = new Label();
+							emptyLabel.setText("-");
+							receptKomponentPanel.add(emptyLabel);
+							emptyLabels.add(emptyLabel);
 							
 							ArrayList<Tuple<TextBox, Label>> receptKompArray = new ArrayList<Tuple<TextBox,Label>>();
 							receptKompArray.add(new Tuple<TextBox, Label>(raavareId, raavareIdLabel));
@@ -231,6 +238,13 @@ public class ReceptView extends Composite
 				Window.alert("Din recept er nu gemt");
 			}
 		};
+	}
+	
+	public void removeEmptyLabels() {
+		for(Label emptyLabel : emptyLabels)
+			emptyLabel.removeFromParent();
+		
+		emptyLabels = new ArrayList<Label>();
 	}
 	
 	public void getReceptService()
