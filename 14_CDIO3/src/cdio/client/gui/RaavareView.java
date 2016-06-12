@@ -20,6 +20,10 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
 import cdio.client.helpers.CellListHelper;
+import cdio.client.validate.CharactersValidator;
+import cdio.client.validate.LengthValidator;
+import cdio.client.validate.Validator;
+import cdio.client.validate.ValidatorHelper;
 import cdio.dal.dto.RaavareDTO;
 import cdio.dal.dto.UserDTO;
 import cdio.service.RawMaterialService;
@@ -46,7 +50,7 @@ public class RaavareView extends Composite
 	
 	private UserDTO user;
 	private String token;
-	
+	public ValidatorHelper validatorHelper = new ValidatorHelper();
 	/*
 	 * SelectList variables
 	 */
@@ -55,12 +59,18 @@ public class RaavareView extends Composite
 	
 	public RaavareView(UserDTO user, String token)
 	{
+		getService();
+		initWidget(uiBinder.createAndBindUi(this));
+		
 		this.user = user;
 		this.token = token;
 		
-		getService();
-		initWidget(uiBinder.createAndBindUi(this));
 		populateCellList();
+		ArrayList<Validator> textValidators = new ArrayList<Validator>();
+		
+		textValidators.add(new LengthValidator(new Object[] { new Integer( 30 ), '<' }));
+		validatorHelper.add("Råvare navn", raavareNavn, textValidators );
+		validatorHelper.add("Leverandør", leverandoer, textValidators );
 	}
 	
 	private Handler selectionHandler()
@@ -100,6 +110,8 @@ public class RaavareView extends Composite
 	{
 		RaavareDTO raavare = new RaavareDTO(0, raavareNavn.getText(), leverandoer.getText());
 		
+		if(!validatorHelper.validate())
+			return;
 		// New user
 		if (raavareId.getText().equals(""))
 		{

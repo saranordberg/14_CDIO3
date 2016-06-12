@@ -21,6 +21,10 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
 import cdio.client.helpers.CellListHelper;
+import cdio.client.validate.LengthValidator;
+import cdio.client.validate.NumberValidator;
+import cdio.client.validate.Validator;
+import cdio.client.validate.ValidatorHelper;
 import cdio.dal.dto.ProduktBatchDTO;
 import cdio.dal.dto.UserDTO;
 import cdio.service.ProductBatchService;
@@ -49,6 +53,7 @@ public class ProductBatchView extends Composite
 	
 	private UserDTO user;
 	private String token;
+	public ValidatorHelper validatorHelper = new ValidatorHelper();
 	
 	/*
 	 * SelectList variables
@@ -58,12 +63,19 @@ public class ProductBatchView extends Composite
 	
 	public ProductBatchView(UserDTO user, String token)
 	{
+		getProductBatchService();
+		initWidget(uiBinder.createAndBindUi(this));
+		
 		this.user = user;
 		this.token = token;
 		
-		getProductBatchService();
-		initWidget(uiBinder.createAndBindUi(this));
 		populateCellList();
+		
+		ArrayList<Validator> idValidators = new ArrayList<Validator>();
+		
+		idValidators.add(new LengthValidator(new Object[] { new Integer( 30 ), '<' }));
+		idValidators.add(new NumberValidator(null));
+		validatorHelper.add("Recept ID", receptID, idValidators );
 	}
 	
 	private Handler selectionHandler()
@@ -103,6 +115,8 @@ public class ProductBatchView extends Composite
 	{
 		ProduktBatchDTO pb = new ProduktBatchDTO(Integer.parseInt(pbId.getText()), Integer.parseInt(status.getSelectedValue()), Integer.parseInt(receptID.getText()));
 		
+		if(!validatorHelper.validate())
+			return;
 		// New productBatch
 		if (pbId.getText().equals(""))
 		{

@@ -26,6 +26,7 @@
   <source path='client'/>
   <source path='dal' />
   <source path='service' />
+  <source path='client.validate' />
 
   <!-- allow Super Dev Mode -->
   <add-linker name="xsiframe"/>
