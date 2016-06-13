@@ -8,12 +8,14 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
+import cdio.dal.dao.interfaces.DALException;
 import cdio.dal.dto.UserDTO;
 import cdio.service.UserService;
 import cdio.service.UserServiceAsync;
@@ -34,9 +36,9 @@ public class LoginView extends Composite
 	public TextBox userID, password;
 	@UiField
 	public Button loginButton;
-	private iLoginCallback callback;
+	public iLoginCallback callback;
 	
-	public void getOperatorService()
+	public void getUserService()
 	{
 		this.service = GWT.create(UserService.class);
 		ServiceDefTarget endpoint = (ServiceDefTarget) this.service;
@@ -48,36 +50,44 @@ public class LoginView extends Composite
 		initWidget(uiBinder.createAndBindUi(this));
 		this.callback = callback;
 		
-		this.userID.setText("1");
-		this.password.setText("Test");
+		this.userID.setText("2");
+		this.password.setText("jegharfaaetis");
 		
-		getOperatorService();
+		getUserService();
 	}
 	
 	@UiHandler("loginButton")
 	void onClick(ClickEvent e)
 	{
+		
 		doLogin();
 	}
 	
 	private void doLogin()
 	{
-		try
-		{
 			int id = Integer.parseInt(this.userID.getText());
 			String password = this.password.getText();
 			UserDTO user = new UserDTO();
+			user.userId = id;
+			user.password = password;
 			
-			user.userId = 1;
-			user.level = 100;
-			// TODO: FIX LOGIN
-			callback.login(user, Document.get().createUniqueId());
-			
-		}
-		catch (NumberFormatException e)
-		{
-			loginFailed("UserID must be a number");
-		}
+			service.login(user, new AsyncCallback<UserDTO>() {
+
+					@Override
+					public void onFailure(Throwable caught)
+					{
+						String message = "Brugernavn eller password er forkert";
+						loginFailed(message);
+					}
+
+					@Override
+					public void onSuccess(UserDTO result)
+					{
+						callback.login(result, "HEJ");
+					
+					}
+						});
+
 	}
 	
 	private void loginFailed(String message)

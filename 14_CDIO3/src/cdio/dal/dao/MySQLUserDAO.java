@@ -86,4 +86,25 @@ public class MySQLUserDAO implements UserDAO
 		return list;
 	}
 	
+	public UserDTO Login(UserDTO user) throws DALException
+	{
+		try
+		{
+			UserDTO loginUser = getUser(user.userId);
+			
+			if (user.password.equals(loginUser.password)){
+				return loginUser;
+			}
+			else {
+				throw new DALException("User " + user.userId + " findes ikke");
+			}
+			
+		}
+		catch (Exception e)
+		{
+			throw new DALException(e);
+		}
+		
+	}
+	
 }

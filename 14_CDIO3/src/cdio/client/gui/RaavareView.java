@@ -22,6 +22,7 @@ import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 import cdio.client.helpers.CellListHelper;
 import cdio.client.validate.CharactersValidator;
 import cdio.client.validate.LengthValidator;
+import cdio.client.validate.LeverandoerValidator;
 import cdio.client.validate.Validator;
 import cdio.client.validate.ValidatorHelper;
 import cdio.dal.dto.RaavareDTO;
@@ -67,10 +68,17 @@ public class RaavareView extends Composite
 		
 		populateCellList();
 		ArrayList<Validator> textValidators = new ArrayList<Validator>();
+		ArrayList<Validator> leverandoerValidators = new ArrayList<Validator>();
+		
 		
 		textValidators.add(new LengthValidator(new Object[] { new Integer(30), '<' }));
-		validatorHelper.add("Råvare navn", raavareNavn, textValidators);
-		validatorHelper.add("Leverandør", leverandoer, textValidators);
+		textValidators.add(new CharactersValidator(null));
+		
+		leverandoerValidators.add(new LengthValidator(new Object[] { new Integer(30), '<' }));
+		leverandoerValidators.add(new LeverandoerValidator(null));
+		
+		validatorHelper.add("Raavare navn", raavareNavn, textValidators);
+		validatorHelper.add("Leverandoer", leverandoer, leverandoerValidators);
 	}
 	
 	private Handler selectionHandler()

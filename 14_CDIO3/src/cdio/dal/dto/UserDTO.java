@@ -28,6 +28,7 @@ public class UserDTO implements Serializable
 	public String password;
 	/** User level max 100 */
 	public int level;
+	public String token;
 	
 	public UserDTO()
 	{

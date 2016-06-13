@@ -18,4 +18,6 @@ public interface UserService extends RemoteService
 	void updateUser(UserDTO opr, String token) throws DALException;
 	
 	List<UserDTO> listUser(int userID, String token) throws DALException;
+	
+	UserDTO login (UserDTO opr) throws DALException;
 }

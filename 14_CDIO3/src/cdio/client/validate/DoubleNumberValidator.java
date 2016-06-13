@@ -1,9 +1,9 @@
 package cdio.client.validate;
 
-public class NumberValidator extends Validator
+public class DoubleNumberValidator extends Validator
 {
 	
-	public NumberValidator(Object[] parameters)
+	public DoubleNumberValidator(Object[] parameters)
 	{
 		super(parameters);
 		// TODO Auto-generated constructor stub
@@ -11,11 +11,12 @@ public class NumberValidator extends Validator
 	
 	public String validate(String value, String name)
 	{
-		if (value.matches("[0-9]+"))
+		try 
 		{
+			Double.parseDouble(value);
 			return null;
 		}
-		else
+		catch (Exception e)
 		{
 			return name + " kan kun indeholde tal";
 		}

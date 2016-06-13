@@ -38,5 +38,12 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
 		MySQLUserDAO conn = new MySQLUserDAO();
 		return conn.getUserList();
 	}
+
+	@Override
+	public UserDTO login(UserDTO user) throws DALException
+	{
+		MySQLUserDAO conn = new MySQLUserDAO();
+		return conn.Login(user);
+	}
 	
 }

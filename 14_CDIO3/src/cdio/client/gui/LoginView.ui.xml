@@ -20,7 +20,7 @@
 					<g:TextBox ui:field="password" width="90%"/>
 				</g:Cell>
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_BOTTOM">
-					<g:Button ui:field="loginButton" width="100px" height="40px" styleName="rect_button">Login</g:Button>
+					<g:Button ui:field="loginButton" width="100px" height="40px" styleName="rect_button">Log in</g:Button>
 				</g:Cell>
 			</g:VerticalPanel>
 		</g:VerticalPanel>

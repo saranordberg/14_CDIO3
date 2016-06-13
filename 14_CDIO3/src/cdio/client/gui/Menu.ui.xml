@@ -32,7 +32,7 @@
 								styleName="{style.header}" horizontalAlignment="ALIGN_RIGHT"
 								verticalAlignment="ALIGN_BOTTOM">
 								<g:Label ui:field="name" text="name" styleName="{style.name}" />
-								<g:Button ui:field="sign_out_btn" text="Sign out"
+								<g:Button ui:field="sign_out_btn" text="Log ud"
 									styleName="sign_out_btn" />
 							</g:VerticalPanel>
 						</g:Dock>
@@ -40,21 +40,17 @@
 							<g:VerticalPanel ui:field="sidebar" width="130px"
 								height="50" horizontalAlignment="ALIGN_CENTER">
 								<g:Button ui:field="opr_button" width="100%" height="40px"
-									styleName="button" text="Operators" />
+									styleName="button" text="Operatører" />
 								<g:Button ui:field="raw_materials_button" width="100%" height="40px"
-									styleName="button" text="Raw materials" />
+									styleName="button" text="Råvarer" />
 								<g:Button ui:field="prescriptions_button" width="100%" height="40px"
-									styleName="button" text="Prescriptions" />
+									styleName="button" text="Recepter" />
 								<g:Button ui:field="raw_materials_batches_button" width="100%" height="40px"
-									styleName="button" text="Raw material batches" />
+									styleName="button" text="Råvarebatches" />
 								<g:Button ui:field="product_batches_button" width="100%" height="40px"
-									styleName="button" text="Product batches" />
-								<g:Button ui:field="password_button" width="100%"
-									height="40px" styleName="button" text="Change password" />
-								<g:Button ui:field="test_button" width="100%" height="40px"
-									styleName="button" text="Test App" />
-								<g:Button ui:field="example_button" width="100%" height="40px"
-									styleName="button" text="Error example" />
+									styleName="button" text="Produktbatches" />
+<!-- 								<g:Button ui:field="password_button" width="100%" -->
+<!-- 									height="40px" styleName="button" text="Skift password" /> -->
 							</g:VerticalPanel>
 						</g:Dock>
 						<g:Dock direction="CENTER">

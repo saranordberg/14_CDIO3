@@ -19,7 +19,7 @@
 			<g:VerticalPanel horizontalAlignment="ALIGN_LEFT" styleName="inner" width="200px" spacing="20">
 			<g:Cell horizontalAlignment="ALIGN_RIGHT">
 					<g:Button ui:field="newButton" width="200px" height="35px"
-						styleName="round_button">New</g:Button>
+						styleName="round_button">Ny bruger</g:Button>
 				</g:Cell>
 				<g:Cell width="100%" horizontalAlignment="ALIGN_LEFT">
 					<g:VerticalPanel ui:field="content" width="100%" spacing="0" >
@@ -75,7 +75,7 @@
 					<g:Label ui:field="passwordLabel" width="90%" horizontalAlignment="ALIGN_LEFT">Kodeord:</g:Label>
 				</g:Cell>
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:TextBox ui:field="password" width="90%"/>
+					<g:TextBox readOnly="true"  ui:field="password" width="90%"/>
 				</g:Cell>
 				
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_BOTTOM">

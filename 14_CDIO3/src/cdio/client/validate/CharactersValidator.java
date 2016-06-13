@@ -10,13 +10,14 @@ public class CharactersValidator extends Validator
 	
 	public String validate(String value, String name)
 	{
-		if (value.matches("[a-zA-Z]+"))
+		if (value.matches("[^0-9\\!@#£¤$%&}{=+:;*§½<>,_/]+$"))
+			
 		{
 			return null;
 		}
 		else
 		{
-			return name + " can only be letters";
+			return name + " kan kun indeholde bogstaver";
 		}
 	}
 }

@@ -10,16 +10,18 @@ import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+import cdio.client.gui.LoginView.iLoginCallback;
 import cdio.client.helpers.UserLevels;
 import cdio.client.helpers.UserLevels.MenuLevel;
 import cdio.dal.dto.UserDTO;
 import cdio.service.UserService;
 import cdio.service.UserServiceAsync;
 
-public class MenuView extends Composite
+public class MenuView extends Composite implements iLoginCallback
 {
 	private static MenuUiBinder uiBinder = GWT.create(MenuUiBinder.class);
 	
@@ -32,8 +34,7 @@ public class MenuView extends Composite
 	}
 	
 	@UiField
-	Button opr_button, prescriptions_button, raw_materials_button, raw_materials_batches_button, product_batches_button,
-			example_button;
+	Button opr_button, prescriptions_button, raw_materials_button, raw_materials_batches_button, product_batches_button;
 	@UiField
 	VerticalPanel content;
 	@UiField
@@ -63,7 +64,6 @@ public class MenuView extends Composite
 		raw_materials_button.setVisible(UserLevels.HasRight(this.userLevel, MenuLevel.RAAVARE));
 		raw_materials_batches_button.setVisible(UserLevels.HasRight(this.userLevel, MenuLevel.RAAVAREBATCH));
 		product_batches_button.setVisible(UserLevels.HasRight(this.userLevel, MenuLevel.PRODUKTBATCH));
-		example_button.setVisible(UserLevels.HasRight(this.userLevel, MenuLevel.ADMIN));
 	}
 	
 	public void getOperatorService()
@@ -108,7 +108,25 @@ public class MenuView extends Composite
 		content.add(new ProductBatchView(user, token));
 	}
 	
+	@UiHandler("sign_out_btn")
+	void signOutButtonClick(ClickEvent event)
+	{
+		RootPanel.get().clear();
+		
+		LoginView login = new LoginView(this);
+		RootPanel.get().add(login);
+		user = null;	
+	}
+	
 	public interface iMenuCallback
 	{
+	}
+
+	@Override
+	public void login(UserDTO user, String token)
+	{
+		RootPanel.get().clear();
+		RootPanel.get().add(new MenuView(user, token));
+		
 	}
 }
