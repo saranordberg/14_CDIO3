@@ -26,6 +26,7 @@ import cdio.client.validate.NumberValidator;
 import cdio.client.validate.Validator;
 import cdio.client.validate.ValidatorHelper;
 import cdio.dal.dto.UserDTO;
+import cdio.dal.password.PasswordGenerator;
 import cdio.service.UserService;
 import cdio.service.UserServiceAsync;
 
@@ -53,6 +54,7 @@ public class UserView extends Composite
 	private UserDTO user;
 	private String token;
 	public ValidatorHelper validatorHelper = new ValidatorHelper();
+	private PasswordGenerator passwordGenerator = new PasswordGenerator();
 	
 	/*
 	 * SelectList variables
@@ -133,7 +135,7 @@ public class UserView extends Composite
 	public void actionButtonClick(ClickEvent event)
 	{
 		UserDTO user = new UserDTO(0, firstName.getText(), lastName.getText(), ini.getText(), cpr.getText(),
-				password.getText(), Integer.parseInt(userLevel.getText()));
+				passwordGenerator.generatePassword(), Integer.parseInt(userLevel.getText()));
 		
 		if (!validatorHelper.validate())
 			return;
