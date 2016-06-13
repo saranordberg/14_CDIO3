@@ -15,12 +15,16 @@
 		border-left: 3px solid #800517;
 		background-color: #AAAAAA;
 	}
+	
+	.inner {
+		overflow:visible;
+	}
 	</ui:style>
 
 	<g:HTMLPanel>
 		<g:HorizontalPanel ui:field="outer" width="100%" height="100%" styleName="outer" 
 			horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE">
-			<g:AbsolutePanel ui:field="inner" width="80%" height="700px" styleName="inner">
+			<g:AbsolutePanel ui:field="inner" width="80%" height="5000px" styleName="inner">
 				<g:at top="0" left="0">
 					<g:DockPanel width="100%" height="100%">
 						<g:Dock direction="NORTH" height="80px">
@@ -55,7 +59,7 @@
 						</g:Dock>
 						<g:Dock direction="CENTER">
 							<g:VerticalPanel ui:field="content" width="100%"
-								height="100%" styleName="{style.content}" horizontalAlignment="ALIGN_LEFT"
+								height="1000px" styleName="{style.content}" horizontalAlignment="ALIGN_LEFT"
 								verticalAlignment="ALIGN_MIDDLE"/>
 						</g:Dock>
 					</g:DockPanel>

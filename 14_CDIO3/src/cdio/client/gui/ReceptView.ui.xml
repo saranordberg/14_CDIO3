@@ -49,25 +49,12 @@
 				</g:Cell>
 			</g:VerticalPanel>
 			<g:VerticalPanel ui:field="receptKomponentPanel" horizontalAlignment="ALIGN_LEFT" styleName="inner2" width="200px" spacing="0">
+
+			</g:VerticalPanel>
+			<g:VerticalPanel ui:field="addRaavarePanel" horizontalAlignment="ALIGN_LEFT" styleName="inner2" width="200px" spacing="20">
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:Label ui:field="raavareIdLabel" width="90%" horizontalAlignment="ALIGN_LEFT" >Råvare ID:</g:Label>
-				</g:Cell>
-				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:TextBox readOnly="true"  ui:field="raavareId" width="90%"></g:TextBox>
-				</g:Cell>
-				
-				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:Label ui:field="nomNettoLabel" width="90%" horizontalAlignment="ALIGN_LEFT">Nom netto:</g:Label>
-				</g:Cell>
-				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:TextBox ui:field="nomNetto" width="90%"/>
-				</g:Cell>
-				
-				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:Label ui:field="toleranceLabel" width="90%" horizontalAlignment="ALIGN_LEFT">Tolerance:</g:Label>
-				</g:Cell>
-				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:TextBox ui:field="tolerance" width="90%"/>
+					<g:Button ui:field="addMaterialButton" width="200px" height="35px"
+						styleName="round_button">Tilføj råvare</g:Button>
 				</g:Cell>
 			</g:VerticalPanel>
 		</g:HorizontalPanel>

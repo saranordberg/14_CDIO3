@@ -76,12 +76,23 @@ public class MySQLReceptDAO implements ReceptDAO
 	}
 	
 	@Override
-	public void createRecept(ReceptDTO recept) throws DALException
+	public int createRecept(ReceptDTO recept) throws DALException
 	{
 		try
 		{
-			Connector.getInstance().doUpdate("INSERT INTO recept (recept_id, recept_navn) VALUES (?,?)",
+			int id = Connector.getInstance().doUpdate("INSERT INTO recept (recept_id, recept_navn) VALUES (?,?)",
 					recept.receptId, recept.receptNavn);
+			int uniqueId;
+			for(ReceptKompDTO receptkomponent : recept.receptKomps) {
+				receptkomponent.receptId = id;
+				
+				Connector.getInstance().doUpdate(
+						"INSERT INTO receptkomponent (recept_id, raavare_id, nom_netto, tolerance) VALUES (?, ?, ?, ?)",
+						receptkomponent.receptId, receptkomponent.raavareId, receptkomponent.nomNetto,
+						receptkomponent.tolerance);
+			}
+			
+			return id;
 		}
 		catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e)
 		{

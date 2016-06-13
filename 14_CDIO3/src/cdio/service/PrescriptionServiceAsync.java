@@ -1,8 +1,11 @@
 package cdio.service;
 
+import java.util.ArrayList;
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import cdio.dal.dto.ReceptDTO;
+import cdio.dal.dto.ReceptKompDTO;
 
 public interface PrescriptionServiceAsync
 {
