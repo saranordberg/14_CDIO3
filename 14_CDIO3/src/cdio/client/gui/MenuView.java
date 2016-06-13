@@ -34,7 +34,7 @@ public class MenuView extends Composite implements iLoginCallback
 	}
 	
 	@UiField
-	Button opr_button, prescriptions_button, raw_materials_button, raw_materials_batches_button, product_batches_button;
+	Button opr_button, prescriptions_button, raw_materials_button, raw_materials_batches_button, product_batches_button, password_button;
 	@UiField
 	VerticalPanel content;
 	@UiField
@@ -64,6 +64,7 @@ public class MenuView extends Composite implements iLoginCallback
 		raw_materials_button.setVisible(UserLevels.HasRight(this.userLevel, MenuLevel.RAAVARE));
 		raw_materials_batches_button.setVisible(UserLevels.HasRight(this.userLevel, MenuLevel.RAAVAREBATCH));
 		product_batches_button.setVisible(UserLevels.HasRight(this.userLevel, MenuLevel.PRODUKTBATCH));
+		password_button.setVisible(true);
 	}
 	
 	public void getOperatorService()
@@ -99,6 +100,13 @@ public class MenuView extends Composite implements iLoginCallback
 	{
 		content.clear();
 		content.add(new ReceptView(user, token));
+	}
+	
+	@UiHandler("password_button")
+	void pwButtonClick(ClickEvent event)
+	{
+		content.clear();
+		content.add(new PasswordView(user, token));
 	}
 	
 	@UiHandler("product_batches_button")
