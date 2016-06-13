@@ -84,6 +84,8 @@ public class MySQLReceptKompDAO implements ReceptKompDAO
 					"INSERT INTO receptkomponent (recept_id, raavare_id, nom_netto, tolerance) VALUES (?, ?, ?, ?)",
 					receptkomponent.receptId, receptkomponent.raavareId, receptkomponent.nomNetto,
 					receptkomponent.tolerance);
+			
+			return;
 		}
 		catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e)
 		{

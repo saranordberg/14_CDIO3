@@ -3,10 +3,9 @@ package cdio.client.helpers;
 import java.util.ArrayList;
 
 import com.google.gwt.cell.client.TextCell;
-import com.google.gwt.event.logical.shared.AttachEvent.Handler;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
-import com.google.gwt.user.client.Window;
+import com.google.gwt.view.client.Range;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 
@@ -23,6 +22,8 @@ public class CellListHelper
 	public void createCellList(ArrayList<String> values, SelectionChangeEvent.Handler selectionHandler)
 	{
 		cellList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
+		cellList.setPageSize(values.size());
+		cellList.setVisibleRange(new Range(0, values.size()));
 		
 		// Add a selection model to handle user selection.
 		cellList.setSelectionModel(selectionModel);

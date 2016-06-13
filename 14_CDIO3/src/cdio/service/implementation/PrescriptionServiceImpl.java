@@ -1,12 +1,16 @@
 package cdio.service.implementation;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import cdio.dal.dao.MySQLReceptDAO;
+import cdio.dal.dao.MySQLReceptKompDAO;
 import cdio.dal.dao.interfaces.DALException;
 import cdio.dal.dto.ReceptDTO;
+import cdio.dal.dto.ReceptKompDTO;
 import cdio.service.PrescriptionService;
 
 public class PrescriptionServiceImpl extends RemoteServiceServlet implements PrescriptionService

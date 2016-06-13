@@ -35,7 +35,10 @@ public class Connector
 			throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException
 	{
 		
-		return instance == null ? instance = new Connector() : instance;
+		if(instance == null)
+			instance = new Connector();
+		
+		return instance;
 	}
 	
 	//
@@ -60,7 +63,6 @@ public class Connector
 	{
 		try
 		{
-			
 			PreparedStatement statement = conn.prepareStatement(query);
 			
 			int i = 1;
@@ -93,7 +95,7 @@ public class Connector
 		try
 		{
 			
-			PreparedStatement statement = conn.prepareStatement(query);
+			PreparedStatement statement = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
 			
 			int i = 1;
 			for (Object parameter : parameters)
@@ -112,7 +114,14 @@ public class Connector
 				i++;
 			}
 			
-			return statement.executeUpdate();
+			statement.executeUpdate();
+			
+			ResultSet rs = statement.getGeneratedKeys();
+			
+			if(rs.next())
+				return rs.getInt(1);
+			
+			return 0;
 		}
 		catch (SQLException e)
 		{
