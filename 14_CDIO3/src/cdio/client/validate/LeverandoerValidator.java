@@ -10,14 +10,14 @@ public class LeverandoerValidator extends Validator
 	
 	public String validate(String value, String name)
 	{
-		if (value.matches("[^0-9\\!@#£¤$%}{=:;*§½<>,_]+$"))
+		if (value.matches("[^0-9\\!@#$%}{=:;*Â§<>,_]+$"))
 			
 		{
 			return null;
 		}
 		else
 		{
-			return name + " kan kun være bogstaver og (!@#£¤$%}{=:;*§½<>,_)";
+			return name + " kan kun indeholde bogstaver og fÃ¸lgende specialtegn (-+/&)";
 		}
 	}
 }

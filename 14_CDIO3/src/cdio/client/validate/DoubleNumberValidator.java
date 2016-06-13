@@ -18,7 +18,7 @@ public class DoubleNumberValidator extends Validator
 		}
 		catch (Exception e)
 		{
-			return name + " can only be numbers";
+			return name + " kan kun indeholde tal";
 		}
 	}
 }

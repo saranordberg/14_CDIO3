@@ -17,7 +17,7 @@ public class CharactersValidator extends Validator
 		}
 		else
 		{
-			return name + " can only be letters";
+			return name + " kan kun indeholde bogstaver";
 		}
 	}
 }

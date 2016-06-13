@@ -23,7 +23,7 @@ public class LengthValidator extends Validator
 				}
 				else
 				{
-					return name + " must be  than " + (Integer) parameters[0] + " characters";
+					return name + " skal indeholde mere end " + (Integer) parameters[0] + " tegn";
 				}
 			case '<':
 				if (value.length() < (Integer) parameters[0])
@@ -32,7 +32,7 @@ public class LengthValidator extends Validator
 				}
 				else
 				{
-					return name + " must be less than " + (Integer) parameters[0] + " characters";
+					return name + " skal indeholde mindre end " + (Integer) parameters[0] + " tegn";
 				}
 			case '=':
 				if (value.length() == (Integer) parameters[0])
@@ -41,7 +41,7 @@ public class LengthValidator extends Validator
 				}
 				else
 				{
-					return name + " must be " + (Integer) parameters[0] + " characters";
+					return name + " skal indeholde præcis " + (Integer) parameters[0] + " tegn";
 				}
 			default:
 				return null;

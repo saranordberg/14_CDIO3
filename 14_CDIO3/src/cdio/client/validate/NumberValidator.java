@@ -17,7 +17,7 @@ public class NumberValidator extends Validator
 		}
 		else
 		{
-			return name + " can only be numbers";
+			return name + " kan kun indeholde tal";
 		}
 	}
 }
