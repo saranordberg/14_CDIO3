@@ -19,7 +19,7 @@
 			<g:VerticalPanel horizontalAlignment="ALIGN_LEFT" styleName="inner" width="200px" spacing="20">
 			<g:Cell horizontalAlignment="ALIGN_RIGHT">
 					<g:Button ui:field="newButton" width="200px" height="35px"
-						styleName="round_button">New</g:Button>
+						styleName="round_button">Ny råvarebatch</g:Button>
 				</g:Cell>
 				<g:Cell width="100%" horizontalAlignment="ALIGN_LEFT">
 					<g:VerticalPanel ui:field="content" width="100%" spacing="0" >
