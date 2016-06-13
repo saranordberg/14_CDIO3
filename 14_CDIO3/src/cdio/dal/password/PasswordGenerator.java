@@ -2,10 +2,11 @@ package cdio.dal.password;
 
 import java.util.Random;
 
-import com.google.gwt.user.client.Window;
+import cdio.client.validate.PasswordValidator;
 
 public class PasswordGenerator
 {
+	private PasswordValidator passwordValidator = new PasswordValidator();
 	public String generatePassword(){
 		
 		   int length = 8;
@@ -16,39 +17,44 @@ public class PasswordGenerator
 	   do {
 		for( int i = 0; i < length; i++ ) 
 			sb.append( AB.charAt( rnd.nextInt(AB.length()) ) );
-	   } while(this.passwordValidation(sb.toString())!=true);
+	   } while(passwordValidator.validate(sb.toString())!=true);
 	   return sb.toString();
 	}
 
-	public boolean passwordValidation(String password) {
-		boolean out;
-		int checks = 0;
-		if (password.length() <= 5) {
-			return false;
-		}
+	
+	
+	
+	
+//	public boolean passwordValidation(String password) {
+//		boolean out;
+//		int checks = 0;
+//		if (password.length() <= 5) {
+//			return false;
+//		}
 //		if (checkLetters(password)) {
 //			checks++;
 //		}
 //		if (checkCapitals(password)) {
 //			checks++;
 //		}
-
+//
 //		if (checkNumbers(password)) {
 //			checks++;
 //		}
-
+//
 //		if (checkSymbols(password)) {
 //			checks++;
 //		}
-		Window.alert(""+checks);
-		if (checks >= 3) {
-			
-			
-			return true;
-		} else {
-			return false;
-		}
-	}public boolean checkLetters(String x) {
+//		Window.alert(""+checks);
+//		if (checks >= 3) {
+//			
+//			
+//			return true;
+//		} else {
+//			return false;
+//		}
+//	}
+public boolean checkLetters(String x) {
 		boolean loop = true;
 		int i = 97;
 		int j;

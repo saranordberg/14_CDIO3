@@ -12,14 +12,12 @@ import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.view.client.SelectionChangeEvent;
 
 import cdio.client.helpers.CellListHelper;
+import cdio.client.validate.PasswordValidator;
 import cdio.client.validate.ValidatorHelper;
 import cdio.dal.dto.UserDTO;
-import cdio.dal.password.PasswordGenerator;
 import cdio.service.UserService;
 import cdio.service.UserServiceAsync;
 
@@ -43,7 +41,7 @@ public class PasswordView extends Composite
 	private UserDTO user;
 	private String token;
 	public ValidatorHelper validatorHelper = new ValidatorHelper();
-	private PasswordGenerator passwordGenerator = new PasswordGenerator();
+	private PasswordValidator passwordValidator = new PasswordValidator();
 	
 	/*
 	 * SelectList variables
@@ -65,7 +63,7 @@ public class PasswordView extends Composite
 	{
 		if (this.user.password.equals(oldPw.getText()))
 		{
-			if (passwordGenerator.passwordValidation(newPw.getText()))
+			if ((passwordValidator.validate(newPw.getText())))
 			{
 				if (this.newPw.getText().equals(this.newPw2.getText()))
 				{
