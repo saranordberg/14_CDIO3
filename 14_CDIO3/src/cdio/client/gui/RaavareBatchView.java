@@ -13,6 +13,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.DoubleBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -20,6 +21,7 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
 import cdio.client.helpers.CellListHelper;
+import cdio.client.validate.DoubleNumberValidator;
 import cdio.client.validate.LengthValidator;
 import cdio.client.validate.NumberValidator;
 import cdio.client.validate.Validator;
@@ -44,7 +46,9 @@ public class RaavareBatchView extends Composite
 	@UiField
 	public VerticalPanel content;
 	@UiField
-	public TextBox rb_Id, raavare_Id, maengde;
+	public TextBox rb_Id, raavare_Id;
+	@UiField
+	public DoubleBox maengde;
 	@UiField
 	public Button actionButton;
 	
@@ -76,7 +80,7 @@ public class RaavareBatchView extends Composite
 		validatorHelper.add("Raavare id", raavare_Id, idValidators);
 		
 		maengdeValidators.add(new LengthValidator(new Object[] { new Integer(21), '<' }));
-		maengdeValidators.add(new NumberValidator(null));
+		maengdeValidators.add(new DoubleNumberValidator(null));
 		validatorHelper.add("Mængde", maengde, maengdeValidators);
 	}
 	

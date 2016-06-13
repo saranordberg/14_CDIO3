@@ -47,7 +47,7 @@
 					<g:Label ui:field="MaengdeLabel" width="90%" horizontalAlignment="ALIGN_LEFT">Mængde:</g:Label>
 				</g:Cell>
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:TextBox ui:field="maengde" width="90%"/>
+					<g:DoubleBox ui:field="maengde" width="90%"/>
 				</g:Cell>
 				
 				
