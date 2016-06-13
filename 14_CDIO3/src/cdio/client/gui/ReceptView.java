@@ -353,6 +353,11 @@ public class ReceptView extends Composite
 				recept_navn.setText("");
 				actionButton.setText("Opret");
 				
+				receptKomponentPanel.clear();
+				initializeRaavare();
+				
+				
+				
 				Window.alert("Din recept er nu gemt");
 			}
 		};
