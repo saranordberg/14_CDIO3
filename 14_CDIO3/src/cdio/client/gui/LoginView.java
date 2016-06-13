@@ -50,8 +50,8 @@ public class LoginView extends Composite
 		initWidget(uiBinder.createAndBindUi(this));
 		this.callback = callback;
 		
-		this.userID.setText("1");
-		this.password.setText("Test");
+		this.userID.setText("2");
+		this.password.setText("jegharfaaetis");
 		
 		getUserService();
 	}

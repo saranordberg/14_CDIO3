@@ -10,6 +10,7 @@ import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -33,8 +34,7 @@ public class MenuView extends Composite implements iLoginCallback
 	}
 	
 	@UiField
-	Button opr_button, prescriptions_button, raw_materials_button, raw_materials_batches_button, product_batches_button,
-			example_button;
+	Button opr_button, prescriptions_button, raw_materials_button, raw_materials_batches_button, product_batches_button;
 	@UiField
 	VerticalPanel content;
 	@UiField
@@ -64,7 +64,6 @@ public class MenuView extends Composite implements iLoginCallback
 		raw_materials_button.setVisible(UserLevels.HasRight(this.userLevel, MenuLevel.RAAVARE));
 		raw_materials_batches_button.setVisible(UserLevels.HasRight(this.userLevel, MenuLevel.RAAVAREBATCH));
 		product_batches_button.setVisible(UserLevels.HasRight(this.userLevel, MenuLevel.PRODUKTBATCH));
-		example_button.setVisible(UserLevels.HasRight(this.userLevel, MenuLevel.ADMIN));
 	}
 	
 	public void getOperatorService()
@@ -109,6 +108,16 @@ public class MenuView extends Composite implements iLoginCallback
 		content.add(new ProductBatchView(user, token));
 	}
 	
+	@UiHandler("sign_out_btn")
+	void signOutButtonClick(ClickEvent event)
+	{
+		RootPanel.get().clear();
+		
+		LoginView login = new LoginView(this);
+		RootPanel.get().add(login);
+		user = null;	
+	}
+	
 	public interface iMenuCallback
 	{
 	}
@@ -116,7 +125,8 @@ public class MenuView extends Composite implements iLoginCallback
 	@Override
 	public void login(UserDTO user, String token)
 	{
-		// TODO Auto-generated method stub
+		RootPanel.get().clear();
+		RootPanel.get().add(new MenuView(user, token));
 		
 	}
 }
