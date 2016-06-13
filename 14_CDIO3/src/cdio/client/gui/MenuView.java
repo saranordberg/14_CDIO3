@@ -13,13 +13,14 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+import cdio.client.gui.LoginView.iLoginCallback;
 import cdio.client.helpers.UserLevels;
 import cdio.client.helpers.UserLevels.MenuLevel;
 import cdio.dal.dto.UserDTO;
 import cdio.service.UserService;
 import cdio.service.UserServiceAsync;
 
-public class MenuView extends Composite
+public class MenuView extends Composite implements iLoginCallback
 {
 	private static MenuUiBinder uiBinder = GWT.create(MenuUiBinder.class);
 	
@@ -110,5 +111,12 @@ public class MenuView extends Composite
 	
 	public interface iMenuCallback
 	{
+	}
+
+	@Override
+	public void login(UserDTO user, String token)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }
