@@ -10,7 +10,8 @@ public class CharactersValidator extends Validator
 	
 	public String validate(String value, String name)
 	{
-		if (value.matches("[a-zA-Z]+"))
+		if (value.matches("[^0-9\\!@#£¤$%&}{=+:;*§½<>,_/]+$"))
+			
 		{
 			return null;
 		}
