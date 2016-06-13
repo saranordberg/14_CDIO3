@@ -2,6 +2,8 @@ package cdio.dal.password;
 
 import java.util.Random;
 
+import com.google.gwt.user.client.Window;
+
 public class PasswordGenerator
 {
 	public String generatePassword(){
@@ -24,22 +26,24 @@ public class PasswordGenerator
 		if (password.length() <= 5) {
 			return false;
 		}
-		if (checkLetters(password)) {
-			checks++;
-		}
-		if (checkCapitals(password)) {
-			checks++;
-		}
+//		if (checkLetters(password)) {
+//			checks++;
+//		}
+//		if (checkCapitals(password)) {
+//			checks++;
+//		}
 
-		if (checkNumbers(password)) {
-			checks++;
-		}
+//		if (checkNumbers(password)) {
+//			checks++;
+//		}
 
-		if (checkSymbols(password)) {
-			checks++;
-		}
-
+//		if (checkSymbols(password)) {
+//			checks++;
+//		}
+		Window.alert(""+checks);
 		if (checks >= 3) {
+			
+			
 			return true;
 		} else {
 			return false;

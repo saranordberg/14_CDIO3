@@ -6,6 +6,8 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -38,7 +40,6 @@ public class PasswordView extends Composite
 	@UiField
 	public Button actionButton;
 	
-
 	private UserDTO user;
 	private String token;
 	public ValidatorHelper validatorHelper = new ValidatorHelper();
@@ -57,13 +58,40 @@ public class PasswordView extends Composite
 		this.user = user;
 		this.token = token;
 		
-		
 	}
 	
 	@UiHandler("actionButton")
 	public void actionButtonClick(ClickEvent event)
 	{
-		
+		if (this.user.password.equals(oldPw.getText()))
+		{
+			if (passwordGenerator.passwordValidation(newPw.getText()))
+			{
+				if (this.newPw.getText().equals(this.newPw2.getText()))
+				{
+					this.user.password = newPw.getText();
+					service.updateUser(this.user, token, actionCallback());
+					Window.alert("Dit kodeord er nu skiftet");
+				}
+				else
+				{
+					Window.alert("Dit nye kodeord matcher ikke hinanden");
+				}
+				
+			}
+			else
+			{
+				Window.alert("Dit nye kodeord skal indeholde store og smae bogstaver og mindst et tal.");
+			}
+			
+		}
+		else
+		{
+			Window.alert("Din tekst matcher ikke dit kodeord");
+		}
+		oldPw.setText("");
+		newPw.setText("");
+		newPw2.setText("");
 	}
 	
 	public void getUserService()
@@ -73,4 +101,24 @@ public class PasswordView extends Composite
 		endpoint.setServiceEntryPoint(GWT.getModuleBaseURL() + SERVICEURL);
 	}
 	
+	public AsyncCallback<Void> actionCallback()
+	{
+		return new AsyncCallback<Void>()
+		{
+			
+			@Override
+			public void onFailure(Throwable caught)
+			{
+				Window.alert("Der skete en fejl. Kontakt venligst administratoren");
+				GWT.log(caught.getMessage());
+			}
+			
+			@Override
+			public void onSuccess(Void result)
+			{
+				
+			}
+		};
+		
+	}
 }
