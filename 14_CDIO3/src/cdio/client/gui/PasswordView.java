@@ -79,7 +79,7 @@ public class PasswordView extends Composite
 			}
 			else
 			{
-				Window.alert("Dit nye kodeord skal indeholde store og smae bogstaver og mindst et tal.");
+				Window.alert("Dit nye kodeord skal mindst et stort, et lille bogstav, et tal og et af foelgende tegn: @#$%!-.");
 			}
 			
 		}
