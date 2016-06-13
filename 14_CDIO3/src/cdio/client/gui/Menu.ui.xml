@@ -45,8 +45,8 @@
 									styleName="button" text="Råvarebatches" />
 								<g:Button ui:field="product_batches_button" width="100%" height="40px"
 									styleName="button" text="Produktbatches" />
-<!-- 								<g:Button ui:field="password_button" width="100%" -->
-<!-- 									height="40px" styleName="button" text="Skift password" /> -->
+ 								<g:Button ui:field="password_button" width="100%"
+ 									height="40px" styleName="button" text="Skift password" />
 							</g:VerticalPanel>
 						</g:Dock>
 						<g:Dock direction="CENTER">
