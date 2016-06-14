@@ -135,7 +135,7 @@ public class UserView extends Composite
 	public void actionButtonClick(ClickEvent event)
 	{
 		UserDTO user = new UserDTO(0, firstName.getText(), lastName.getText(), ini.getText(), cpr.getText(),
-				passwordGenerator.generatePassword(), Integer.parseInt(userLevel.getText()));
+				password.getText(), Integer.parseInt(userLevel.getText()));
 		
 		if (!validatorHelper.validate())
 			return;
@@ -143,6 +143,7 @@ public class UserView extends Composite
 		// New user
 		if (userId.getText().equals(""))
 		{
+			user.password = passwordGenerator.generatePassword();
 			service.createUser(user, token, actionCallback());
 		}
 		// Update user
