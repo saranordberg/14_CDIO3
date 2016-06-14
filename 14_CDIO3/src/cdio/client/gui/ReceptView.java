@@ -23,13 +23,12 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
 import cdio.client.helpers.CellListHelper;
-import cdio.client.helpers.ListBoxHelper;
+import cdio.client.helpers.RawMaterialListBoxHelper;
 import cdio.client.helpers.Tuple;
 import cdio.client.validate.CharactersValidator;
 import cdio.client.validate.LengthValidator;
 import cdio.client.validate.Validator;
 import cdio.client.validate.ValidatorHelper;
-import cdio.dal.dto.RaavareDTO;
 import cdio.dal.dto.ReceptDTO;
 import cdio.dal.dto.ReceptKompDTO;
 import cdio.dal.dto.UserDTO;
@@ -68,6 +67,7 @@ public class ReceptView extends Composite
 	private UserDTO user;
 	private String token;
 	public ValidatorHelper validatorHelper = new ValidatorHelper();
+	public RawMaterialListBoxHelper rawMaterialListBoxHelper = new RawMaterialListBoxHelper();
 	
 	private ArrayList<ArrayList<Tuple<Widget, Label>>> receptKomponents = new ArrayList<ArrayList<Tuple<Widget, Label>>>();
 	private ArrayList<Widget> dummyLabels = new ArrayList<Widget>();
@@ -134,7 +134,7 @@ public class ReceptView extends Composite
 						
 						receptKomponents = new ArrayList<ArrayList<Tuple<Widget, Label>>>();
 						
-						getMaterialsListBox();
+						rawMaterialListBoxHelper.getMaterialsListBox(token);
 						int i = 0;
 						for (ReceptKompDTO receptKomp : result.receptKomps)
 						{
@@ -143,7 +143,7 @@ public class ReceptView extends Composite
 							receptKomponentPanel.add(raavareIdLabel);
 							
 							ListBox raavareId = new ListBox();
-							populateListBoxWithMaterials(receptKomp.raavareId+"", raavareId);
+							rawMaterialListBoxHelper.populateListBoxWithMaterials(receptKomp.raavareId+"", raavareId, token);
 							//raavareId.setSelectedIndex(ListBoxHelper.getIndexByValue(receptKomp.receptId+"", raavareId));
 							receptKomponentPanel.add(raavareId);
 							
@@ -243,14 +243,14 @@ public class ReceptView extends Composite
 
 	private void initializeRaavare()
 	{
-		getMaterialsListBox();
+		rawMaterialListBoxHelper.getMaterialsListBox(token);
 		
 		Label raavareIdLabel = new Label();
 		raavareIdLabel.setText("Råvare ID:");
 		receptKomponentPanel.add(raavareIdLabel);
 		
 		ListBox raavareId = new ListBox();
-		populateListBoxWithMaterials(null, raavareId);
+		rawMaterialListBoxHelper.populateListBoxWithMaterials(null, raavareId, token);
 		receptKomponentPanel.add(raavareId);
 		
 		Label nomNettoLabel = new Label();
@@ -372,43 +372,7 @@ public class ReceptView extends Composite
 		endpoint.setServiceEntryPoint(GWT.getModuleBaseURL() + RAW_MATERIAL_SERVICE_URL);
 	}
 	
-	public ArrayList<Tuple<String, String>> getMaterialsListBox()
-	{
-		if(materials != null)
-			return materials;
-		
-		this.materials = new ArrayList<Tuple<String, String>>();
-		rawMaterialService.listRaavare(token, new AsyncCallback<ArrayList<RaavareDTO>>()
-		{
-			
-			@Override
-			public void onFailure(Throwable caught)
-			{
-				Window.alert("Der skete en fejl. Kontakt venligst administratoren");
-				GWT.log(caught.getMessage());
-			}
-			
-			@Override
-			public void onSuccess(ArrayList<RaavareDTO> results)
-			{
-				for (RaavareDTO raavare : results)
-					materials.add(new Tuple<String, String>(raavare.raavareId + " : " + raavare.raavareNavn + " : " + raavare.leverandoer, raavare.raavareId+""));
-			}
-			
-		});
-		
-		return materials;
-	}
 	
-	private void populateListBoxWithMaterials(String value, ListBox listBox) {
-		ArrayList<Tuple<String, String>> materials = getMaterialsListBox();
-		
-		for(Tuple<String, String> material : materials)
-			listBox.addItem(material.x, material.y);
-		
-		if(value != null || !value.equals(""))
-			listBox.setSelectedIndex(ListBoxHelper.getIndexByValue(value, listBox));
-	}	
 	
 	private ArrayList<ReceptKompDTO> createReceptKompDTOs() {
 		ArrayList<ReceptKompDTO> receptKomps = new ArrayList<ReceptKompDTO>();

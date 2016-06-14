@@ -14,6 +14,7 @@ import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DoubleBox;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -21,6 +22,7 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
 import cdio.client.helpers.CellListHelper;
+import cdio.client.helpers.RawMaterialListBoxHelper;
 import cdio.client.validate.DoubleNumberValidator;
 import cdio.client.validate.LengthValidator;
 import cdio.client.validate.NumberValidator;
@@ -46,7 +48,9 @@ public class RaavareBatchView extends Composite
 	@UiField
 	public VerticalPanel content;
 	@UiField
-	public TextBox rb_Id, raavare_Id;
+	public TextBox rb_Id;
+	@UiField
+	public ListBox raavare_Id;
 	@UiField
 	public DoubleBox maengde;
 	@UiField
@@ -55,6 +59,7 @@ public class RaavareBatchView extends Composite
 	private UserDTO user;
 	private String token;
 	public ValidatorHelper validatorHelper = new ValidatorHelper();
+	public RawMaterialListBoxHelper rawMaterialListBoxHelper = new RawMaterialListBoxHelper();
 	
 	/*
 	 * SelectList variables
@@ -71,14 +76,10 @@ public class RaavareBatchView extends Composite
 		this.token = token;
 		
 		populateCellList();
-		ArrayList<Validator> idValidators = new ArrayList<Validator>();
+		rawMaterialListBoxHelper.getMaterialsListBox(token);
 		ArrayList<Validator> maengdeValidators = new ArrayList<Validator>();
 		
-		// idValidators.add(new LengthValidator(new Object[] { new Integer( 10
-		// ), '<' }));
-		idValidators.add(new NumberValidator(null));
-		validatorHelper.add("Raavare id", raavare_Id, idValidators);
-		
+
 		maengdeValidators.add(new LengthValidator(new Object[] { new Integer(21), '<' }));
 		maengdeValidators.add(new DoubleNumberValidator(null));
 		validatorHelper.add("Mængde", maengde, maengdeValidators);
@@ -106,7 +107,12 @@ public class RaavareBatchView extends Composite
 					public void onSuccess(RaavareBatchDTO result)
 					{
 						rb_Id.setText(new Integer(result.rbId).toString());
-						raavare_Id.setText(new Integer(result.raavareId).toString());
+//						raavare_Id.setText(new Integer(result.raavareId).toString());
+						
+//						raavare_Id = new ListBox();
+						rawMaterialListBoxHelper.populateListBoxWithMaterials(result.raavareId+"", raavare_Id, token);
+						//raavareId.setSelectedIndex(ListBoxHelper.getIndexByValue(receptKomp.receptId+"", raavareId));
+						
 						maengde.setText(new Double(result.maengde).toString());
 						actionButton.setText("Gem");
 					}
@@ -119,7 +125,7 @@ public class RaavareBatchView extends Composite
 	@UiHandler("actionButton")
 	public void actionButtonClick(ClickEvent event)
 	{
-		RaavareBatchDTO raavareBatch = new RaavareBatchDTO(0, Integer.parseInt(raavare_Id.getText()),
+		RaavareBatchDTO raavareBatch = new RaavareBatchDTO(0, Integer.parseInt(raavare_Id.getSelectedValue()),
 				Double.parseDouble(maengde.getText()));
 		
 		if (!validatorHelper.validate())
@@ -142,7 +148,7 @@ public class RaavareBatchView extends Composite
 	public void newButtonClick(ClickEvent event)
 	{
 		rb_Id.setText("");
-		raavare_Id.setText("");
+		rawMaterialListBoxHelper.populateListBoxWithMaterials(null, raavare_Id, token);
 		maengde.setText("");
 		actionButton.setText("Opret");
 	}
@@ -193,7 +199,7 @@ public class RaavareBatchView extends Composite
 				populateCellList();
 				
 				rb_Id.setText("");
-				raavare_Id.setText("");
+				raavare_Id.setSelectedIndex(0);
 				maengde.setText("");
 				actionButton.setText("Opret");
 				
