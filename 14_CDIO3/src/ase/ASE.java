@@ -9,7 +9,6 @@ import java.net.Socket;
 import cdio.dal.dao.MySQLProduktBatchDAO;
 import cdio.dal.dao.MySQLUserDAO;
 import cdio.dal.dao.interfaces.DALException;
-import cdio.dal.dto.ProduktBatchDTO;
 
 public class ASE
 {

@@ -3,7 +3,6 @@ package cdio.service;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import cdio.dal.dto.ProduktBatchDTO;
-import cdio.dal.dto.RaavareDTO;
 
 public interface ProductBatchServiceAsync
 {

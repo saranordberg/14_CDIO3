@@ -25,7 +25,6 @@ import cdio.client.helpers.CellListHelper;
 import cdio.client.helpers.ListBoxPopulater;
 import cdio.client.validate.DoubleNumberValidator;
 import cdio.client.validate.LengthValidator;
-import cdio.client.validate.NumberValidator;
 import cdio.client.validate.Validator;
 import cdio.client.validate.ValidatorHelper;
 import cdio.dal.dto.RaavareBatchDTO;

@@ -2,14 +2,10 @@ package cdio.test.database;
 
 import static org.junit.Assert.assertNotNull;
 
-import java.sql.SQLException;
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
 
-import cdio.dal.connection.Connector;
-import cdio.dal.connection.Constant;
 import cdio.dal.dao.MySQLRaavareDAO;
 import cdio.dal.dao.interfaces.DALException;
 import cdio.dal.dto.RaavareDTO;

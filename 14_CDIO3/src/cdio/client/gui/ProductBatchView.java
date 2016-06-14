@@ -22,9 +22,6 @@ import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
 import cdio.client.helpers.CellListHelper;
 import cdio.client.helpers.ListBoxPopulater;
-import cdio.client.validate.LengthValidator;
-import cdio.client.validate.NumberValidator;
-import cdio.client.validate.Validator;
 import cdio.client.validate.ValidatorHelper;
 import cdio.dal.dto.ProduktBatchDTO;
 import cdio.dal.dto.UserDTO;
@@ -46,7 +43,9 @@ public class ProductBatchView extends Composite
 	@UiField
 	public VerticalPanel content;
 	@UiField
-	public TextBox pbId, receptID;
+	public TextBox pbId;
+	@UiField
+	public ListBox receptID;
 	@UiField
 	public ListBox status;
 	@UiField
@@ -61,7 +60,7 @@ public class ProductBatchView extends Composite
 	 */
 	private CellListHelper cellList;
 	private SelectionChangeEvent.Handler selectionHandler = selectionHandler();
-	public ListBoxPopulater rawMaterialListBoxHelper = new ListBoxPopulater();
+	public ListBoxPopulater listBoxPopulater = new ListBoxPopulater();
 	
 	public ProductBatchView(UserDTO user, String token)
 	{
@@ -72,12 +71,7 @@ public class ProductBatchView extends Composite
 		this.token = token;
 		
 		populateCellList();
-		rawMaterialListBoxHelper.getMaterialsListBox(token);
-		ArrayList<Validator> idValidators = new ArrayList<Validator>();
-		
-		idValidators.add(new LengthValidator(new Object[] { new Integer(30), '<' }));
-		idValidators.add(new NumberValidator(null));
-		validatorHelper.add("Recept ID", receptID, idValidators);
+		listBoxPopulater.populateWithPrescription(token);
 	}
 	
 	private Handler selectionHandler()
@@ -105,7 +99,7 @@ public class ProductBatchView extends Composite
 						status.setSelectedIndex(Integer.parseInt(result.status));
 //						receptID.setText(new Integer(result.receptId).toString());
 //						receptID.setReadOnly(true);
-						rawMaterialListBoxHelper.populateListBoxWithMaterials(result.receptId+"", receptID, token);
+						listBoxPopulater.populateListBoxWithMaterials(result.receptId+"", receptID, token);
 						actionButton.setVisible(false);
 					}
 					
@@ -118,7 +112,7 @@ public class ProductBatchView extends Composite
 	public void actionButtonClick(ClickEvent event)
 	{
 		ProduktBatchDTO pb = new ProduktBatchDTO(0,
-				Integer.parseInt(receptID.getText()),
+				Integer.parseInt(receptID.getSelectedValue()),
 				status.getSelectedValue());
 		
 		if (!validatorHelper.validate())
@@ -143,8 +137,7 @@ public class ProductBatchView extends Composite
 	{
 		pbId.setText("");
 		status.setSelectedIndex(0);
-		receptID.setText("");
-		receptID.setReadOnly(false);
+		listBoxPopulater.populateListBoxWithMaterials(null, receptID, token);
 		actionButton.setText("Opret");
 		actionButton.setVisible(true);
 	}
@@ -196,8 +189,7 @@ public class ProductBatchView extends Composite
 				
 				pbId.setText("");
 				status.setSelectedIndex(1);
-				receptID.setText("");
-				receptID.setReadOnly(false);
+				listBoxPopulater.populateListBoxWithMaterials(null, receptID, token);
 				actionButton.setText("Opret");
 				
 				Window.alert("Din produktbatch er nu gemt");

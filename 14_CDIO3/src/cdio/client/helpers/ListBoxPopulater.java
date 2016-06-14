@@ -55,7 +55,7 @@ public class ListBoxPopulater
 		});
 	}
 	
-	public void populateWithProducts(String token)
+	public void populateWithPrescription(String token)
 	{
 		this.materials = new ArrayList<Tuple<String, String>>();
 		
