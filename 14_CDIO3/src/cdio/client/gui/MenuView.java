@@ -34,13 +34,13 @@ public class MenuView extends Composite implements iLoginCallback
 	}
 	
 	@UiField
-	Button opr_button, prescriptions_button, raw_materials_button, raw_materials_batches_button, product_batches_button, password_button;
+	public Button opr_button, prescriptions_button, raw_materials_button, raw_materials_batches_button, product_batches_button, password_button;
 	@UiField
-	VerticalPanel content;
+	public VerticalPanel content;
 	@UiField
-	Button sign_out_btn;
+	public Button sign_out_btn;
 	@UiField
-	Label name;
+	public Label name;
 	// private iSignOut_callback sign_out;
 	private UserDTO user;
 	private String token;
