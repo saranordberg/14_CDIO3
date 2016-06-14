@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import cdio.dal.dao.interfaces.DALException;
@@ -68,8 +69,8 @@ public class Connector
 			int i = 1;
 			for (Object parameter : parameters)
 			{
-				if (parameter instanceof String)
-					statement.setString(i, (String) parameter);
+				if (parameter instanceof Timestamp)
+					statement.setTimestamp(i, (Timestamp)parameter);
 				else if (parameter instanceof Integer)
 					statement.setInt(i, (int) parameter);
 				else if (parameter instanceof Double)
@@ -78,6 +79,8 @@ public class Connector
 					statement.setDate(i, new java.sql.Date(((Date) parameter).getTime()));
 				else if (parameter instanceof Float)
 					statement.setFloat(i, (float) parameter);
+				else if (parameter instanceof String)
+					statement.setString(i, (String) parameter);
 				
 				i++;
 			}
@@ -100,8 +103,8 @@ public class Connector
 			int i = 1;
 			for (Object parameter : parameters)
 			{
-				if (parameter instanceof String)
-					statement.setString(i, (String) parameter);
+				if (parameter instanceof Timestamp)
+					statement.setTimestamp(i, (Timestamp)parameter);
 				else if (parameter instanceof Integer)
 					statement.setInt(i, (int) parameter);
 				else if (parameter instanceof Double)
@@ -110,6 +113,8 @@ public class Connector
 					statement.setDate(i, new java.sql.Date(((Date) parameter).getTime()));
 				else if (parameter instanceof Float)
 					statement.setFloat(i, (float) parameter);
+				else if (parameter instanceof String)
+					statement.setString(i, (String) parameter);
 				
 				i++;
 			}

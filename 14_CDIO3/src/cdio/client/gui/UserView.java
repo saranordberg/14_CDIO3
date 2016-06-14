@@ -69,6 +69,7 @@ public class UserView extends Composite
 		
 		this.user = user;
 		this.token = token;
+		GWT.log("TOKEN: " + token);
 		
 		populateCellList();
 		ArrayList<Validator> cprValidators = new ArrayList<Validator>();

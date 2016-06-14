@@ -12,12 +12,14 @@ import cdio.dal.dao.interfaces.DALException;
 import cdio.dal.dto.ReceptDTO;
 import cdio.dal.dto.ReceptKompDTO;
 import cdio.service.PrescriptionService;
+import cdio.service.tokenhandler.TokenValidator;
 
 public class PrescriptionServiceImpl extends RemoteServiceServlet implements PrescriptionService
 {
 	@Override
 	public ReceptDTO getRecept(int receptId, String token) throws DALException
 	{
+		TokenValidator.validateToken(token);
 		MySQLReceptDAO conn = new MySQLReceptDAO();
 		return conn.getRecept(receptId);
 	}
@@ -25,6 +27,7 @@ public class PrescriptionServiceImpl extends RemoteServiceServlet implements Pre
 	@Override
 	public void createRecept(ReceptDTO recept, String token) throws DALException
 	{
+		TokenValidator.validateToken(token);
 		MySQLReceptDAO conn = new MySQLReceptDAO();
 		conn.createRecept(recept);
 	}
@@ -32,6 +35,7 @@ public class PrescriptionServiceImpl extends RemoteServiceServlet implements Pre
 	@Override
 	public void updateRecept(ReceptDTO recept, String token) throws DALException
 	{
+		TokenValidator.validateToken(token);
 		MySQLReceptDAO conn = new MySQLReceptDAO();
 		conn.updateRecept(recept);
 	}
@@ -39,6 +43,7 @@ public class PrescriptionServiceImpl extends RemoteServiceServlet implements Pre
 	@Override
 	public List<ReceptDTO> listRecept(String token) throws DALException
 	{
+		TokenValidator.validateToken(token);
 		MySQLReceptDAO conn = new MySQLReceptDAO();
 		return conn.getReceptList();
 	}

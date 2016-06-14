@@ -77,6 +77,7 @@ public class LoginView extends Composite
 					@Override
 					public void onFailure(Throwable caught)
 					{
+						GWT.log(caught.getMessage());
 						String message = "Brugernavn eller password er forkert";
 						loginFailed(message);
 					}
@@ -84,7 +85,7 @@ public class LoginView extends Composite
 					@Override
 					public void onSuccess(UserDTO result)
 					{
-						callback.login(result, "HEJ");
+						callback.login(result);
 					
 					}
 						});
@@ -98,6 +99,6 @@ public class LoginView extends Composite
 	
 	public interface iLoginCallback
 	{
-		public void login(UserDTO user, String token);
+		public void login(UserDTO user);
 	}
 }
