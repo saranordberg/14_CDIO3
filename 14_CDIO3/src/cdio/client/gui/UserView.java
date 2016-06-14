@@ -168,7 +168,7 @@ public class UserView extends Composite
 	
 	public void populateCellList()
 	{
-		service.listUser(user.userId, token, new AsyncCallback<ArrayList<UserDTO>>()
+		service.listUser(token, new AsyncCallback<ArrayList<UserDTO>>()
 		{
 			
 			@Override

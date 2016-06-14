@@ -107,17 +107,17 @@ public class MySQLReceptDAO implements ReceptDAO
 		try
 		{
 			Connector.getInstance().doUpdate("UPDATE recept SET  recept_navn = ? WHERE recept_id = ?"
-					, recept.receptNavn, recept.receptKomps);
+					, recept.receptNavn, recept.receptId);
 			
 			if(recept.receptKomps != null) {
 				//First delete
-				Connector.getInstance().doUpdate("DLETE FROM receptkomponent WHERE recept_id = ?"
+				Connector.getInstance().doUpdate("DELETE FROM receptkomponent WHERE recept_id = ?"
 						, recept.receptId);
 				//Then update
 				for(ReceptKompDTO receptkomponent : recept.receptKomps) {
 					Connector.getInstance().doUpdate(
 							"INSERT INTO receptkomponent (recept_id, raavare_id, nom_netto, tolerance) VALUES (?, ?, ?, ?)",
-							receptkomponent.receptId, receptkomponent.raavareId, receptkomponent.nomNetto,
+							recept.receptId, receptkomponent.raavareId, receptkomponent.nomNetto,
 							receptkomponent.tolerance);
 				}
 			}
