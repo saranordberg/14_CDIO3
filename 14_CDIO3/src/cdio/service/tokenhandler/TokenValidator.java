@@ -29,6 +29,26 @@ public class TokenValidator
 		}
 	}
 	
+	public static boolean validateToken(String token) throws DALException {
+		if(token == null)
+			throw InvalidToken();
+		
+		try
+		{
+			MySQLTokenDAO conn = new MySQLTokenDAO();
+			TokenDTO tokenDTO = conn.getToken(token);
+			
+			if(tokenDTO.expiration.after(new Timestamp(new Date().getTime())))
+				return true;
+			else
+				throw InvalidToken();
+		}
+		catch (DALException e)
+		{
+			throw InvalidToken();
+		}
+	}
+	
 	private static DALException InvalidToken() {
 		return new DALException("Invalid Token");
 	}

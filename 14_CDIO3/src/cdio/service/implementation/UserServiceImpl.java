@@ -8,12 +8,14 @@ import cdio.dal.dao.MySQLUserDAO;
 import cdio.dal.dao.interfaces.DALException;
 import cdio.dal.dto.UserDTO;
 import cdio.service.UserService;
+import cdio.service.tokenhandler.TokenValidator;
 
 public class UserServiceImpl extends RemoteServiceServlet implements UserService
 {
 	@Override
 	public UserDTO getUser(int userId, String token) throws DALException
 	{
+		TokenValidator.validateToken(token);
 		MySQLUserDAO conn = new MySQLUserDAO();
 		return conn.getUser(userId);
 	}
@@ -21,6 +23,7 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
 	@Override
 	public void createUser(UserDTO user, String token) throws DALException
 	{
+		TokenValidator.validateToken(token);
 		MySQLUserDAO conn = new MySQLUserDAO();
 		conn.createUser(user);
 	}
@@ -28,6 +31,7 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
 	@Override
 	public void updateUser(UserDTO user, String token) throws DALException
 	{
+		TokenValidator.validateToken(token);
 		MySQLUserDAO conn = new MySQLUserDAO();
 		conn.updateUser(user);
 	}
@@ -35,6 +39,7 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
 	@Override
 	public List<UserDTO> listUser(String token) throws DALException
 	{
+		TokenValidator.validateToken(token);
 		MySQLUserDAO conn = new MySQLUserDAO();
 		return conn.getUserList();
 	}

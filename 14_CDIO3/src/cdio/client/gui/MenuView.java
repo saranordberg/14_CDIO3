@@ -48,9 +48,9 @@ public class MenuView extends Composite implements iLoginCallback
 	
 	private iMenuCallback callback;
 	
-	public MenuView(UserDTO user, String token)
+	public MenuView(UserDTO user)
 	{
-		this.token = token;
+		this.token = user.token;
 		this.user = user;
 		this.userLevel = user.level;
 		
@@ -131,10 +131,10 @@ public class MenuView extends Composite implements iLoginCallback
 	}
 
 	@Override
-	public void login(UserDTO user, String token)
+	public void login(UserDTO user)
 	{
 		RootPanel.get().clear();
-		RootPanel.get().add(new MenuView(user, token));
+		RootPanel.get().add(new MenuView(user));
 		
 	}
 }

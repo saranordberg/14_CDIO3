@@ -85,7 +85,7 @@ public class LoginView extends Composite
 					@Override
 					public void onSuccess(UserDTO result)
 					{
-						callback.login(result, "HEJ");
+						callback.login(result);
 					
 					}
 						});
@@ -99,6 +99,6 @@ public class LoginView extends Composite
 	
 	public interface iLoginCallback
 	{
-		public void login(UserDTO user, String token);
+		public void login(UserDTO user);
 	}
 }
