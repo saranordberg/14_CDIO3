@@ -1,7 +1,6 @@
 package cdio.client.gui;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -12,10 +11,10 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-import cdio.dal.dao.interfaces.DALException;
 import cdio.dal.dto.UserDTO;
 import cdio.service.UserService;
 import cdio.service.UserServiceAsync;
@@ -33,7 +32,9 @@ public class LoginView extends Composite
 	private final String SERVICEURL = "userService";
 	
 	@UiField
-	public TextBox userID, password;
+	public TextBox userID;
+	@UiField
+	public PasswordTextBox password;
 	@UiField
 	public Button loginButton;
 	public iLoginCallback callback;
@@ -51,7 +52,7 @@ public class LoginView extends Composite
 		this.callback = callback;
 		
 		this.userID.setText("2");
-		this.password.setText("jegharfaaetis");
+		this.password.setText("Test1234");
 		
 		getUserService();
 	}

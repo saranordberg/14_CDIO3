@@ -11,7 +11,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 import cdio.client.helpers.CellListHelper;
@@ -34,7 +34,7 @@ public class PasswordView extends Composite
 	private final String SERVICEURL = "userService";
 	
 	@UiField
-	public TextBox oldPw, newPw, newPw2;
+	public PasswordTextBox oldPw, newPw, newPw2;
 	@UiField
 	public Button actionButton;
 	
@@ -79,7 +79,7 @@ public class PasswordView extends Composite
 			}
 			else
 			{
-				Window.alert("Dit nye kodeord skal mindst et stort, et lille bogstav, et tal og et af foelgende tegn: @#$%!-.");
+				Window.alert("Dit nye kodeord skal mindst et lille bogstav, et tal og enten et stort bogstav eller et tegn: @#$%!-.");
 			}
 			
 		}
