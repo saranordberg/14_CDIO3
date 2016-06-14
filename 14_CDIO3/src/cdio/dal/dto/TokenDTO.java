@@ -18,7 +18,6 @@ public class TokenDTO implements Serializable
 		this.user_id = user_id;
 		this.token = token;
 		this.expiration = expiration;
-		
 	}
 	
 	public String toString()

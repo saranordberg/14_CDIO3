@@ -8,12 +8,14 @@ import cdio.dal.dao.MySQLRaavareBatchDAO;
 import cdio.dal.dao.interfaces.DALException;
 import cdio.dal.dto.RaavareBatchDTO;
 import cdio.service.RawMaterialBatchService;
+import cdio.service.tokenhandler.TokenValidator;
 
 public class RawMaterialBatchServiceImpl extends RemoteServiceServlet implements RawMaterialBatchService
 {
 	@Override
 	public RaavareBatchDTO getRaavareBatch(int rbId, String token) throws DALException
 	{
+		TokenValidator.validateToken(token);
 		MySQLRaavareBatchDAO conn = new MySQLRaavareBatchDAO();
 		return conn.getRaavareBatch(rbId);
 	}
@@ -21,6 +23,7 @@ public class RawMaterialBatchServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public void createRaavareBatch(RaavareBatchDTO rb, String token) throws DALException
 	{
+		TokenValidator.validateToken(token);
 		MySQLRaavareBatchDAO conn = new MySQLRaavareBatchDAO();
 		conn.createRaavareBatch(rb);
 	}
@@ -28,6 +31,7 @@ public class RawMaterialBatchServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public void updateRaavareBatch(RaavareBatchDTO rb, String token) throws DALException
 	{
+		TokenValidator.validateToken(token);
 		MySQLRaavareBatchDAO conn = new MySQLRaavareBatchDAO();
 		conn.updateRaavareBatch(rb);
 	}
@@ -35,6 +39,7 @@ public class RawMaterialBatchServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public List<RaavareBatchDTO> listRaavareBatch(String token) throws DALException
 	{
+		TokenValidator.validateToken(token);
 		MySQLRaavareBatchDAO conn = new MySQLRaavareBatchDAO();
 		return conn.getRaavareBatchList();
 	}

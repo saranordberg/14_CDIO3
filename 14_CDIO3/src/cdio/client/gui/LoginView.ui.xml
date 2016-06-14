@@ -17,7 +17,7 @@
 					<g:Label ui:field="password_lbl" width="90%" horizontalAlignment="ALIGN_LEFT">Password:</g:Label>
 				</g:Cell>
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:TextBox ui:field="password" width="90%"/>
+					<g:PasswordTextBox ui:field="password" width="90%"/>
 				</g:Cell>
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_BOTTOM">
 					<g:Button ui:field="loginButton" width="100px" height="40px" styleName="rect_button">Log in</g:Button>

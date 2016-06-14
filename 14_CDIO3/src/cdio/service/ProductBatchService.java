@@ -7,7 +7,6 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import cdio.dal.dao.interfaces.DALException;
 import cdio.dal.dto.ProduktBatchDTO;
-import cdio.dal.dto.ReceptDTO;
 
 @RemoteServiceRelativePath("productBatchService")
 public interface ProductBatchService extends RemoteService

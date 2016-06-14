@@ -106,8 +106,21 @@ public class MySQLReceptDAO implements ReceptDAO
 	{
 		try
 		{
-			Connector.getInstance().doUpdate("UPDATE recept SET  recept_navn = '" + recept.receptNavn
-					+ "' WHERE recept_id = " + recept.receptId);
+			Connector.getInstance().doUpdate("UPDATE recept SET  recept_navn = ? WHERE recept_id = ?"
+					, recept.receptNavn, recept.receptId);
+			
+			if(recept.receptKomps != null) {
+				//First delete
+				Connector.getInstance().doUpdate("DELETE FROM receptkomponent WHERE recept_id = ?"
+						, recept.receptId);
+				//Then update
+				for(ReceptKompDTO receptkomponent : recept.receptKomps) {
+					Connector.getInstance().doUpdate(
+							"INSERT INTO receptkomponent (recept_id, raavare_id, nom_netto, tolerance) VALUES (?, ?, ?, ?)",
+							recept.receptId, receptkomponent.raavareId, receptkomponent.nomNetto,
+							receptkomponent.tolerance);
+				}
+			}
 		}
 		catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e)
 		{

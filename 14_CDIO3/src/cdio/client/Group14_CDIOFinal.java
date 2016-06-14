@@ -27,10 +27,10 @@ public class Group14_CDIOFinal implements EntryPoint, LoginView.iLoginCallback
 	}
 	
 	@Override
-	public void login(UserDTO user, String token)
+	public void login(UserDTO user)
 	{
 		this.clear();
-		RootPanel.get().add(new MenuView(user, token));
+		RootPanel.get().add(new MenuView(user));
 	}
 	
 	private void clear()

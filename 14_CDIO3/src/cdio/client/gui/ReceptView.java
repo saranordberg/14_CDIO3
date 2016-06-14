@@ -23,13 +23,12 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
 import cdio.client.helpers.CellListHelper;
-import cdio.client.helpers.ListBoxHelper;
+import cdio.client.helpers.ListBoxPopulater;
 import cdio.client.helpers.Tuple;
 import cdio.client.validate.CharactersValidator;
 import cdio.client.validate.LengthValidator;
 import cdio.client.validate.Validator;
 import cdio.client.validate.ValidatorHelper;
-import cdio.dal.dto.RaavareDTO;
 import cdio.dal.dto.ReceptDTO;
 import cdio.dal.dto.ReceptKompDTO;
 import cdio.dal.dto.UserDTO;
@@ -68,10 +67,11 @@ public class ReceptView extends Composite
 	private UserDTO user;
 	private String token;
 	public ValidatorHelper validatorHelper = new ValidatorHelper();
+	public ListBoxPopulater listBoxPopulater = new ListBoxPopulater();
 	
 	private ArrayList<ArrayList<Tuple<Widget, Label>>> receptKomponents = new ArrayList<ArrayList<Tuple<Widget, Label>>>();
-	private ArrayList<Widget> dummyLabels = new ArrayList<Widget>();
-	private ArrayList<Widget> dummyButtons = new ArrayList<Widget>();
+	private ArrayList<Label> dummyLabels = new ArrayList<Label>();
+	private ArrayList<Button> dummyButtons = new ArrayList<Button>();
 	
 	/*
 	 * SelectList variables
@@ -87,6 +87,8 @@ public class ReceptView extends Composite
 		
 		this.user = user;
 		this.token = token;
+		
+		this.listBoxPopulater.populateWithRawMaterials(token);
 		
 		populateCellList();
 		initializeRaavare();
@@ -121,20 +123,9 @@ public class ReceptView extends Composite
 					@Override
 					public void onSuccess(ReceptDTO result)
 					{
-						for (ArrayList<Tuple<Widget, Label>> receptKomp : receptKomponents)
-						{
-							for (Tuple<Widget, Label> tuple : receptKomp)
-							{
-								tuple.x.removeFromParent();
-								tuple.y.removeFromParent();
-							}
-						}
 						
-						removeDummyObjects();
+						removeObjects();
 						
-						receptKomponents = new ArrayList<ArrayList<Tuple<Widget, Label>>>();
-						
-						getMaterialsListBox();
 						int i = 0;
 						for (ReceptKompDTO receptKomp : result.receptKomps)
 						{
@@ -143,7 +134,7 @@ public class ReceptView extends Composite
 							receptKomponentPanel.add(raavareIdLabel);
 							
 							ListBox raavareId = new ListBox();
-							populateListBoxWithMaterials(receptKomp.raavareId+"", raavareId);
+							listBoxPopulater.populateListBoxWithMaterials(receptKomp.raavareId+"", raavareId, token);
 							//raavareId.setSelectedIndex(ListBoxHelper.getIndexByValue(receptKomp.receptId+"", raavareId));
 							receptKomponentPanel.add(raavareId);
 							
@@ -167,27 +158,7 @@ public class ReceptView extends Composite
 							deleteReceptKomp.setText("Fjern råvare");
 							deleteReceptKomp.setStylePrimaryName(i+"");
 							dummyButtons.add(deleteReceptKomp);
-							deleteReceptKomp.addClickHandler(new ClickHandler() {
-
-								@Override
-								public void onClick(ClickEvent event)
-								{
-									Button button = (Button)event.getSource();
-									
-									int index = Integer.parseInt(button.getStylePrimaryName());
-									
-									for(Tuple<Widget, Label> receptKomp : receptKomponents.get(index)) {
-										receptKomp.x.removeFromParent();
-										receptKomp.y.removeFromParent();
-									}
-								
-									
-									dummyButtons.get(index).removeFromParent();
-									dummyLabels.get(index).removeFromParent();
-									
-									
-								}
-							});
+							deleteReceptKomp.addClickHandler(removeRaavareClickHandler());
 							receptKomponentPanel.add(deleteReceptKomp);
 							
 							Label emptyLabel = new Label();
@@ -208,6 +179,8 @@ public class ReceptView extends Composite
 						recept_navn.setText(result.receptNavn);
 						actionButton.setText("Gem");
 					}
+
+					
 					
 				});
 			}
@@ -248,7 +221,9 @@ public class ReceptView extends Composite
 		actionButton.setText("Opret");
 		
 		receptKomponentPanel.clear();
-		receptKomponents = new ArrayList<ArrayList<Tuple<Widget, Label>>>();
+		removeObjects();
+		
+
 		
 		initializeRaavare();
 	}
@@ -261,14 +236,13 @@ public class ReceptView extends Composite
 
 	private void initializeRaavare()
 	{
-		getMaterialsListBox();
 		
 		Label raavareIdLabel = new Label();
 		raavareIdLabel.setText("Råvare ID:");
 		receptKomponentPanel.add(raavareIdLabel);
 		
 		ListBox raavareId = new ListBox();
-		populateListBoxWithMaterials(null, raavareId);
+		listBoxPopulater.populateListBoxWithMaterials(null, raavareId, token);
 		receptKomponentPanel.add(raavareId);
 		
 		Label nomNettoLabel = new Label();
@@ -287,12 +261,14 @@ public class ReceptView extends Composite
 		
 		Button deleteReceptKomp = new Button();
 		deleteReceptKomp.setText("Fjern");
-		deleteReceptKomp.setStylePrimaryName("0");
+		deleteReceptKomp.setStylePrimaryName(dummyLabels.size() +"");
+		deleteReceptKomp.addClickHandler(this.removeRaavareClickHandler());
 		receptKomponentPanel.add(deleteReceptKomp);
 		
 		Label emptyLabel = new Label();
 		emptyLabel.setText("-");
 		receptKomponentPanel.add(emptyLabel);
+		
 		dummyLabels.add(emptyLabel);
 		dummyButtons.add(deleteReceptKomp);
 		
@@ -353,74 +329,15 @@ public class ReceptView extends Composite
 				recept_navn.setText("");
 				actionButton.setText("Opret");
 				
+				receptKomponentPanel.clear();
+				initializeRaavare();
+				
+				
+				
 				Window.alert("Din recept er nu gemt");
 			}
 		};
 	}
-	
-	public void removeDummyObjects()
-	{
-		for (Widget label : dummyLabels)
-			label.removeFromParent();
-		
-		for (Widget button : dummyButtons)
-			button.removeFromParent();
-		
-		dummyLabels = new ArrayList<Widget>();
-		dummyButtons = new ArrayList<Widget>();
-	}
-	
-	public void getPrescriptionService()
-	{
-		this.service = GWT.create(PrescriptionService.class);
-		ServiceDefTarget endpoint = (ServiceDefTarget) this.service;
-		endpoint.setServiceEntryPoint(GWT.getModuleBaseURL() + SERVICEURL);
-	}
-	
-	public void getRawMaterialService()
-	{
-		this.rawMaterialService = GWT.create(RawMaterialService.class);
-		ServiceDefTarget endpoint = (ServiceDefTarget) this.rawMaterialService;
-		endpoint.setServiceEntryPoint(GWT.getModuleBaseURL() + RAW_MATERIAL_SERVICE_URL);
-	}
-	
-	public ArrayList<Tuple<String, String>> getMaterialsListBox()
-	{
-		if(materials != null)
-			return materials;
-		
-		this.materials = new ArrayList<Tuple<String, String>>();
-		rawMaterialService.listRaavare(token, new AsyncCallback<ArrayList<RaavareDTO>>()
-		{
-			
-			@Override
-			public void onFailure(Throwable caught)
-			{
-				Window.alert("Der skete en fejl. Kontakt venligst administratoren");
-				GWT.log(caught.getMessage());
-			}
-			
-			@Override
-			public void onSuccess(ArrayList<RaavareDTO> results)
-			{
-				for (RaavareDTO raavare : results)
-					materials.add(new Tuple<String, String>(raavare.raavareId + " : " + raavare.raavareNavn + " : " + raavare.leverandoer, raavare.raavareId+""));
-			}
-			
-		});
-		
-		return materials;
-	}
-	
-	private void populateListBoxWithMaterials(String value, ListBox listBox) {
-		ArrayList<Tuple<String, String>> materials = getMaterialsListBox();
-		
-		for(Tuple<String, String> material : materials)
-			listBox.addItem(material.x, material.y);
-		
-		if(value != null || !value.equals(""))
-			listBox.setSelectedIndex(ListBoxHelper.getIndexByValue(value, listBox));
-	}	
 	
 	private ArrayList<ReceptKompDTO> createReceptKompDTOs() {
 		ArrayList<ReceptKompDTO> receptKomps = new ArrayList<ReceptKompDTO>();
@@ -447,6 +364,90 @@ public class ReceptView extends Composite
 		}
 		
 		return receptKomps;
+	}
+	public ClickHandler removeRaavareClickHandler()
+	{
+		return new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				Button button = (Button)event.getSource();
+				
+				int index = Integer.parseInt(button.getStylePrimaryName());
+				GWT.log("index : " + index+"");
+				GWT.log("button : " + dummyButtons.size()+"");
+				GWT.log("label : " + dummyLabels.size()+"");
+				GWT.log("recpt : " + receptKomponents.size()+"");
+				
+				for(Tuple<Widget, Label> receptKomp : receptKomponents.get(index)) {
+					receptKomp.x.removeFromParent();
+					receptKomp.y.removeFromParent();
+				}
+				
+				receptKomponents.remove(index);
+			
+				dummyButtons.get(index).removeFromParent();
+				dummyLabels.get(index).removeFromParent();
+				
+				dummyButtons.remove(index);
+				dummyLabels.remove(index);
+				
+				updateDummyButtons();
+				
+				button.removeFromParent();
+			}
+		};
+	}
+	
+	public void updateDummyButtons()
+	{
+		int i = 0;
+		for(Button button : dummyButtons) {
+			button.setStylePrimaryName(i+"");
+		}
+		
+	}
+
+	public void removeObjects() {
+		for (ArrayList<Tuple<Widget, Label>> receptKomp : receptKomponents)
+		{
+			for (Tuple<Widget, Label> tuple : receptKomp)
+			{
+				tuple.x.removeFromParent();
+				tuple.y.removeFromParent();
+			}
+		}
+		
+		removeDummyObjects();
+		
+		receptKomponents = new ArrayList<ArrayList<Tuple<Widget, Label>>>();
+	}
+	
+	public void removeDummyObjects()
+	{
+		for (Widget label : dummyLabels)
+			label.removeFromParent();
+		
+		for (Widget button : dummyButtons)
+			button.removeFromParent();
+		
+		dummyLabels = new ArrayList<Label>();
+		dummyButtons = new ArrayList<Button>();
+	}
+	
+	public void getPrescriptionService()
+	{
+		this.service = GWT.create(PrescriptionService.class);
+		ServiceDefTarget endpoint = (ServiceDefTarget) this.service;
+		endpoint.setServiceEntryPoint(GWT.getModuleBaseURL() + SERVICEURL);
+	}
+	
+	public void getRawMaterialService()
+	{
+		this.rawMaterialService = GWT.create(RawMaterialService.class);
+		ServiceDefTarget endpoint = (ServiceDefTarget) this.rawMaterialService;
+		endpoint.setServiceEntryPoint(GWT.getModuleBaseURL() + RAW_MATERIAL_SERVICE_URL);
 	}
 	
 }

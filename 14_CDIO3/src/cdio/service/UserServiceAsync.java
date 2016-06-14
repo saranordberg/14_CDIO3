@@ -12,7 +12,7 @@ public interface UserServiceAsync
 	
 	void updateUser(UserDTO user, String token, AsyncCallback callback);
 	
-	void listUser(int userID, String token, AsyncCallback callback);
+	void listUser(String token, AsyncCallback callback);
 	
 	void login(UserDTO user, AsyncCallback callback);
 }

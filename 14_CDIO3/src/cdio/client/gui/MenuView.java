@@ -34,13 +34,13 @@ public class MenuView extends Composite implements iLoginCallback
 	}
 	
 	@UiField
-	Button opr_button, prescriptions_button, raw_materials_button, raw_materials_batches_button, product_batches_button;
+	public Button opr_button, prescriptions_button, raw_materials_button, raw_materials_batches_button, product_batches_button, password_button;
 	@UiField
-	VerticalPanel content;
+	public VerticalPanel content;
 	@UiField
-	Button sign_out_btn;
+	public Button sign_out_btn;
 	@UiField
-	Label name;
+	public Label name;
 	// private iSignOut_callback sign_out;
 	private UserDTO user;
 	private String token;
@@ -48,9 +48,9 @@ public class MenuView extends Composite implements iLoginCallback
 	
 	private iMenuCallback callback;
 	
-	public MenuView(UserDTO user, String token)
+	public MenuView(UserDTO user)
 	{
-		this.token = token;
+		this.token = user.token;
 		this.user = user;
 		this.userLevel = user.level;
 		
@@ -59,11 +59,12 @@ public class MenuView extends Composite implements iLoginCallback
 		name.setText(user.firstName + " " + user.lastName);
 		GWT.log(this.userLevel + "");
 		GWT.log("" + UserLevels.HasRight(this.userLevel, MenuLevel.AFVEJNING));
-		opr_button.setVisible(UserLevels.HasRight(this.userLevel, MenuLevel.AFVEJNING));
+		opr_button.setVisible(UserLevels.HasRight(this.userLevel, MenuLevel.ADMIN));
 		prescriptions_button.setVisible(UserLevels.HasRight(this.userLevel, MenuLevel.RECEPT));
 		raw_materials_button.setVisible(UserLevels.HasRight(this.userLevel, MenuLevel.RAAVARE));
 		raw_materials_batches_button.setVisible(UserLevels.HasRight(this.userLevel, MenuLevel.RAAVAREBATCH));
 		product_batches_button.setVisible(UserLevels.HasRight(this.userLevel, MenuLevel.PRODUKTBATCH));
+		password_button.setVisible(true);
 	}
 	
 	public void getOperatorService()
@@ -101,6 +102,13 @@ public class MenuView extends Composite implements iLoginCallback
 		content.add(new ReceptView(user, token));
 	}
 	
+	@UiHandler("password_button")
+	void pwButtonClick(ClickEvent event)
+	{
+		content.clear();
+		content.add(new PasswordView(user, token));
+	}
+	
 	@UiHandler("product_batches_button")
 	void pbButtonClick(ClickEvent event)
 	{
@@ -123,10 +131,10 @@ public class MenuView extends Composite implements iLoginCallback
 	}
 
 	@Override
-	public void login(UserDTO user, String token)
+	public void login(UserDTO user)
 	{
 		RootPanel.get().clear();
-		RootPanel.get().add(new MenuView(user, token));
+		RootPanel.get().add(new MenuView(user));
 		
 	}
 }

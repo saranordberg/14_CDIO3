@@ -25,7 +25,7 @@ public class MySQLProduktBatchDAO implements ProduktBatchDAO
 			if (!rs.first())
 				throw new DALException("Produktbatchen" + pbId + "findes ikke");
 			
-			return new ProduktBatchDTO(rs.getInt("pb_id"), rs.getInt("recept_id"), rs.getInt("status"));
+			return new ProduktBatchDTO(rs.getInt("pb_id"), rs.getInt("recept_id"), rs.getString("status"));
 		}
 		catch (Exception e)
 		{
@@ -60,7 +60,7 @@ public class MySQLProduktBatchDAO implements ProduktBatchDAO
 			ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM produktbatch");
 			while (rs.next())
 			{
-				list.add(new ProduktBatchDTO(rs.getInt("pb_id"), rs.getInt("recept_id"), rs.getInt("status")));
+				list.add(new ProduktBatchDTO(rs.getInt("pb_id"), rs.getInt("recept_id"), rs.getString("status")));
 			}
 		}
 		catch (Exception e)
