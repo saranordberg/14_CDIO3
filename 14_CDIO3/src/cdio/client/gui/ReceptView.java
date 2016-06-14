@@ -70,8 +70,8 @@ public class ReceptView extends Composite
 	public ListBoxPopulater listBoxPopulater = new ListBoxPopulater();
 	
 	private ArrayList<ArrayList<Tuple<Widget, Label>>> receptKomponents = new ArrayList<ArrayList<Tuple<Widget, Label>>>();
-	private ArrayList<Widget> dummyLabels = new ArrayList<Widget>();
-	private ArrayList<Widget> dummyButtons = new ArrayList<Widget>();
+	private ArrayList<Label> dummyLabels = new ArrayList<Label>();
+	private ArrayList<Button> dummyButtons = new ArrayList<Button>();
 	
 	/*
 	 * SelectList variables
@@ -261,13 +261,14 @@ public class ReceptView extends Composite
 		
 		Button deleteReceptKomp = new Button();
 		deleteReceptKomp.setText("Fjern");
-		deleteReceptKomp.setStylePrimaryName("0");
+		deleteReceptKomp.setStylePrimaryName(dummyLabels.size() +"");
 		deleteReceptKomp.addClickHandler(this.removeRaavareClickHandler());
 		receptKomponentPanel.add(deleteReceptKomp);
 		
 		Label emptyLabel = new Label();
 		emptyLabel.setText("-");
 		receptKomponentPanel.add(emptyLabel);
+		
 		dummyLabels.add(emptyLabel);
 		dummyButtons.add(deleteReceptKomp);
 		
@@ -338,34 +339,6 @@ public class ReceptView extends Composite
 		};
 	}
 	
-	public void removeDummyObjects()
-	{
-		for (Widget label : dummyLabels)
-			label.removeFromParent();
-		
-		for (Widget button : dummyButtons)
-			button.removeFromParent();
-		
-		dummyLabels = new ArrayList<Widget>();
-		dummyButtons = new ArrayList<Widget>();
-	}
-	
-	public void getPrescriptionService()
-	{
-		this.service = GWT.create(PrescriptionService.class);
-		ServiceDefTarget endpoint = (ServiceDefTarget) this.service;
-		endpoint.setServiceEntryPoint(GWT.getModuleBaseURL() + SERVICEURL);
-	}
-	
-	public void getRawMaterialService()
-	{
-		this.rawMaterialService = GWT.create(RawMaterialService.class);
-		ServiceDefTarget endpoint = (ServiceDefTarget) this.rawMaterialService;
-		endpoint.setServiceEntryPoint(GWT.getModuleBaseURL() + RAW_MATERIAL_SERVICE_URL);
-	}
-	
-	
-	
 	private ArrayList<ReceptKompDTO> createReceptKompDTOs() {
 		ArrayList<ReceptKompDTO> receptKomps = new ArrayList<ReceptKompDTO>();
 		
@@ -402,6 +375,10 @@ public class ReceptView extends Composite
 				Button button = (Button)event.getSource();
 				
 				int index = Integer.parseInt(button.getStylePrimaryName());
+				GWT.log("index : " + index+"");
+				GWT.log("button : " + dummyButtons.size()+"");
+				GWT.log("label : " + dummyLabels.size()+"");
+				GWT.log("recpt : " + receptKomponents.size()+"");
 				
 				for(Tuple<Widget, Label> receptKomp : receptKomponents.get(index)) {
 					receptKomp.x.removeFromParent();
@@ -413,11 +390,25 @@ public class ReceptView extends Composite
 				dummyButtons.get(index).removeFromParent();
 				dummyLabels.get(index).removeFromParent();
 				
+				dummyButtons.remove(index);
+				dummyLabels.remove(index);
+				
+				updateDummyButtons();
+				
 				button.removeFromParent();
 			}
 		};
 	}
 	
+	public void updateDummyButtons()
+	{
+		int i = 0;
+		for(Button button : dummyButtons) {
+			button.setStylePrimaryName(i+"");
+		}
+		
+	}
+
 	public void removeObjects() {
 		for (ArrayList<Tuple<Widget, Label>> receptKomp : receptKomponents)
 		{
@@ -431,6 +422,32 @@ public class ReceptView extends Composite
 		removeDummyObjects();
 		
 		receptKomponents = new ArrayList<ArrayList<Tuple<Widget, Label>>>();
+	}
+	
+	public void removeDummyObjects()
+	{
+		for (Widget label : dummyLabels)
+			label.removeFromParent();
+		
+		for (Widget button : dummyButtons)
+			button.removeFromParent();
+		
+		dummyLabels = new ArrayList<Label>();
+		dummyButtons = new ArrayList<Button>();
+	}
+	
+	public void getPrescriptionService()
+	{
+		this.service = GWT.create(PrescriptionService.class);
+		ServiceDefTarget endpoint = (ServiceDefTarget) this.service;
+		endpoint.setServiceEntryPoint(GWT.getModuleBaseURL() + SERVICEURL);
+	}
+	
+	public void getRawMaterialService()
+	{
+		this.rawMaterialService = GWT.create(RawMaterialService.class);
+		ServiceDefTarget endpoint = (ServiceDefTarget) this.rawMaterialService;
+		endpoint.setServiceEntryPoint(GWT.getModuleBaseURL() + RAW_MATERIAL_SERVICE_URL);
 	}
 	
 }
