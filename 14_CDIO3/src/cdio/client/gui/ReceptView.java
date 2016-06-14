@@ -180,8 +180,9 @@ public class ReceptView extends Composite
 										receptKomp.x.removeFromParent();
 										receptKomp.y.removeFromParent();
 									}
-								
 									
+									receptKomponents.remove(index);
+								
 									dummyButtons.get(index).removeFromParent();
 									dummyLabels.get(index).removeFromParent();
 									

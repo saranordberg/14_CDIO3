@@ -100,9 +100,10 @@ public class ProductBatchView extends Composite
 					public void onSuccess(ProduktBatchDTO result)
 					{
 						pbId.setText(new Integer(result.pbId).toString());
-						status.setSelectedIndex(result.status);
+						status.setSelectedIndex(Integer.parseInt(result.status));
 						receptID.setText(new Integer(result.receptId).toString());
-						actionButton.setText("Gem");
+						receptID.setReadOnly(true);
+						actionButton.setVisible(false);
 					}
 					
 				});
@@ -113,11 +114,13 @@ public class ProductBatchView extends Composite
 	@UiHandler("actionButton")
 	public void actionButtonClick(ClickEvent event)
 	{
-		ProduktBatchDTO pb = new ProduktBatchDTO(Integer.parseInt(pbId.getText()),
-				Integer.parseInt(status.getSelectedValue()), Integer.parseInt(receptID.getText()));
+		ProduktBatchDTO pb = new ProduktBatchDTO(0,
+				Integer.parseInt(receptID.getText()),
+				status.getSelectedValue());
 		
 		if (!validatorHelper.validate())
 			return;
+		
 		// New productBatch
 		if (pbId.getText().equals(""))
 		{
@@ -126,6 +129,7 @@ public class ProductBatchView extends Composite
 		// Update productBatch
 		else
 		{
+			GWT.log("Status : " + pb.status);
 			pb.pbId = Integer.parseInt(pbId.getText());
 			service.updateProduktBatch(pb, token, actionCallback());
 		}
@@ -137,7 +141,9 @@ public class ProductBatchView extends Composite
 		pbId.setText("");
 		status.setSelectedIndex(0);
 		receptID.setText("");
+		receptID.setReadOnly(false);
 		actionButton.setText("Opret");
+		actionButton.setVisible(true);
 	}
 	
 	public void populateCellList()
@@ -188,6 +194,7 @@ public class ProductBatchView extends Composite
 				pbId.setText("");
 				status.setSelectedIndex(1);
 				receptID.setText("");
+				receptID.setReadOnly(false);
 				actionButton.setText("Opret");
 				
 				Window.alert("Din produktbatch er nu gemt");

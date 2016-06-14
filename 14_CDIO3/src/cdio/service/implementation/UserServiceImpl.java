@@ -33,7 +33,7 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
 	}
 	
 	@Override
-	public List<UserDTO> listUser(int userID, String token) throws DALException
+	public List<UserDTO> listUser(String token) throws DALException
 	{
 		MySQLUserDAO conn = new MySQLUserDAO();
 		return conn.getUserList();
