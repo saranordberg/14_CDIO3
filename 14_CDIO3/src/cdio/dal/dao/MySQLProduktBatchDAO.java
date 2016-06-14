@@ -8,6 +8,7 @@ import java.util.List;
 import cdio.dal.connection.Connector;
 import cdio.dal.dao.interfaces.DALException;
 import cdio.dal.dao.interfaces.ProduktBatchDAO;
+import cdio.dal.dto.ASEDTO;
 import cdio.dal.dto.ProduktBatchDTO;
 
 public class MySQLProduktBatchDAO implements ProduktBatchDAO
@@ -25,6 +26,24 @@ public class MySQLProduktBatchDAO implements ProduktBatchDAO
 				throw new DALException("Produktbatchen" + pbId + "findes ikke");
 			
 			return new ProduktBatchDTO(rs.getInt("pb_id"), rs.getInt("recept_id"), rs.getInt("status"));
+		}
+		catch (Exception e)
+		{
+			throw new DALException(e);
+		}
+	}
+	public ArrayList<ASEDTO> getStuff(int pbId) throws DALException
+	{
+		ArrayList<ASEDTO> list = new ArrayList<ASEDTO>();
+		try
+		{
+			ResultSet rs = Connector.getInstance()
+					.doQuery("SELECT * FROM produktbatch as PB INNER JOIN receptkomponent AS RK ON PB.recept_id = RK.recept_id INNER JOIN raavare AS RV ON RK.raavare.id = RV.raavare.id INNER JOIN raavare WHERE PB.pb_id = ? ", pbId);
+			
+			while (rs.next()){
+				list.add(new ASEDTO(rs.getInt("pb_id"), rs.getInt("tara"), rs.getNString("raavare_navn"), rs.getInt("netto"), rs.getInt("user_id"), rs.getInt("raavare_id")));
+			}
+			return list;
 		}
 		catch (Exception e)
 		{
@@ -79,6 +98,12 @@ public class MySQLProduktBatchDAO implements ProduktBatchDAO
 			// TODO Auto-generated catch block
 			throw new DALException(e);
 		}
+	}
+	@Override
+	public ASEDTO getstuff(int pbId, int receptId, int status, int netto, int user_id, int maengde)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

@@ -5,10 +5,17 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
+
+import cdio.dal.connection.Connector;
 import cdio.dal.dao.MySQLProduktBatchDAO;
 import cdio.dal.dao.MySQLUserDAO;
 import cdio.dal.dao.interfaces.DALException;
+import cdio.dal.dto.ASEDTO;
 import cdio.dal.dto.ProduktBatchDTO;
 
 public class ASE
@@ -99,52 +106,55 @@ public class ASE
 		MySQLProduktBatchDAO  produktdao = new MySQLProduktBatchDAO ();
 		int PbId = Integer.parseInt(produktbatchid);
 		produktdao.getProduktBatch(PbId);
-		String[] Components = getProductBatchComponents(PbId);
-		for (int i = 1; i <= Components.length; i++)
+		ArrayList<ASEDTO> components;
+		try
 		{
-			sendMessage(out, "T");
-			skipMessages(in, 1);
-			sendMessage(out, "P111 \"Tjek at vægten er 0\"");
-			if (getConfirmation(in, out))
+			components = produktdao.getStuff(PbId);
+			
+			for (int i = 1; i <= components.size(); i++)
 			{
-				
-				sendMessage(out, "P111 \"Sæt beholderen på vægten\"");
+				sendMessage(out, "T");
 				skipMessages(in, 1);
+				sendMessage(out, "P111 \"Tjek at vægten er 0\"");
 				if (getConfirmation(in, out))
 				{
-					sendMessage(out, "T");
-					sendMessage(out, "P110");
-					sendMessage(out, "P111 \"AFmål og tryk ok\"");
-					skipMessages(in, 3);
-					System.out.println("Start afmåling");
-					if (getWeightconfirmation(in, out))
+					
+					sendMessage(out, "P111 \"Sæt beholderen på vægten\"");
+					skipMessages(in, 1);
+					if (getConfirmation(in, out))
 					{
-						sendMessage(out, "S");
-						skipMessages(in, 1);
-						double weight = getWeight(in);
-						System.out.println("vægten er: " + weight);
-						System.out.println("Aflsut afmåling");
+						sendMessage(out, "T");
 						sendMessage(out, "P110");
+						sendMessage(out, "RM20 8 \"Skriv raavare id\" \"\" \"&3\"");
+						String raavare_id = ExtractMessageFromRM20(in);
+						ASEDTO dto = getNettoFromID(components, raavare_id);
+						sendMessage(out, "P111 \"Afmål" + dto.netto + " og tryk ok\"");
+						skipMessages(in, 3);
+						System.out.println("Start afmåling");
+						if (getWeightconfirmation(in, out))
+						{
+							sendMessage(out, "S");
+							skipMessages(in, 1);
+							double weight = getWeight(in);
+							System.out.println("vægten er: " + weight);
+							System.out.println("Aflsut afmåling");
+							sendMessage(out, "P110");
+						}
 					}
 				}
+				
 			}
-			
 		}
+		catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
-	public static String[] getProductBatchComponents(int id)
-	{
-		String[] out = { "Saltvand", "sovs", "citron" };
-		return out;
-	}
 	
-	public static double getWeight(BufferedReader in) throws IOException
-	{
-		String weight = in.readLine();
-		weight = weight.substring(8, 13);
-		double a = Double.parseDouble(weight);
-		return a;
-	}
+	
 	
 	public static void sendMessage(PrintWriter out, String message)
 	{
@@ -153,38 +163,7 @@ public class ASE
 		System.out.println("Sending: " + message);
 	}
 	
-	public static String ExtractMessageFromRM20(BufferedReader in) throws IOException
-	{
-		String inmessage;
-		inmessage = in.readLine();
-		System.out.println(inmessage);
-		inmessage = in.readLine();
-		System.out.println(inmessage);
-		inmessage = in.readLine();
-		System.out.println(inmessage);
-		inmessage = inmessage.substring(8);
-		System.out.println(inmessage);
-		int lastindex = inmessage.indexOf("\"");
-		inmessage = inmessage.substring(0, lastindex);
-		System.out.println(inmessage);
-		return inmessage;
-	}
 	
-	public static String ExtractPbIdRM20(BufferedReader in) throws IOException
-	{
-		String inmessage = in.readLine();
-		
-		System.out.println(inmessage);
-		System.out.println(in.readLine());
-		inmessage = in.readLine();
-		inmessage = inmessage.substring(8);
-		
-		System.out.println(inmessage);
-		int lastindex = inmessage.indexOf("\"");
-		inmessage = inmessage.substring(0, lastindex);
-		System.out.println(inmessage);
-		return inmessage;
-	}
 	
 	public static boolean getConfirmation(BufferedReader in, PrintWriter out) throws IOException
 	{
@@ -203,6 +182,14 @@ public class ASE
 			return false;
 		}
 		
+	}
+	
+	public static double getWeight(BufferedReader in) throws IOException
+	{
+		String weight = in.readLine();
+		weight = weight.substring(8, 13);
+		double a = Double.parseDouble(weight);
+		return a;
 	}
 	
 	public static boolean getWeightconfirmation(BufferedReader in, PrintWriter out) throws IOException
@@ -260,12 +247,67 @@ public class ASE
 		return inmessage;
 	}
 	
+	
+	public static String ExtractMessageFromRM20(BufferedReader in) throws IOException
+	{
+		String inmessage;
+		inmessage = in.readLine();
+		System.out.println(inmessage);
+		inmessage = in.readLine();
+		System.out.println(inmessage);
+		inmessage = in.readLine();
+		System.out.println(inmessage);
+		inmessage = inmessage.substring(8);
+		System.out.println(inmessage);
+		int lastindex = inmessage.indexOf("\"");
+		inmessage = inmessage.substring(0, lastindex);
+		System.out.println(inmessage);
+		return inmessage;
+	}
+	
+	public static String ExtractPbIdRM20(BufferedReader in) throws IOException
+	{
+		String inmessage = in.readLine();
+		
+		System.out.println(inmessage);
+		System.out.println(in.readLine());
+		inmessage = in.readLine();
+		inmessage = inmessage.substring(8);
+		
+		System.out.println(inmessage);
+		int lastindex = inmessage.indexOf("\"");
+		inmessage = inmessage.substring(0, lastindex);
+		System.out.println(inmessage);
+		return inmessage;
+	}
+	
 	public static void skipMessages(BufferedReader in, int i) throws IOException
 	{
 		for (int j = 0; j < i; j++)
 		{
 			System.out.println("skipped message: " + in.readLine());
 		}
+	}
+	
+	
+	
+	public static ASEDTO getNettoFromID (ArrayList<ASEDTO> list, String id){
+		
+		int intid = Integer.parseInt(id);
+		
+		for(ASEDTO x:list){
+			
+			if(intid == x.raavare_id){
+				return x;
+				
+				
+			}
+			
+		}
+		return null;
+		
+		
+		
 	}
 	
 	public static void skipAllMessages(BufferedReader in) throws IOException
