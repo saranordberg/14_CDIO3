@@ -123,18 +123,8 @@ public class ReceptView extends Composite
 					@Override
 					public void onSuccess(ReceptDTO result)
 					{
-						for (ArrayList<Tuple<Widget, Label>> receptKomp : receptKomponents)
-						{
-							for (Tuple<Widget, Label> tuple : receptKomp)
-							{
-								tuple.x.removeFromParent();
-								tuple.y.removeFromParent();
-							}
-						}
 						
-						removeDummyObjects();
-						
-						receptKomponents = new ArrayList<ArrayList<Tuple<Widget, Label>>>();
+						removeObjects();
 						
 						int i = 0;
 						for (ReceptKompDTO receptKomp : result.receptKomps)
@@ -231,7 +221,9 @@ public class ReceptView extends Composite
 		actionButton.setText("Opret");
 		
 		receptKomponentPanel.clear();
-		receptKomponents = new ArrayList<ArrayList<Tuple<Widget, Label>>>();
+		removeObjects();
+		
+
 		
 		initializeRaavare();
 	}
@@ -424,6 +416,21 @@ public class ReceptView extends Composite
 				button.removeFromParent();
 			}
 		};
+	}
+	
+	public void removeObjects() {
+		for (ArrayList<Tuple<Widget, Label>> receptKomp : receptKomponents)
+		{
+			for (Tuple<Widget, Label> tuple : receptKomp)
+			{
+				tuple.x.removeFromParent();
+				tuple.y.removeFromParent();
+			}
+		}
+		
+		removeDummyObjects();
+		
+		receptKomponents = new ArrayList<ArrayList<Tuple<Widget, Label>>>();
 	}
 	
 }
