@@ -2,12 +2,15 @@ package cdio.dal.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import cdio.dal.connection.Connector;
 import cdio.dal.dao.interfaces.DALException;
 import cdio.dal.dao.interfaces.UserDAO;
+import cdio.dal.dto.TokenDTO;
 import cdio.dal.dto.UserDTO;
 
 //
@@ -92,7 +95,13 @@ public class MySQLUserDAO implements UserDAO
 		{
 			UserDTO loginUser = getUser(user.userId);
 			
-			if (user.password.equals(loginUser.password)){
+			if (user.password.equals(loginUser.password))
+			{
+				Date expirationDate = new Date();
+				expirationDate.setHours(expirationDate.getHours() + 2);
+				Timestamp timestamp = new Timestamp(expirationDate.getTime());
+				MySQLTokenDAO tokenConn = new MySQLTokenDAO();
+				loginUser.token = tokenConn.createToken(new TokenDTO(loginUser.userId, "", timestamp));
 				return loginUser;
 			}
 			else {
