@@ -8,34 +8,31 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.ListBox;
 
-import cdio.client.gui.ReceptView;
 import cdio.dal.dto.RaavareDTO;
+import cdio.dal.dto.ReceptDTO;
+import cdio.service.PrescriptionService;
+import cdio.service.PrescriptionServiceAsync;
 import cdio.service.RawMaterialService;
 import cdio.service.RawMaterialServiceAsync;
 
-public class RawMaterialListBoxHelper
+public class ListBoxPopulater
 {
 	public ArrayList<Tuple<String, String>> materials;
 	public RawMaterialServiceAsync rawMaterialService;
+	public PrescriptionServiceAsync prescriptionService;
 	private final String RAW_MATERIAL_SERVICE_URL = "rawMaterialService";
+	private final String PRESCRIPTION_SERVICE_URL = "prescriptionService";
 	
-	public RawMaterialListBoxHelper(){
+	public ListBoxPopulater(){
 		getRawMaterialService();
-	}
-	
-	public ArrayList<Tuple<String, String>> getMaterialsListBox(String token)
-	{
-		if (materials != null)
-			return materials;
-		
-		this.materials = new ArrayList<Tuple<String, String>>();
-		populateWithRawMaterials(token);
-		
-		return materials;
+		getPrescriptionService();
 	}
 
-	private void populateWithRawMaterials(String token)
+
+	public void populateWithRawMaterials(String token)
 	{
+		this.materials = new ArrayList<Tuple<String, String>>();
+		
 		rawMaterialService.listRaavare(token, new AsyncCallback<ArrayList<RaavareDTO>>()
 		{
 			
@@ -58,9 +55,11 @@ public class RawMaterialListBoxHelper
 		});
 	}
 	
-	private void populateWithProducts(String token)
+	public void populateWithProducts(String token)
 	{
-		rawMaterialService.listRaavare(token, new AsyncCallback<ArrayList<RaavareDTO>>()
+		this.materials = new ArrayList<Tuple<String, String>>();
+		
+		prescriptionService.listRecept(token, new AsyncCallback<ArrayList<ReceptDTO>>()
 		{
 			
 			@Override
@@ -71,12 +70,12 @@ public class RawMaterialListBoxHelper
 			}
 			
 			@Override
-			public void onSuccess(ArrayList<RaavareDTO> results)
+			public void onSuccess(ArrayList<ReceptDTO> results)
 			{
-				for (RaavareDTO raavare : results)
+				for (ReceptDTO recept : results)
 					materials.add(new Tuple<String, String>(
-							raavare.raavareId + " : " + raavare.raavareNavn + " : " + raavare.leverandoer,
-							raavare.raavareId + ""));
+							recept.receptId + " : " + recept.receptNavn,
+							recept.receptId + ""));
 			}
 			
 		});
@@ -84,7 +83,7 @@ public class RawMaterialListBoxHelper
 	
 	public void populateListBoxWithMaterials(String value, ListBox listBox, String token)
 	{
-		ArrayList<Tuple<String, String>> materials = getMaterialsListBox(token);
+//		ArrayList<Tuple<String, String>> materials = getMaterialsListBox(token);
 		
 		for (Tuple<String, String> material : materials)
 			listBox.addItem(material.x, material.y);
@@ -98,6 +97,12 @@ public class RawMaterialListBoxHelper
 		this.rawMaterialService = GWT.create(RawMaterialService.class);
 		ServiceDefTarget endpoint = (ServiceDefTarget) this.rawMaterialService;
 		endpoint.setServiceEntryPoint(GWT.getModuleBaseURL() + RAW_MATERIAL_SERVICE_URL);
+	}
+	
+	public void getPrescriptionService(){
+		this.prescriptionService = GWT.create(PrescriptionService.class);
+		ServiceDefTarget endpoint = (ServiceDefTarget) this.prescriptionService;
+		endpoint.setServiceEntryPoint(GWT.getModuleBaseURL() + PRESCRIPTION_SERVICE_URL);
 	}
 	
 }

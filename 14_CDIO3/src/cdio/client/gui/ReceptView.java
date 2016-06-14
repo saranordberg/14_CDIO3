@@ -23,7 +23,7 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
 import cdio.client.helpers.CellListHelper;
-import cdio.client.helpers.RawMaterialListBoxHelper;
+import cdio.client.helpers.ListBoxPopulater;
 import cdio.client.helpers.Tuple;
 import cdio.client.validate.CharactersValidator;
 import cdio.client.validate.LengthValidator;
@@ -67,7 +67,7 @@ public class ReceptView extends Composite
 	private UserDTO user;
 	private String token;
 	public ValidatorHelper validatorHelper = new ValidatorHelper();
-	public RawMaterialListBoxHelper rawMaterialListBoxHelper = new RawMaterialListBoxHelper();
+	public ListBoxPopulater listBoxPopulater = new ListBoxPopulater();
 	
 	private ArrayList<ArrayList<Tuple<Widget, Label>>> receptKomponents = new ArrayList<ArrayList<Tuple<Widget, Label>>>();
 	private ArrayList<Widget> dummyLabels = new ArrayList<Widget>();
@@ -87,6 +87,8 @@ public class ReceptView extends Composite
 		
 		this.user = user;
 		this.token = token;
+		
+		this.listBoxPopulater.populateWithRawMaterials(token);
 		
 		populateCellList();
 		initializeRaavare();
@@ -134,7 +136,6 @@ public class ReceptView extends Composite
 						
 						receptKomponents = new ArrayList<ArrayList<Tuple<Widget, Label>>>();
 						
-						rawMaterialListBoxHelper.getMaterialsListBox(token);
 						int i = 0;
 						for (ReceptKompDTO receptKomp : result.receptKomps)
 						{
@@ -143,7 +144,7 @@ public class ReceptView extends Composite
 							receptKomponentPanel.add(raavareIdLabel);
 							
 							ListBox raavareId = new ListBox();
-							rawMaterialListBoxHelper.populateListBoxWithMaterials(receptKomp.raavareId+"", raavareId, token);
+							listBoxPopulater.populateListBoxWithMaterials(receptKomp.raavareId+"", raavareId, token);
 							//raavareId.setSelectedIndex(ListBoxHelper.getIndexByValue(receptKomp.receptId+"", raavareId));
 							receptKomponentPanel.add(raavareId);
 							
@@ -243,14 +244,13 @@ public class ReceptView extends Composite
 
 	private void initializeRaavare()
 	{
-		rawMaterialListBoxHelper.getMaterialsListBox(token);
 		
 		Label raavareIdLabel = new Label();
 		raavareIdLabel.setText("Råvare ID:");
 		receptKomponentPanel.add(raavareIdLabel);
 		
 		ListBox raavareId = new ListBox();
-		rawMaterialListBoxHelper.populateListBoxWithMaterials(null, raavareId, token);
+		listBoxPopulater.populateListBoxWithMaterials(null, raavareId, token);
 		receptKomponentPanel.add(raavareId);
 		
 		Label nomNettoLabel = new Label();

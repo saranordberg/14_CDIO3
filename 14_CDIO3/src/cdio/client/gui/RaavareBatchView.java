@@ -22,7 +22,7 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
 import cdio.client.helpers.CellListHelper;
-import cdio.client.helpers.RawMaterialListBoxHelper;
+import cdio.client.helpers.ListBoxPopulater;
 import cdio.client.validate.DoubleNumberValidator;
 import cdio.client.validate.LengthValidator;
 import cdio.client.validate.NumberValidator;
@@ -59,7 +59,7 @@ public class RaavareBatchView extends Composite
 	private UserDTO user;
 	private String token;
 	public ValidatorHelper validatorHelper = new ValidatorHelper();
-	public RawMaterialListBoxHelper rawMaterialListBoxHelper = new RawMaterialListBoxHelper();
+	public ListBoxPopulater listBoxPopulater = new ListBoxPopulater();
 	
 	/*
 	 * SelectList variables
@@ -76,7 +76,7 @@ public class RaavareBatchView extends Composite
 		this.token = token;
 		
 		populateCellList();
-		rawMaterialListBoxHelper.getMaterialsListBox(token);
+		listBoxPopulater.populateWithRawMaterials(token);
 		ArrayList<Validator> maengdeValidators = new ArrayList<Validator>();
 		
 
@@ -110,7 +110,7 @@ public class RaavareBatchView extends Composite
 //						raavare_Id.setText(new Integer(result.raavareId).toString());
 						
 //						raavare_Id = new ListBox();
-						rawMaterialListBoxHelper.populateListBoxWithMaterials(result.raavareId+"", raavare_Id, token);
+						listBoxPopulater.populateListBoxWithMaterials(result.raavareId+"", raavare_Id, token);
 						//raavareId.setSelectedIndex(ListBoxHelper.getIndexByValue(receptKomp.receptId+"", raavareId));
 						
 						maengde.setText(new Double(result.maengde).toString());
@@ -148,7 +148,7 @@ public class RaavareBatchView extends Composite
 	public void newButtonClick(ClickEvent event)
 	{
 		rb_Id.setText("");
-		rawMaterialListBoxHelper.populateListBoxWithMaterials(null, raavare_Id, token);
+		listBoxPopulater.populateListBoxWithMaterials(null, raavare_Id, token);
 		maengde.setText("");
 		actionButton.setText("Opret");
 	}
