@@ -167,28 +167,7 @@ public class ReceptView extends Composite
 							deleteReceptKomp.setText("Fjern råvare");
 							deleteReceptKomp.setStylePrimaryName(i+"");
 							dummyButtons.add(deleteReceptKomp);
-							deleteReceptKomp.addClickHandler(new ClickHandler() {
-
-								@Override
-								public void onClick(ClickEvent event)
-								{
-									Button button = (Button)event.getSource();
-									
-									int index = Integer.parseInt(button.getStylePrimaryName());
-									
-									for(Tuple<Widget, Label> receptKomp : receptKomponents.get(index)) {
-										receptKomp.x.removeFromParent();
-										receptKomp.y.removeFromParent();
-									}
-									
-									receptKomponents.remove(index);
-								
-									dummyButtons.get(index).removeFromParent();
-									dummyLabels.get(index).removeFromParent();
-									
-									
-								}
-							});
+							deleteReceptKomp.addClickHandler(removeRaavareClickHandler());
 							receptKomponentPanel.add(deleteReceptKomp);
 							
 							Label emptyLabel = new Label();
@@ -209,6 +188,8 @@ public class ReceptView extends Composite
 						recept_navn.setText(result.receptNavn);
 						actionButton.setText("Gem");
 					}
+
+					
 					
 				});
 			}
@@ -289,6 +270,7 @@ public class ReceptView extends Composite
 		Button deleteReceptKomp = new Button();
 		deleteReceptKomp.setText("Fjern");
 		deleteReceptKomp.setStylePrimaryName("0");
+		deleteReceptKomp.addClickHandler(this.removeRaavareClickHandler());
 		receptKomponentPanel.add(deleteReceptKomp);
 		
 		Label emptyLabel = new Label();
@@ -453,6 +435,31 @@ public class ReceptView extends Composite
 		}
 		
 		return receptKomps;
+	}
+	public ClickHandler removeRaavareClickHandler()
+	{
+		return new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				Button button = (Button)event.getSource();
+				
+				int index = Integer.parseInt(button.getStylePrimaryName());
+				
+				for(Tuple<Widget, Label> receptKomp : receptKomponents.get(index)) {
+					receptKomp.x.removeFromParent();
+					receptKomp.y.removeFromParent();
+				}
+				
+				receptKomponents.remove(index);
+			
+				dummyButtons.get(index).removeFromParent();
+				dummyLabels.get(index).removeFromParent();
+				
+				button.removeFromParent();
+			}
+		};
 	}
 	
 }
