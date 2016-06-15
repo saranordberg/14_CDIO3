@@ -38,10 +38,10 @@ public class MySQLProduktBatchDAO implements ProduktBatchDAO
 		try
 		{
 			ResultSet rs = Connector.getInstance()
-					.doQuery("SELECT * FROM produktbatch as PB INNER JOIN receptkomponent AS RK ON PB.recept_id = RK.recept_id INNER JOIN raavare AS RV ON RK.raavare.id = RV.raavare.id INNER JOIN raavare WHERE PB.pb_id = ? ", pbId);
+					.doQuery("SELECT * FROM produktbatch AS PB INNER JOIN receptkomponent AS RK ON PB.recept_id = RK.recept_id INNER JOIN raavare AS RV ON RK.raavare_id = RV.raavare_id INNER JOIN raavare WHERE PB.pb_id = ? ", pbId);
 			
 			while (rs.next()){
-				list.add(new ASEDTO(rs.getInt("pb_id"), rs.getInt("tara"), rs.getNString("raavare_navn"), rs.getInt("netto"), rs.getInt("user_id"), rs.getInt("raavare_id")));
+				list.add(new ASEDTO(rs.getInt("pb_id"), rs.getNString("raavare_navn"), rs.getInt("nom_netto"),  rs.getInt("raavare_id")));
 			}
 			return list;
 		}

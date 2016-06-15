@@ -14,7 +14,7 @@ public class ASEDTO implements Serializable
 	{
 	}
 	
-	public ASEDTO(int pbId, int status, String raavare_navn, int netto, int user_id, int raavare_id)
+	public ASEDTO(int pbId, String raavare_navn, int netto, int raavare_id)
 	{
 		this.pbId = pbId;
 		this.status = status;
