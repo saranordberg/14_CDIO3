@@ -28,6 +28,7 @@ import cdio.client.validate.LengthValidator;
 import cdio.client.validate.Validator;
 import cdio.client.validate.ValidatorHelper;
 import cdio.dal.dto.RaavareBatchDTO;
+import cdio.dal.dto.RaavareDTO;
 import cdio.dal.dto.UserDTO;
 import cdio.service.RawMaterialBatchService;
 import cdio.service.RawMaterialBatchServiceAsync;
@@ -78,7 +79,6 @@ public class RaavareBatchView extends Composite
 		listBoxPopulater.populateWithRawMaterials(token);
 		ArrayList<Validator> maengdeValidators = new ArrayList<Validator>();
 		
-
 		maengdeValidators.add(new LengthValidator(new Object[] { new Integer(21), '<' }));
 		maengdeValidators.add(new DoubleNumberValidator(null));
 		validatorHelper.add("Mængde", maengde, maengdeValidators);
@@ -106,11 +106,13 @@ public class RaavareBatchView extends Composite
 					public void onSuccess(RaavareBatchDTO result)
 					{
 						rb_Id.setText(new Integer(result.rbId).toString());
-//						raavare_Id.setText(new Integer(result.raavareId).toString());
+						// raavare_Id.setText(new
+						// Integer(result.raavareId).toString());
 						
-//						raavare_Id = new ListBox();
-						listBoxPopulater.populateListBoxWithMaterials(result.raavareId+"", raavare_Id, token);
-						//raavareId.setSelectedIndex(ListBoxHelper.getIndexByValue(receptKomp.receptId+"", raavareId));
+						// raavare_Id = new ListBox();
+						listBoxPopulater.populateListBoxWithMaterials(result.raavareNavn + "", raavare_Id, token);
+						// raavareId.setSelectedIndex(ListBoxHelper.getIndexByValue(receptKomp.receptId+"",
+						// raavareId));
 						
 						maengde.setText(new Double(result.maengde).toString());
 						actionButton.setText("Gem");
@@ -125,7 +127,7 @@ public class RaavareBatchView extends Composite
 	public void actionButtonClick(ClickEvent event)
 	{
 		RaavareBatchDTO raavareBatch = new RaavareBatchDTO(0, Integer.parseInt(raavare_Id.getSelectedValue()),
-				Double.parseDouble(maengde.getText(), ));
+				Double.parseDouble(maengde.getText()), "");
 		
 		if (!validatorHelper.validate())
 			return;
@@ -160,6 +162,7 @@ public class RaavareBatchView extends Composite
 			@Override
 			public void onFailure(Throwable caught)
 			{
+				
 				Window.alert("Der skete en fejl. Kontakt venligst administratoren");
 			}
 			

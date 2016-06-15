@@ -66,30 +66,31 @@ public class LoginView extends Composite
 	
 	private void doLogin()
 	{
-			int id = Integer.parseInt(this.userID.getText());
-			String password = this.password.getText();
-			UserDTO user = new UserDTO();
-			user.userId = id;
-			user.password = password;
+		int id = Integer.parseInt(this.userID.getText());
+		String password = this.password.getText();
+		UserDTO user = new UserDTO();
+		user.userId = id;
+		user.password = password;
+		
+		service.login(user, new AsyncCallback<UserDTO>()
+		{
 			
-			service.login(user, new AsyncCallback<UserDTO>() {
-
-					@Override
-					public void onFailure(Throwable caught)
-					{
-						GWT.log(caught.getMessage());
-						String message = "Brugernavn eller password er forkert";
-						loginFailed(message);
-					}
-
-					@Override
-					public void onSuccess(UserDTO result)
-					{
-						callback.login(result);
-					
-					}
-						});
-
+			@Override
+			public void onFailure(Throwable caught)
+			{
+				GWT.log(caught.getMessage());
+				String message = "Brugernavn eller password er forkert";
+				loginFailed(message);
+			}
+			
+			@Override
+			public void onSuccess(UserDTO result)
+			{
+				callback.login(result);
+				
+			}
+		});
+		
 	}
 	
 	private void loginFailed(String message)
