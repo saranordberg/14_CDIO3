@@ -5,24 +5,20 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
-
-import cdio.dal.connection.Connector;
 import cdio.dal.dao.MySQLProduktBatchDAO;
 import cdio.dal.dao.MySQLUserDAO;
 import cdio.dal.dao.interfaces.DALException;
 import cdio.dal.dto.ASEDTO;
 import cdio.dal.dto.ProduktBatchDTO;
-
+import cdio.dal.dto.UserDTO;
 public class ASE
 {
 	public static void main(String[] args) throws InterruptedException, NumberFormatException, DALException
 	{
-		String hostName = "169.254.2.2";
+			
+		String hostName = "169.254.2.3";
 		int portNumber = 8000;
 		try
 		{
@@ -87,8 +83,10 @@ public class ASE
 		sendMessage(out, "RM20 8 \"Skriv dit ID\" \"\" \"&3\"");
 		String id = ExtractMessageFromRM20(in);
 		MySQLUserDAO userDoa = new MySQLUserDAO();
-		
-		sendMessage(out, "P111 \"er du?\"" + userDoa.getUser(Integer.parseInt(id)));
+		System.out.println(id);
+		UserDTO User = userDoa.getUser(Integer.parseInt(id));
+		String name = User.firstName + " " + User.lastName;
+		sendMessage(out, "P111 \"er du?" + name + " \"");
 		
 		if (getConfirmation(in, out))
 		{
@@ -105,11 +103,13 @@ public class ASE
 		System.out.println(produktbatchid);
 		MySQLProduktBatchDAO  produktdao = new MySQLProduktBatchDAO ();
 		int PbId = Integer.parseInt(produktbatchid);
-		produktdao.getProduktBatch(PbId);
 		ArrayList<ASEDTO> components;
 		try
-		{
+		{	
 			components = produktdao.getStuff(PbId);
+			ProduktBatchDTO pbDTO = produktdao.getProduktBatch(PbId);
+			pbDTO.status = "1";
+			produktdao.updateProduktBatch(pbDTO);
 			
 			for (int i = 1; i <= components.size(); i++)
 			{
@@ -144,6 +144,9 @@ public class ASE
 				}
 				
 			}
+			pbDTO = produktdao.getProduktBatch(PbId);
+			pbDTO.status = "2";
+			produktdao.updateProduktBatch(pbDTO);
 		}
 		catch (Exception e)
 		{
