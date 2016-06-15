@@ -18,11 +18,12 @@ public class ASE
 	public static void main(String[] args) throws InterruptedException, NumberFormatException, DALException
 	{
 			
-		String hostName = "169.254.2.3";
+		String hostName = "169.254.2.2";
+		Socket echoSocket = null;
 		int portNumber = 8000;
 		try
 		{
-			Socket echoSocket = new Socket(hostName, portNumber);
+			echoSocket = new Socket(hostName, portNumber);
 			PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
 			BufferedReader in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
 			
@@ -31,6 +32,25 @@ public class ASE
 			String inline;
 			
 			loop(out, in, echoSocket);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			try
+			{
+				echoSocket.close();
+			}
+			catch (IOException e1)
+			{
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		
+		try
+		{
+			echoSocket.close();
 		}
 		catch (IOException e)
 		{
@@ -51,8 +71,7 @@ public class ASE
 				;
 				KoerAfvejning(out, in, echoSocket);
 			}
-		}
-		echoSocket.close();
+		}		
 	}
 	
 	public static boolean StartAfvejning(PrintWriter out, BufferedReader in) throws IOException
@@ -123,18 +142,17 @@ public class ASE
 					skipMessages(in, 1);
 					if (getConfirmation(in, out))
 					{
-						sendMessage(out, "T");
 						sendMessage(out, "P110");
 						sendMessage(out, "RM20 8 \"Skriv raavare id\" \"\" \"&3\"");
 						String raavare_id = ExtractMessageFromRM20(in);
 						ASEDTO dto = getNettoFromID(components, raavare_id);
 						sendMessage(out, "P111 \"Afmål" + dto.netto + " og tryk ok\"");
-						skipMessages(in, 3);
+						getConfirmation(in, out);
+						sendMessage(out, "T");
 						System.out.println("Start afmåling");
 						if (getWeightconfirmation(in, out))
 						{
 							sendMessage(out, "S");
-							skipMessages(in, 1);
 							double weight = getWeight(in);
 							System.out.println("vægten er: " + weight);
 							System.out.println("Aflsut afmåling");
@@ -161,6 +179,7 @@ public class ASE
 	
 	public static void sendMessage(PrintWriter out, String message)
 	{
+		out.flush();
 		out.println(message);
 		out.flush();
 		System.out.println("Sending: " + message);
@@ -173,7 +192,7 @@ public class ASE
 		sendMessage(out, "RM30 \"Ok\"");
 		sendMessage(out, "RM31 1");
 		sendMessage(out, "RM39 1");
-		System.out.println("message in getConfirm:" + in.readLine());
+//		System.out.println("message in getConfirm:" + in.readLine());
 		
 		if (getReturnValueFromRM30(in).equals("A") || getReturnValueFromRM30(in).equals("1"))
 		{
@@ -190,6 +209,9 @@ public class ASE
 	public static double getWeight(BufferedReader in) throws IOException
 	{
 		String weight = in.readLine();
+		while(!weight.startsWith("S S"))
+			weight = in.readLine();
+		
 		weight = weight.substring(8, 13);
 		double a = Double.parseDouble(weight);
 		return a;
@@ -201,7 +223,7 @@ public class ASE
 		sendMessage(out, "RM30 \"Ok\"");
 		sendMessage(out, "RM31 1");
 		sendMessage(out, "RM39 1");
-		skipMessages(in, 3);
+//		skipMessages(in, 3);
 		String check = getWeightReturnRM30(in);
 		if (check.equals("A") || check.equals("1"))
 		{
@@ -221,27 +243,24 @@ public class ASE
 	{
 		String inmessage;
 		inmessage = in.readLine();
-		System.out.println(" weight 1: " + inmessage);
-		inmessage = in.readLine();
+		//RM30 1
+		while(inmessage.length() < 5 && (!inmessage.startsWith("RM30 1") || !inmessage.startsWith("RM30 A")))
+			inmessage = in.readLine();
+		
 		System.out.println(" weight 2: " + inmessage);
 		inmessage = inmessage.substring(5);
 		System.out.println(" weight 3: " + inmessage);
 		inmessage = inmessage.substring(0, 1);
 		System.out.println(" weight 4: " + inmessage);
 		return inmessage;
-		
 	}
 	
 	public static String getReturnValueFromRM30(BufferedReader in) throws IOException
 	{
 		String inmessage;
 		inmessage = in.readLine();
-		System.out.println(" rm30 1: " + inmessage);
-		inmessage = in.readLine();
-		System.out.println(" rm30 2: " + inmessage);
-		inmessage = in.readLine();
-		System.out.println(" rm30 3: " + inmessage);
-		inmessage = in.readLine();
+		while(inmessage.length() < 5 && (!inmessage.startsWith("RM30 1") || !inmessage.startsWith("RM30 A")))
+			inmessage = in.readLine();
 		System.out.println(" rm30 4: " + inmessage);
 		inmessage = inmessage.substring(5);
 		System.out.println(" rm30 5: " + inmessage);
@@ -253,13 +272,12 @@ public class ASE
 	
 	public static String ExtractMessageFromRM20(BufferedReader in) throws IOException
 	{
-		String inmessage;
-		inmessage = in.readLine();
-		System.out.println(inmessage);
-		inmessage = in.readLine();
-		System.out.println(inmessage);
-		inmessage = in.readLine();
-		System.out.println(inmessage);
+		String inmessage = in.readLine();
+		while(inmessage.length() < 8 || !inmessage.startsWith("RM20 A \"")) {
+			inmessage = in.readLine();
+			String hej ="";
+		}
+		
 		inmessage = inmessage.substring(8);
 		System.out.println(inmessage);
 		int lastindex = inmessage.indexOf("\"");
