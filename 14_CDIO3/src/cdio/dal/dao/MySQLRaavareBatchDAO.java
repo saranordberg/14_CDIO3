@@ -19,11 +19,11 @@ public class MySQLRaavareBatchDAO implements RaavareBatchDAO
 		try
 		{
 			ResultSet rs = Connector.getInstance()
-					.doQuery("Select rb_id, maengde, raavare_id FROM raavarebatch WHERE rb_id = ?", rbId);
+					.doQuery("Select rb_id, maengde, raavare_id, raavare_navn FROM raavarebatch WHERE rb_id = ?", rbId);
 			if (!rs.first())
 				throw new DALException("Raavaretbatchen" + rbId + "findes ikke");
 			
-			return new RaavareBatchDTO(rs.getInt("rb_id"), rs.getInt("raavare_id"), rs.getDouble("maengde"));
+			return new RaavareBatchDTO(rs.getInt("rb_id"), rs.getInt("raavare_id"), rs.getDouble("maengde"), rs.getString("raavare_navn"));
 		}
 		catch (Exception e)
 		{
@@ -41,7 +41,7 @@ public class MySQLRaavareBatchDAO implements RaavareBatchDAO
 			ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM raavarebatch");
 			while (rs.next())
 			{
-				list.add(new RaavareBatchDTO(rs.getInt("rb_id"), rs.getInt("raavare_id"), rs.getDouble("maengde")));
+				list.add(new RaavareBatchDTO(rs.getInt("rb_id"), rs.getInt("raavare_id"), rs.getDouble("maengde"), rs.getString("raavare_navn")));
 			}
 		}
 		catch (Exception e)
@@ -62,7 +62,7 @@ public class MySQLRaavareBatchDAO implements RaavareBatchDAO
 					.doQuery("SELECT rb_id, maengde, raavare_id FROM raavareBatch WHERE raavare_id = ?", raavareId);
 			while (rs.next())
 			{
-				list.add(new RaavareBatchDTO(rs.getInt("rb_id"), rs.getInt("raavare_id"), rs.getDouble("maengde")));
+				list.add(new RaavareBatchDTO(rs.getInt("rb_id"), rs.getInt("raavare_id"), rs.getDouble("maengde"), rs.getString("raavare_navn")));
 			}
 		}
 		catch (Exception e)

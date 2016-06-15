@@ -125,7 +125,7 @@ public class RaavareBatchView extends Composite
 	public void actionButtonClick(ClickEvent event)
 	{
 		RaavareBatchDTO raavareBatch = new RaavareBatchDTO(0, Integer.parseInt(raavare_Id.getSelectedValue()),
-				Double.parseDouble(maengde.getText()));
+				Double.parseDouble(maengde.getText(), ));
 		
 		if (!validatorHelper.validate())
 			return;
