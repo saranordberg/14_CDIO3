@@ -99,6 +99,7 @@ public class ReceptView extends Composite
 		textValidators.add(new LengthValidator(new Object[] { new Integer(50), '<' }));
 		textValidators.add(new CharactersValidator(null));
 		validatorHelper.add("Recept navn", recept_navn, textValidators);
+		actionButton.setVisible(false);
 	}
 	
 	private Handler selectionHandler()
@@ -177,6 +178,7 @@ public class ReceptView extends Composite
 						
 						receptId.setText(new Integer(result.receptId).toString());
 						recept_navn.setText(result.receptNavn);
+						actionButton.setVisible(true);
 						actionButton.setText("Gem");
 					}
 
@@ -219,6 +221,7 @@ public class ReceptView extends Composite
 		receptId.setText("");
 		recept_navn.setText("");
 		actionButton.setText("Opret");
+		actionButton.setVisible(true);
 		
 		receptKomponentPanel.clear();
 		removeObjects();
@@ -328,6 +331,7 @@ public class ReceptView extends Composite
 				receptId.setText("");
 				recept_navn.setText("");
 				actionButton.setText("Opret");
+				actionButton.setVisible(true);
 				
 				receptKomponentPanel.clear();
 				initializeRaavare();

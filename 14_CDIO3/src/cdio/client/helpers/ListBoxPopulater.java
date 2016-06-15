@@ -84,11 +84,13 @@ public class ListBoxPopulater
 	public void populateListBoxWithMaterials(String value, ListBox listBox, String token)
 	{
 //		ArrayList<Tuple<String, String>> materials = getMaterialsListBox(token);
+		listBox.clear();
 		
 		for (Tuple<String, String> material : materials)
 			listBox.addItem(material.x, material.y);
 		
-		if (value != null || !value.equals(""))
+		GWT.log(value);
+		if (value != null && !value.equals("null") && !value.equals(""))
 			listBox.setSelectedIndex(ListBoxHelper.getIndexByValue(value, listBox));
 	}
 	

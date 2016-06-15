@@ -60,7 +60,7 @@ public class MySQLProduktBatchDAO implements ProduktBatchDAO
 			ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM get_all_produktbatch");
 			while (rs.next())
 			{
-				list.add(new ProduktBatchDTO(rs.getInt("pb_id"), rs.getInt("recept_id"), rs.getString("status")));
+				list.add(new ProduktBatchDTO(rs.getInt("pb_id"), rs.getInt("recept_id"), rs.getString("status"), rs.getString("recept_navn")));
 			}
 		}
 		catch (Exception e)

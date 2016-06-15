@@ -8,13 +8,13 @@
 		<g:VerticalPanel width="100%" height="100%" horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" styleName="outer">
 			<g:VerticalPanel width="210px" styleName="inner" height="185px">
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:Label ui:field="id_lbl" width="90%" horizontalAlignment="ALIGN_LEFT" >User ID:</g:Label>
+					<g:Label ui:field="id_lbl" width="90%" horizontalAlignment="ALIGN_LEFT" >Bruger ID:</g:Label>
 				</g:Cell>
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
 					<g:TextBox ui:field="userID" width="90%"></g:TextBox>
 				</g:Cell>
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
-					<g:Label ui:field="password_lbl" width="90%" horizontalAlignment="ALIGN_LEFT">Password:</g:Label>
+					<g:Label ui:field="password_lbl" width="90%" horizontalAlignment="ALIGN_LEFT">Kodeord:</g:Label>
 				</g:Cell>
 				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
 					<g:PasswordTextBox ui:field="password" width="90%"/>

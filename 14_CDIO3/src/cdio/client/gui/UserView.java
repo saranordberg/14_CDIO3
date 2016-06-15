@@ -94,6 +94,7 @@ public class UserView extends Composite
 		niveauValidators.add(new NumberValidator(null));
 		validatorHelper.add("Bruger niveau", userLevel, niveauValidators);
 		
+		actionButton.setVisible(false);
 	}
 	
 	private Handler selectionHandler()
@@ -125,6 +126,7 @@ public class UserView extends Composite
 						password.setText(result.password);
 						userLevel.setText(new Integer(result.level).toString());
 						actionButton.setText("Gem");
+						actionButton.setVisible(true);
 					}
 					
 				});
@@ -166,6 +168,7 @@ public class UserView extends Composite
 		password.setText("");
 		userLevel.setText("");
 		actionButton.setText("Opret");
+		actionButton.setVisible(true);
 	}
 	
 	public void populateCellList()
@@ -221,6 +224,7 @@ public class UserView extends Composite
 				password.setText("");
 				userLevel.setText("");
 				actionButton.setText("Opret");
+				actionButton.setVisible(true);
 				
 				Window.alert("Din bruger er nu gemt");
 			}

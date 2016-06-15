@@ -28,6 +28,7 @@ import cdio.client.validate.LengthValidator;
 import cdio.client.validate.Validator;
 import cdio.client.validate.ValidatorHelper;
 import cdio.dal.dto.RaavareBatchDTO;
+import cdio.dal.dto.RaavareDTO;
 import cdio.dal.dto.UserDTO;
 import cdio.service.RawMaterialBatchService;
 import cdio.service.RawMaterialBatchServiceAsync;
@@ -78,10 +79,10 @@ public class RaavareBatchView extends Composite
 		listBoxPopulater.populateWithRawMaterials(token);
 		ArrayList<Validator> maengdeValidators = new ArrayList<Validator>();
 		
-
 		maengdeValidators.add(new LengthValidator(new Object[] { new Integer(21), '<' }));
 		maengdeValidators.add(new DoubleNumberValidator(null));
 		validatorHelper.add("Mængde", maengde, maengdeValidators);
+		actionButton.setVisible(false);
 	}
 	
 	private Handler selectionHandler()
@@ -100,20 +101,24 @@ public class RaavareBatchView extends Composite
 					public void onFailure(Throwable caught)
 					{
 						Window.alert("Der skete en fejl. Kontakt venligst administratoren");
+						
 					}
 					
 					@Override
 					public void onSuccess(RaavareBatchDTO result)
 					{
 						rb_Id.setText(new Integer(result.rbId).toString());
-//						raavare_Id.setText(new Integer(result.raavareId).toString());
+						// raavare_Id.setText(new
+						// Integer(result.raavareId).toString());
 						
-//						raavare_Id = new ListBox();
-						listBoxPopulater.populateListBoxWithMaterials(result.raavareId+"", raavare_Id, token);
-						//raavareId.setSelectedIndex(ListBoxHelper.getIndexByValue(receptKomp.receptId+"", raavareId));
+						// raavare_Id = new ListBox();
+						listBoxPopulater.populateListBoxWithMaterials(result.raavareId + "", raavare_Id, token);
+						// raavareId.setSelectedIndex(ListBoxHelper.getIndexByValue(receptKomp.receptId+"",
+						// raavareId));
 						
 						maengde.setText(new Double(result.maengde).toString());
 						actionButton.setText("Gem");
+						actionButton.setVisible(true);
 					}
 					
 				});
@@ -150,6 +155,7 @@ public class RaavareBatchView extends Composite
 		listBoxPopulater.populateListBoxWithMaterials(null, raavare_Id, token);
 		maengde.setText("");
 		actionButton.setText("Opret");
+		actionButton.setVisible(true);
 	}
 	
 	public void populateCellList()
@@ -160,6 +166,7 @@ public class RaavareBatchView extends Composite
 			@Override
 			public void onFailure(Throwable caught)
 			{
+				GWT.log(caught.getMessage());
 				Window.alert("Der skete en fejl. Kontakt venligst administratoren");
 			}
 			
@@ -169,7 +176,7 @@ public class RaavareBatchView extends Composite
 				ArrayList<String> values = new ArrayList<String>();
 				
 				for (RaavareBatchDTO result : results)
-					values.add(result.rbId + " : " + result.raavareId);
+					values.add(result.rbId + " : " + result.raavareNavn + " : " + result.leverandoer);
 				
 				cellList = new CellListHelper(values, selectionHandler);
 				
@@ -201,6 +208,7 @@ public class RaavareBatchView extends Composite
 				raavare_Id.setSelectedIndex(0);
 				maengde.setText("");
 				actionButton.setText("Opret");
+				actionButton.setVisible(true);
 				
 				Window.alert("Din raavarebatch er nu gemt");
 			}
