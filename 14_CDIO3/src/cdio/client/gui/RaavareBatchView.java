@@ -100,6 +100,7 @@ public class RaavareBatchView extends Composite
 					public void onFailure(Throwable caught)
 					{
 						Window.alert("Der skete en fejl. Kontakt venligst administratoren");
+						
 					}
 					
 					@Override
@@ -127,7 +128,7 @@ public class RaavareBatchView extends Composite
 	public void actionButtonClick(ClickEvent event)
 	{
 		RaavareBatchDTO raavareBatch = new RaavareBatchDTO(0, Integer.parseInt(raavare_Id.getSelectedValue()),
-				Double.parseDouble(maengde.getText()), "");
+				Double.parseDouble(maengde.getText()));
 		
 		if (!validatorHelper.validate())
 			return;
@@ -162,7 +163,7 @@ public class RaavareBatchView extends Composite
 			@Override
 			public void onFailure(Throwable caught)
 			{
-				
+				GWT.log(caught.getMessage());
 				Window.alert("Der skete en fejl. Kontakt venligst administratoren");
 			}
 			
@@ -172,7 +173,7 @@ public class RaavareBatchView extends Composite
 				ArrayList<String> values = new ArrayList<String>();
 				
 				for (RaavareBatchDTO result : results)
-					values.add(result.rbId + " : " + result.raavareId);
+					values.add(result.rbId + " : " + result.raavareNavn + " : " + result.leverandoer);
 				
 				cellList = new CellListHelper(values, selectionHandler);
 				

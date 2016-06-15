@@ -84,6 +84,7 @@ public class ListBoxPopulater
 	public void populateListBoxWithMaterials(String value, ListBox listBox, String token)
 	{
 //		ArrayList<Tuple<String, String>> materials = getMaterialsListBox(token);
+		listBox.clear();
 		
 		for (Tuple<String, String> material : materials)
 			listBox.addItem(material.x, material.y);

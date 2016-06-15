@@ -32,7 +32,7 @@ public class Raavarebatch
 	@Test
 	public void UpdateRaavareBatch() throws DALException
 	{
-		RaavareBatchDTO x = new RaavareBatchDTO(23, 233, 3, "Test");
+		RaavareBatchDTO x = new RaavareBatchDTO(23, 233, 3, "Test", "Testing A/S");
 		MySQLRaavareBatchDAO conn = new MySQLRaavareBatchDAO();
 		conn.updateRaavareBatch(x);
 		
@@ -41,7 +41,7 @@ public class Raavarebatch
 	@Test
 	public void CreateRaavarebatch() throws DALException
 	{
-		RaavareBatchDTO x = new RaavareBatchDTO(0, 1, 94, "Test2");
+		RaavareBatchDTO x = new RaavareBatchDTO(0, 1, 94, "Test2", "Testing A/S");
 		MySQLRaavareBatchDAO conn = new MySQLRaavareBatchDAO();
 		conn.createRaavareBatch(x);
 		

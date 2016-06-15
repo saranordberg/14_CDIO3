@@ -83,6 +83,7 @@ public class ProductBatchView extends Composite
 				String selected = cellList.selected();
 				int pbIdFromSelect = Integer.parseInt(selected.split(" : ")[0].replace(" ", ""));
 				
+				
 				service.getProduktBatch(pbIdFromSelect, token, new AsyncCallback<ProduktBatchDTO>()
 				{
 					
@@ -150,6 +151,7 @@ public class ProductBatchView extends Composite
 			@Override
 			public void onFailure(Throwable caught)
 			{
+				GWT.log(caught.getMessage());
 				Window.alert("Der skete en fejl. Kontakt venligst administratoren");
 			}
 			
@@ -159,7 +161,7 @@ public class ProductBatchView extends Composite
 				ArrayList<String> values = new ArrayList<String>();
 				
 				for (ProduktBatchDTO result : results)
-					values.add(result.pbId + " : " + result.status);
+					values.add(result.pbId + " : " + result.recept_navn);
 				
 				cellList = new CellListHelper(values, selectionHandler);
 				
