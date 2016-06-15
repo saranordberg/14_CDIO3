@@ -80,6 +80,7 @@ public class RaavareView extends Composite
 		
 		validatorHelper.add("Raavare navn", raavareNavn, textValidators);
 		validatorHelper.add("Leverandoer", leverandoer, leverandoerValidators);
+		actionButton.setVisible(false);
 	}
 	
 	private Handler selectionHandler()
@@ -106,6 +107,7 @@ public class RaavareView extends Composite
 						raavareId.setText(new Integer(result.raavareId).toString());
 						raavareNavn.setText(result.raavareNavn);
 						leverandoer.setText(result.leverandoer);
+						actionButton.setVisible(true);
 						actionButton.setText("Gem");
 					}
 					
@@ -140,6 +142,7 @@ public class RaavareView extends Composite
 		raavareId.setText("");
 		raavareNavn.setText("");
 		leverandoer.setText("");
+		actionButton.setVisible(true);
 		actionButton.setText("Opret");
 	}
 	

@@ -72,6 +72,7 @@ public class ProductBatchView extends Composite
 		
 		populateCellList();
 		listBoxPopulater.populateWithPrescription(token);
+		actionButton.setVisible(false);
 	}
 	
 	private Handler selectionHandler()

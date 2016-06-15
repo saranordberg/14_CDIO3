@@ -40,7 +40,7 @@
 							<g:VerticalPanel ui:field="sidebar" width="130px"
 								height="50" horizontalAlignment="ALIGN_CENTER">
 								<g:Button ui:field="opr_button" width="100%" height="40px"
-									styleName="button" text="Operatører" />
+									styleName="button" text="Brugere" />
 								<g:Button ui:field="raw_materials_button" width="100%" height="40px"
 									styleName="button" text="Råvarer" />
 								<g:Button ui:field="prescriptions_button" width="100%" height="40px"

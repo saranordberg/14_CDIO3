@@ -89,7 +89,8 @@ public class ListBoxPopulater
 		for (Tuple<String, String> material : materials)
 			listBox.addItem(material.x, material.y);
 		
-		if (value != null || !value.equals(""))
+		GWT.log(value);
+		if (value != null && !value.equals("null") && !value.equals(""))
 			listBox.setSelectedIndex(ListBoxHelper.getIndexByValue(value, listBox));
 	}
 	

@@ -82,6 +82,7 @@ public class RaavareBatchView extends Composite
 		maengdeValidators.add(new LengthValidator(new Object[] { new Integer(21), '<' }));
 		maengdeValidators.add(new DoubleNumberValidator(null));
 		validatorHelper.add("Mængde", maengde, maengdeValidators);
+		actionButton.setVisible(false);
 	}
 	
 	private Handler selectionHandler()
@@ -111,12 +112,13 @@ public class RaavareBatchView extends Composite
 						// Integer(result.raavareId).toString());
 						
 						// raavare_Id = new ListBox();
-						listBoxPopulater.populateListBoxWithMaterials(result.raavareNavn + "", raavare_Id, token);
+						listBoxPopulater.populateListBoxWithMaterials(result.raavareId + "", raavare_Id, token);
 						// raavareId.setSelectedIndex(ListBoxHelper.getIndexByValue(receptKomp.receptId+"",
 						// raavareId));
 						
 						maengde.setText(new Double(result.maengde).toString());
 						actionButton.setText("Gem");
+						actionButton.setVisible(true);
 					}
 					
 				});
@@ -153,6 +155,7 @@ public class RaavareBatchView extends Composite
 		listBoxPopulater.populateListBoxWithMaterials(null, raavare_Id, token);
 		maengde.setText("");
 		actionButton.setText("Opret");
+		actionButton.setVisible(true);
 	}
 	
 	public void populateCellList()
@@ -205,6 +208,7 @@ public class RaavareBatchView extends Composite
 				raavare_Id.setSelectedIndex(0);
 				maengde.setText("");
 				actionButton.setText("Opret");
+				actionButton.setVisible(true);
 				
 				Window.alert("Din raavarebatch er nu gemt");
 			}
