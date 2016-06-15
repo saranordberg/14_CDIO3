@@ -37,7 +37,7 @@ public class MySQLRaavareDAO implements RaavareDAO
 		List<RaavareDTO> list = new ArrayList<RaavareDTO>();
 		try
 		{
-			ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM raavare");
+			ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM get_all_raavare");
 			while (rs.next())
 			{
 				list.add(new RaavareDTO(rs.getInt("raavare_id"), rs.getString("raavare_navn"),

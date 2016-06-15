@@ -62,7 +62,7 @@ public class MySQLReceptKompDAO implements ReceptKompDAO
 		
 		try
 		{
-			ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM grp14.receptkomponent");
+			ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM get_all_receptkomponent");
 			while (rs.next())
 				list.add(new ReceptKompDTO(rs.getInt("recept_id"), rs.getInt("raavare_id"), rs.getDouble("nom_netto"),
 						rs.getDouble("tolerance")));

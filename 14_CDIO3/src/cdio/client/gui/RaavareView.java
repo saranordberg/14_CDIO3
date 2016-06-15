@@ -67,6 +67,7 @@ public class RaavareView extends Composite
 		this.token = token;
 		
 		populateCellList();
+		
 		ArrayList<Validator> textValidators = new ArrayList<Validator>();
 		ArrayList<Validator> leverandoerValidators = new ArrayList<Validator>();
 		

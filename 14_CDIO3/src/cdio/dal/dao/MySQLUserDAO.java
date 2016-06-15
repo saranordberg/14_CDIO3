@@ -75,7 +75,7 @@ public class MySQLUserDAO implements UserDAO
 		List<UserDTO> list = new ArrayList<UserDTO>();
 		try
 		{
-			ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM user");
+			ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM get_all_user");
 			while (rs.next())
 			{
 				list.add(new UserDTO(rs.getInt("user_id"), rs.getString("first_name"), rs.getString("last_name"),
