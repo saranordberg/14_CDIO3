@@ -62,7 +62,7 @@ public class MySQLReceptDAO implements ReceptDAO
 		
 		try
 		{
-			ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM grp14.recept");
+			ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM get_all_recept");
 			while (rs.next())
 			{
 				list.add(new ReceptDTO(rs.getInt("recept_id"), rs.getString("recept_navn")));

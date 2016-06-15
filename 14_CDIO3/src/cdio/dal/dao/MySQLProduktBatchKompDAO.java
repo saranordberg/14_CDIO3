@@ -58,7 +58,7 @@ public class MySQLProduktBatchKompDAO implements ProduktBatchKompDAO
 		List<ProduktBatchKompDTO> list = new ArrayList<ProduktBatchKompDTO>();
 		try
 		{
-			ResultSet rs = Connector.getInstance().doQuery("Select * FROM produktbatchkomponent");
+			ResultSet rs = Connector.getInstance().doQuery("Select * FROM get_all_produktbatchkomponent");
 			while (rs.next())
 			{
 				list.add(new ProduktBatchKompDTO(rs.getInt("pb_id"), rs.getInt("rb_id"), rs.getDouble("tara"),
