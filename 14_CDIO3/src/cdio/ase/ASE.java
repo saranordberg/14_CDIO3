@@ -278,7 +278,6 @@ public class ASE
 		String inmessage = in.readLine();
 		while(inmessage.length() < 8 || !inmessage.startsWith("RM20 A \"")) {
 			inmessage = in.readLine();
-			String hej ="";
 		}
 		
 		inmessage = inmessage.substring(8);
