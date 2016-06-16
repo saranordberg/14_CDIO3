@@ -38,10 +38,10 @@ public class MySQLProduktBatchDAO implements ProduktBatchDAO
 		try
 		{
 			ResultSet rs = Connector.getInstance()
-					.doQuery("SELECT * FROM produktbatch AS PB INNER JOIN receptkomponent AS RK ON PB.recept_id = RK.recept_id INNER JOIN raavare AS RV ON RK.raavare_id = RV.raavare_id INNER JOIN raavare WHERE PB.pb_id = ? ", pbId);
+					.doQuery("SELECT * FROM produktbatch AS PB INNER JOIN receptkomponent AS RK ON PB.recept_id = RK.recept_id INNER JOIN raavare AS RV ON RK.raavare_id = RV.raavare_id WHERE PB.pb_id = ? ", pbId);
 			
 			while (rs.next()){
-				list.add(new ASEDTO(rs.getInt("pb_id"), rs.getNString("raavare_navn"), rs.getInt("nom_netto"),  rs.getInt("raavare_id")));
+				list.add(new ASEDTO(rs.getInt("pb_id"), rs.getNString("raavare_navn"), rs.getDouble("nom_netto"), rs.getDouble("tolerance"),  rs.getInt("raavare_id")));
 			}
 			return list;
 		}
@@ -60,7 +60,7 @@ public class MySQLProduktBatchDAO implements ProduktBatchDAO
 			ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM get_all_produktbatch");
 			while (rs.next())
 			{
-				list.add(new ProduktBatchDTO(rs.getInt("pb_id"), rs.getInt("recept_id"), rs.getString("status"), rs.getString("recept_navn")));
+				list.add(new ProduktBatchDTO(rs.getInt("pb_id"), rs.getInt("recept_id"), rs.getString("status")));
 			}
 		}
 		catch (Exception e)

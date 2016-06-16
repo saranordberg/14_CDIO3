@@ -6,15 +6,16 @@ public class ASEDTO implements Serializable
 {
 	public int pbId; // i omraadet 1-99999999
 	public int status; // 0: ikke paabegyndt, 1: under produktion, 2: afsluttet
-	public int netto;
+	public double netto;
 	public int user_id;
 	public String raavare_navn;
 	public int raavare_id;
+	public double tolerance;
 	public ASEDTO()
 	{
 	}
 	
-	public ASEDTO(int pbId, String raavare_navn, int netto, int raavare_id)
+	public ASEDTO(int pbId, String raavare_navn, double netto, double tolerance, int raavare_id)
 	{
 		this.pbId = pbId;
 		this.status = status;

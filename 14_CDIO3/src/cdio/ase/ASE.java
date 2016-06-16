@@ -101,9 +101,9 @@ public class ASE
 		sendMessage(out, "@");
 		sendMessage(out, "RM20 8 \"Skriv dit ID\" \"\" \"&3\"");
 		String id = ExtractMessageFromRM20(in);
-		MySQLUserDAO userDoa = new MySQLUserDAO();
+		MySQLUserDAO userDAO = new MySQLUserDAO();
 		System.out.println(id);
-		UserDTO User = userDoa.getUser(Integer.parseInt(id));
+		UserDTO User = userDAO.getUser(Integer.parseInt(id));
 		String name = User.firstName + " " + User.lastName;
 		sendMessage(out, "P111 \"er du?" + name + " \"");
 		
@@ -123,32 +123,39 @@ public class ASE
 			pbDTO.status = "1";
 			produktdao.updateProduktBatch(pbDTO);
 			
-			for (int i = 1; i <= components.size(); i++)
+			for (ASEDTO component : components)
 			{
 				sendMessage(out, "T");
 				skipMessages(in, 1);
-				sendMessage(out, "P111 \"Tjek at vÊgten er 0\"");
+				sendMessage(out, "P111 \"Tjek at v√¶gten er 0\"");
 				if (getConfirmation(in, out))
 				{
 					
-					sendMessage(out, "P111 \"SÊt beholderen pÂ vÊgten\"");
+					sendMessage(out, "P111 \"S√¶t beholderen p√• v√¶gten\"");
 					skipMessages(in, 1);
 					if (getConfirmation(in, out))
 					{
 						sendMessage(out, "P110");
-						sendMessage(out, "RM20 8 \"Skriv raavare id\" \"\" \"&3\"");
+						sendMessage(out, "RM20 8 \"Afvej " + component.raavare_navn + "\" \"\" \"&3\"");
 						String raavare_id = ExtractMessageFromRM20(in);
 						ASEDTO dto = getNettoFromID(components, raavare_id);
-						sendMessage(out, "P111 \"AfmÂl" + dto.netto + " og tryk ok\"");
+						sendMessage(out, "P111 \"Afm√•l" + dto.netto + " og tryk ok\"");
 						getConfirmation(in, out);
 						sendMessage(out, "T");
-						System.out.println("Start afmÂling");
+						System.out.println("Start afm√•ling");
 						if (getWeightconfirmation(in, out))
 						{
 							sendMessage(out, "S");
 							double weight = getWeight(in);
-							System.out.println("vÊgten er: " + weight);
-							System.out.println("Aflsut afmÂling");
+							while(weight < (component.netto - component.tolerance) || weight > (component.netto + component.tolerance))
+							{
+								sendMessage(out, "P111 \"Afm√•lingen er ikke inden for intervallet " + component.netto + " +/- " + component.tolerance + ". Pr√∏v igen\"");
+								sendMessage(out, "S");
+								weight = getWeight(in);
+							}
+							
+							System.out.println("V√¶gten er: " + weight);
+							System.out.println("Aflsut afm√•ling");
 							sendMessage(out, "P110");
 						}
 					}
