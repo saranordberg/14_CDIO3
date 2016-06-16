@@ -18,7 +18,7 @@ public class ASE
 	public static void main(String[] args) throws InterruptedException, NumberFormatException, DALException
 	{
 			
-		String hostName = "169.254.2.2";
+		String hostName = "169.254.2.3";
 		Socket echoSocket = null;
 		int portNumber = 8000;
 		try
@@ -67,8 +67,8 @@ public class ASE
 		{
 			if (StartAfvejning(out, in))
 			{
-				skipMessages(in, 1);
-				;
+//				skipMessages(in, 1);
+//				;
 				KoerAfvejning(out, in, echoSocket);
 			}
 		}		
@@ -107,18 +107,11 @@ public class ASE
 		String name = User.firstName + " " + User.lastName;
 		sendMessage(out, "P111 \"er du?" + name + " \"");
 		
-		if (getConfirmation(in, out))
-		{
-			
-		}
-		else
-		{
-			
-		}
+		getConfirmation(in, out);
 		sendMessage(out, "P110");
 		System.out.println(in.readLine());
 		sendMessage(out, "RM20 8 \"Skriv produktbatch id'en\" \"\" \"&3\"");
-		String produktbatchid = ExtractPbIdRM20(in);
+		String produktbatchid = ExtractMessageFromRM20(in);
 		System.out.println(produktbatchid);
 		MySQLProduktBatchDAO  produktdao = new MySQLProduktBatchDAO ();
 		int PbId = Integer.parseInt(produktbatchid);
@@ -194,6 +187,7 @@ public class ASE
 		sendMessage(out, "RM39 1");
 //		System.out.println("message in getConfirm:" + in.readLine());
 		
+		
 		if (getReturnValueFromRM30(in).equals("A") || getReturnValueFromRM30(in).equals("1"))
 		{
 			sendMessage(out, "RM39 0");
@@ -259,8 +253,10 @@ public class ASE
 	{
 		String inmessage;
 		inmessage = in.readLine();
-		while(inmessage.length() < 5 && (!inmessage.startsWith("RM30 1") || !inmessage.startsWith("RM30 A")))
-			inmessage = in.readLine();
+		while(inmessage.length() < 5 && !inmessage.startsWith("RM30 1") || !inmessage.startsWith("RM30 A")) {
+			inmessage = in.readLine();			
+		}
+
 		System.out.println(" rm30 4: " + inmessage);
 		inmessage = inmessage.substring(5);
 		System.out.println(" rm30 5: " + inmessage);
@@ -286,21 +282,21 @@ public class ASE
 		return inmessage;
 	}
 	
-	public static String ExtractPbIdRM20(BufferedReader in) throws IOException
-	{
-		String inmessage = in.readLine();
-		
-		System.out.println(inmessage);
-		System.out.println(in.readLine());
-		inmessage = in.readLine();
-		inmessage = inmessage.substring(8);
-		
-		System.out.println(inmessage);
-		int lastindex = inmessage.indexOf("\"");
-		inmessage = inmessage.substring(0, lastindex);
-		System.out.println(inmessage);
-		return inmessage;
-	}
+//	public static String ExtractPbIdRM20(BufferedReader in) throws IOException
+//	{
+//		String inmessage = in.readLine();
+//		
+//		System.out.println(inmessage);
+//		System.out.println(in.readLine());
+//		inmessage = in.readLine();
+//		inmessage = inmessage.substring(8);
+//		
+//		System.out.println(inmessage);
+//		int lastindex = inmessage.indexOf("\"");
+//		inmessage = inmessage.substring(0, lastindex);
+//		System.out.println(inmessage);
+//		return inmessage;
+//	}
 	
 	public static void skipMessages(BufferedReader in, int i) throws IOException
 	{
