@@ -122,7 +122,7 @@ public class ASE
 		ArrayList<ASEDTO> components;
 		try
 		{
-			components = produktdao.getStuff(PbId);
+			components = produktdao.getASEDTOList(PbId);
 			ProduktBatchDTO pbDTO = produktdao.getProduktBatch(PbId);
 			pbDTO.status = "1";
 			produktdao.updateProduktBatch(pbDTO);

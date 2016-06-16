@@ -32,7 +32,7 @@ public class MySQLProduktBatchDAO implements ProduktBatchDAO
 			throw new DALException(e);
 		}
 	}
-	public ArrayList<ASEDTO> getStuff(int pbId) throws DALException
+	public ArrayList<ASEDTO> getASEDTOList(int pbId) throws DALException
 	{
 		ArrayList<ASEDTO> list = new ArrayList<ASEDTO>();
 		try
