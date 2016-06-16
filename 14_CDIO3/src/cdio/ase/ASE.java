@@ -127,18 +127,18 @@ public class ASE
 			pbDTO.status = "1";
 			produktdao.updateProduktBatch(pbDTO);
 			
-			sendMessage(out, "T");
-			sendMessage(out, "P111 \"Tjek at vægten er 0\"");
-			getConfirmation(in, out);
-			
-			sendMessage(out, "P111 \"Sæt beholderen på vægten\"");
-			getConfirmation(in, out);
-			sendMessage(out, "S");
-			double taraWeight = getWeight(in);
-			
 			
 			for (ASEDTO component : components)
 			{
+				sendMessage(out, "T");
+				sendMessage(out, "P111 \"Tjek at vægten er 0\"");
+				getConfirmation(in, out);
+				
+				sendMessage(out, "P111 \"Sæt beholderen på vægten\"");
+				getConfirmation(in, out);
+				sendMessage(out, "S");
+				double taraWeight = getWeight(in);
+				
 				sendMessage(out, "RM20 8 \"Indtast raavarebatch nummber for " + component.raavare_navn + "\" \"\" \"&3\"");
 				int raavarebatch_id = Integer.parseInt(ExtractMessageFromRM20(in));
 				
