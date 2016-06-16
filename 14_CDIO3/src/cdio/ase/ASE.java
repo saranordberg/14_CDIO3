@@ -9,11 +9,13 @@ import java.util.ArrayList;
 
 import cdio.dal.dao.MySQLProduktBatchDAO;
 import cdio.dal.dao.MySQLProduktBatchKompDAO;
+import cdio.dal.dao.MySQLRaavareBatchDAO;
 import cdio.dal.dao.MySQLUserDAO;
 import cdio.dal.dao.interfaces.DALException;
 import cdio.dal.dto.ASEDTO;
 import cdio.dal.dto.ProduktBatchDTO;
 import cdio.dal.dto.ProduktBatchKompDTO;
+import cdio.dal.dto.RaavareBatchDTO;
 import cdio.dal.dto.UserDTO;
 
 public class ASE
@@ -65,15 +67,11 @@ public class ASE
 	public static void loop(PrintWriter out, BufferedReader in, Socket echoSocket)
 			throws InterruptedException, IOException, NumberFormatException, DALException
 	{
+		StartAfvejning(out, in);
 		boolean loopchecker = true;
 		while (loopchecker)
 		{
-			if (StartAfvejning(out, in))
-			{
-				// skipMessages(in, 1);
-				// ;
-				KoerAfvejning(out, in, echoSocket);
-			}
+			KoerAfvejning(out, in, echoSocket);
 		}
 	}
 	
@@ -82,7 +80,6 @@ public class ASE
 		sendMessage(out, "RM30 \"Start\"");
 		sendMessage(out, "RM31 1");
 		sendMessage(out, "RM39 1");
-		skipMessages(in, 2);
 		String check = getWeightReturnRM30(in);
 		if (check.equals("A") || check.equals("1"))
 		{
@@ -109,7 +106,7 @@ public class ASE
 		System.out.println(id);
 		UserDTO User = userDAO.getUser(Integer.parseInt(id));
 		String name = User.firstName + " " + User.lastName;
-		sendMessage(out, "P111 \"er du?" + name + " \"");
+		sendMessage(out, "P111 \"er du " + name + "?\"");
 		
 		getConfirmation(in, out);
 		sendMessage(out, "P110");
@@ -130,47 +127,63 @@ public class ASE
 			
 			for (ASEDTO component : components)
 			{
+				sendMessage(out, "P110");
 				sendMessage(out, "T");
 				sendMessage(out, "P111 \"Tjek at vægten er 0\"");
 				getConfirmation(in, out);
+				sendMessage(out, "P110");
 				
 				sendMessage(out, "P111 \"Sæt beholderen på vægten\"");
 				getConfirmation(in, out);
+				sendMessage(out, "P110");
 				sendMessage(out, "S");
 				double taraWeight = getWeight(in);
 				
-				sendMessage(out, "RM20 8 \"Indtast raavarebatch nummber for " + component.raavare_navn + "\" \"\" \"&3\"");
+				sendMessage(out, "RM20 8 \"rb id :" + component.raavare_navn + "\" \"\" \"&3\"");
 				int raavarebatch_id = Integer.parseInt(ExtractMessageFromRM20(in));
 				
+				
 				sendMessage(out, "P110");
-//				sendMessage(out, "RM20 8 \"Afvej " + component.raavare_navn + "\" \"\" \"&3\"");
-				sendMessage(out, "P111 \"Afmål " + component.netto  + " kg " + component.raavare_navn + " og tryk ok\"");
-				getConfirmation(in, out);
 				sendMessage(out, "T");
+//				sendMessage(out, "RM20 8 \"Afvej " + component.raavare_navn + "\" \"\" \"&3\"");
+				sendMessage(out, "P111 \"Afm�l " + component.netto  + " kg " + component.raavare_navn + " og tryk ok\"");
+				getConfirmation(in, out);
+				sendMessage(out, "P110");
 				System.out.println("Start afmåling");
 				getWeightconfirmation(in, out);
 				sendMessage(out, "S");
 				double weight = getWeight(in);
-				while (weight < (component.netto - ((component.netto / 100) * component.tolerance))
-						|| weight > ((component.netto / 100) * component.tolerance))
-				{
-					sendMessage(out, "P111 \"Afmålingen er ikke inden for intervallet " + component.netto + " +/- "
-							+ component.tolerance + ". Prøv igen\"");
-					getWeightconfirmation(in, out);
-					sendMessage(out, "S");
-					weight = getWeight(in);
-				}
+//				while (weight < (component.netto - ((component.netto / 100) * component.tolerance))
+//						|| weight > ((component.netto / 100) * component.tolerance))
+//				{
+//					sendMessage(out, "P111 \"Afmålingen er ikke inden for intervallet " + component.netto + " +/- "
+//							+ component.tolerance + ". Prøv igen\"");
+//					getWeightconfirmation(in, out);
+//					sendMessage(out, "P110");
+//					sendMessage(out, "S");
+//					weight = getWeight(in);
+//				}
 				
 				System.out.println("Vægten er: " + weight);
 				System.out.println("Aflsut afmåling");
+				sendMessage(out, "P110");
+				sendMessage(out, "P111 \"Fjern beholderen og tryk ok\"");
+				getConfirmation(in, out);
 				sendMessage(out, "P110");
 				
 				produktBatchKomps.add(new ProduktBatchKompDTO(pbDTO.pbId, raavarebatch_id, taraWeight, weight,  User.userId));
 			}
 			
-			MySQLProduktBatchKompDAO batchKompDAO = new MySQLProduktBatchKompDAO();
-			for(ProduktBatchKompDTO batchKomp : produktBatchKomps)
-				batchKompDAO.createProduktBatchKomp(batchKomp);
+			MySQLProduktBatchKompDAO produktBatchKompDAO = new MySQLProduktBatchKompDAO();
+			MySQLRaavareBatchDAO batchKompDAO = new MySQLRaavareBatchDAO();
+			for(ProduktBatchKompDTO batchKomp : produktBatchKomps) {
+				produktBatchKompDAO.createProduktBatchKomp(batchKomp);
+				
+				RaavareBatchDTO raavareBatch = batchKompDAO.getRaavareBatch(batchKomp.rbId);
+				raavareBatch.maengde = raavareBatch.maengde = raavareBatch.maengde - batchKomp.netto;
+				batchKompDAO.updateRaavareBatch(raavareBatch);
+			}
+				
 			
 			pbDTO.status = "2";
 			produktdao.updateProduktBatch(pbDTO);
