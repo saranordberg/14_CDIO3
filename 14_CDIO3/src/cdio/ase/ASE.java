@@ -8,16 +8,19 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import cdio.dal.dao.MySQLProduktBatchDAO;
+import cdio.dal.dao.MySQLProduktBatchKompDAO;
 import cdio.dal.dao.MySQLUserDAO;
 import cdio.dal.dao.interfaces.DALException;
 import cdio.dal.dto.ASEDTO;
 import cdio.dal.dto.ProduktBatchDTO;
+import cdio.dal.dto.ProduktBatchKompDTO;
 import cdio.dal.dto.UserDTO;
+
 public class ASE
 {
 	public static void main(String[] args) throws InterruptedException, NumberFormatException, DALException
 	{
-			
+		
 		String hostName = "169.254.2.3";
 		Socket echoSocket = null;
 		int portNumber = 8000;
@@ -67,11 +70,11 @@ public class ASE
 		{
 			if (StartAfvejning(out, in))
 			{
-//				skipMessages(in, 1);
-//				;
+				// skipMessages(in, 1);
+				// ;
 				KoerAfvejning(out, in, echoSocket);
 			}
-		}		
+		}
 	}
 	
 	public static boolean StartAfvejning(PrintWriter out, BufferedReader in) throws IOException
@@ -98,6 +101,7 @@ public class ASE
 	public static void KoerAfvejning(PrintWriter out, BufferedReader in, Socket echoSocket)
 			throws InterruptedException, IOException, NumberFormatException, DALException
 	{
+		ArrayList<ProduktBatchKompDTO> produktBatchKomps = new ArrayList<ProduktBatchKompDTO>();
 		sendMessage(out, "@");
 		sendMessage(out, "RM20 8 \"Skriv dit ID\" \"\" \"&3\"");
 		String id = ExtractMessageFromRM20(in);
@@ -113,56 +117,61 @@ public class ASE
 		sendMessage(out, "RM20 8 \"Skriv produktbatch id'en\" \"\" \"&3\"");
 		String produktbatchid = ExtractMessageFromRM20(in);
 		System.out.println(produktbatchid);
-		MySQLProduktBatchDAO  produktdao = new MySQLProduktBatchDAO ();
+		MySQLProduktBatchDAO produktdao = new MySQLProduktBatchDAO();
 		int PbId = Integer.parseInt(produktbatchid);
 		ArrayList<ASEDTO> components;
 		try
-		{	
-			components = produktdao.getStuff(PbId);
+		{
+			components = produktdao.getASEDTOList(PbId);
 			ProduktBatchDTO pbDTO = produktdao.getProduktBatch(PbId);
 			pbDTO.status = "1";
 			produktdao.updateProduktBatch(pbDTO);
 			
+			
 			for (ASEDTO component : components)
 			{
 				sendMessage(out, "T");
-				skipMessages(in, 1);
 				sendMessage(out, "P111 \"Tjek at vægten er 0\"");
-				if (getConfirmation(in, out))
+				getConfirmation(in, out);
+				
+				sendMessage(out, "P111 \"Sæt beholderen på vægten\"");
+				getConfirmation(in, out);
+				sendMessage(out, "S");
+				double taraWeight = getWeight(in);
+				
+				sendMessage(out, "RM20 8 \"Indtast raavarebatch nummber for " + component.raavare_navn + "\" \"\" \"&3\"");
+				int raavarebatch_id = Integer.parseInt(ExtractMessageFromRM20(in));
+				
+				sendMessage(out, "P110");
+//				sendMessage(out, "RM20 8 \"Afvej " + component.raavare_navn + "\" \"\" \"&3\"");
+				sendMessage(out, "P111 \"Afmål " + component.netto  + " kg " + component.raavare_navn + " og tryk ok\"");
+				getConfirmation(in, out);
+				sendMessage(out, "T");
+				System.out.println("Start afmåling");
+				getWeightconfirmation(in, out);
+				sendMessage(out, "S");
+				double weight = getWeight(in);
+				while (weight < (component.netto - ((component.netto / 100) * component.tolerance))
+						|| weight > ((component.netto / 100) * component.tolerance))
 				{
-					
-					sendMessage(out, "P111 \"Sæt beholderen på vægten\"");
-					skipMessages(in, 1);
-					if (getConfirmation(in, out))
-					{
-						sendMessage(out, "P110");
-						sendMessage(out, "RM20 8 \"Afvej " + component.raavare_navn + "\" \"\" \"&3\"");
-						String raavare_id = ExtractMessageFromRM20(in);
-						ASEDTO dto = getNettoFromID(components, raavare_id);
-						sendMessage(out, "P111 \"Afmål" + dto.netto + " og tryk ok\"");
-						getConfirmation(in, out);
-						sendMessage(out, "T");
-						System.out.println("Start afmåling");
-						if (getWeightconfirmation(in, out))
-						{
-							sendMessage(out, "S");
-							double weight = getWeight(in);
-							while(weight < (component.netto - component.tolerance) || weight > (component.netto + component.tolerance))
-							{
-								sendMessage(out, "P111 \"Afmålingen er ikke inden for intervallet " + component.netto + " +/- " + component.tolerance + ". Prøv igen\"");
-								sendMessage(out, "S");
-								weight = getWeight(in);
-							}
-							
-							System.out.println("Vægten er: " + weight);
-							System.out.println("Aflsut afmåling");
-							sendMessage(out, "P110");
-						}
-					}
+					sendMessage(out, "P111 \"Afmålingen er ikke inden for intervallet " + component.netto + " +/- "
+							+ component.tolerance + ". Prøv igen\"");
+					getWeightconfirmation(in, out);
+					sendMessage(out, "S");
+					weight = getWeight(in);
 				}
 				
+				System.out.println("Vægten er: " + weight);
+				System.out.println("Aflsut afmåling");
+				sendMessage(out, "P110");
+				
+				produktBatchKomps.add(new ProduktBatchKompDTO(pbDTO.pbId, raavarebatch_id, taraWeight, weight,  User.userId));
 			}
-			pbDTO = produktdao.getProduktBatch(PbId);
+			
+			MySQLProduktBatchKompDAO batchKompDAO = new MySQLProduktBatchKompDAO();
+			for(ProduktBatchKompDTO batchKomp : produktBatchKomps)
+				batchKompDAO.createProduktBatchKomp(batchKomp);
+			
 			pbDTO.status = "2";
 			produktdao.updateProduktBatch(pbDTO);
 		}
@@ -174,9 +183,6 @@ public class ASE
 		
 	}
 	
-	
-	
-	
 	public static void sendMessage(PrintWriter out, String message)
 	{
 		out.flush();
@@ -185,15 +191,12 @@ public class ASE
 		System.out.println("Sending: " + message);
 	}
 	
-	
-	
 	public static boolean getConfirmation(BufferedReader in, PrintWriter out) throws IOException
 	{
 		sendMessage(out, "RM30 \"Ok\"");
 		sendMessage(out, "RM31 1");
 		sendMessage(out, "RM39 1");
-//		System.out.println("message in getConfirm:" + in.readLine());
-		
+		// System.out.println("message in getConfirm:" + in.readLine());
 		
 		if (getReturnValueFromRM30(in).equals("A") || getReturnValueFromRM30(in).equals("1"))
 		{
@@ -210,7 +213,7 @@ public class ASE
 	public static double getWeight(BufferedReader in) throws IOException
 	{
 		String weight = in.readLine();
-		while(!weight.startsWith("S S"))
+		while (!weight.startsWith("S S"))
 			weight = in.readLine();
 		
 		weight = weight.substring(8, 13);
@@ -224,7 +227,7 @@ public class ASE
 		sendMessage(out, "RM30 \"Ok\"");
 		sendMessage(out, "RM31 1");
 		sendMessage(out, "RM39 1");
-//		skipMessages(in, 3);
+		// skipMessages(in, 3);
 		String check = getWeightReturnRM30(in);
 		if (check.equals("A") || check.equals("1"))
 		{
@@ -244,8 +247,8 @@ public class ASE
 	{
 		String inmessage;
 		inmessage = in.readLine();
-		//RM30 1
-		while(inmessage.length() < 5 && (!inmessage.startsWith("RM30 1") || !inmessage.startsWith("RM30 A")))
+		// RM30 1
+		while (inmessage.length() < 5 && (!inmessage.startsWith("RM30 1") || !inmessage.startsWith("RM30 A")))
 			inmessage = in.readLine();
 		
 		System.out.println(" weight 2: " + inmessage);
@@ -260,10 +263,11 @@ public class ASE
 	{
 		String inmessage;
 		inmessage = in.readLine();
-		while(inmessage.length() < 5 && !inmessage.startsWith("RM30 1") || !inmessage.startsWith("RM30 A")) {
-			inmessage = in.readLine();			
+		while (inmessage.length() < 5 && !inmessage.startsWith("RM30 1") || !inmessage.startsWith("RM30 A"))
+		{
+			inmessage = in.readLine();
 		}
-
+		
 		System.out.println(" rm30 4: " + inmessage);
 		inmessage = inmessage.substring(5);
 		System.out.println(" rm30 5: " + inmessage);
@@ -272,11 +276,11 @@ public class ASE
 		return inmessage;
 	}
 	
-	
 	public static String ExtractMessageFromRM20(BufferedReader in) throws IOException
 	{
 		String inmessage = in.readLine();
-		while(inmessage.length() < 8 || !inmessage.startsWith("RM20 A \"")) {
+		while (inmessage.length() < 8 || !inmessage.startsWith("RM20 A \""))
+		{
 			inmessage = in.readLine();
 		}
 		
@@ -288,21 +292,22 @@ public class ASE
 		return inmessage;
 	}
 	
-//	public static String ExtractPbIdRM20(BufferedReader in) throws IOException
-//	{
-//		String inmessage = in.readLine();
-//		
-//		System.out.println(inmessage);
-//		System.out.println(in.readLine());
-//		inmessage = in.readLine();
-//		inmessage = inmessage.substring(8);
-//		
-//		System.out.println(inmessage);
-//		int lastindex = inmessage.indexOf("\"");
-//		inmessage = inmessage.substring(0, lastindex);
-//		System.out.println(inmessage);
-//		return inmessage;
-//	}
+	// public static String ExtractPbIdRM20(BufferedReader in) throws
+	// IOException
+	// {
+	// String inmessage = in.readLine();
+	//
+	// System.out.println(inmessage);
+	// System.out.println(in.readLine());
+	// inmessage = in.readLine();
+	// inmessage = inmessage.substring(8);
+	//
+	// System.out.println(inmessage);
+	// int lastindex = inmessage.indexOf("\"");
+	// inmessage = inmessage.substring(0, lastindex);
+	// System.out.println(inmessage);
+	// return inmessage;
+	// }
 	
 	public static void skipMessages(BufferedReader in, int i) throws IOException
 	{
@@ -312,24 +317,22 @@ public class ASE
 		}
 	}
 	
-	
-	
-	public static ASEDTO getNettoFromID (ArrayList<ASEDTO> list, String id){
+	public static ASEDTO getNettoFromID(ArrayList<ASEDTO> list, String id)
+	{
 		
 		int intid = Integer.parseInt(id);
 		
-		for(ASEDTO x:list){
+		for (ASEDTO x : list)
+		{
 			
-			if(intid == x.raavare_id){
+			if (intid == x.raavare_id)
+			{
 				return x;
-				
 				
 			}
 			
 		}
 		return null;
-		
-		
 		
 	}
 	
